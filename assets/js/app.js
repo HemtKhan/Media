@@ -1,37 +1,25 @@
-// DOM Elements
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-const mainNav = document.getElementById('mainNav');
-const loginBtn = document.getElementById('loginBtn');
-const signupBtn = document.getElementById('signupBtn');
-const testApiBtn = document.getElementById('testApiBtn');
-const retryBtn = document.getElementById('retryBtn');
-const serviceSearch = document.getElementById('serviceSearch');
-const serviceSort = document.getElementById('serviceSort');
-const apiKeyInput = document.getElementById('apiKey');
-
-// Initialize when DOM is loaded
+// Main App Initialization
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize mobile menu
     initMobileMenu();
     
-    // Initialize authentication modals
-    initAuthModals();
-    
-    // Initialize API functionality
-    initAPIFunctionality();
-    
-    // Initialize services manager
-    servicesManager.init();
-    
     // Initialize smooth scrolling
     initSmoothScrolling();
     
-    // Initialize WhatsApp button
-    initWhatsAppButton();
+    // Initialize CTA buttons
+    initCTAButtons();
+    
+    // Load popular services
+    loadPopularServices();
 });
 
 // Mobile Menu
 function initMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainNav');
+    
+    if (!mobileMenuBtn || !mainNav) return;
+    
     mobileMenuBtn.addEventListener('click', () => {
         mainNav.classList.toggle('active');
         mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
@@ -45,85 +33,6 @@ function initMobileMenu() {
             mainNav.classList.remove('active');
             mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
         });
-    });
-}
-
-// Authentication Modals
-function initAuthModals() {
-    const loginModal = document.getElementById('loginModal');
-    const signupModal = document.getElementById('signupModal');
-    
-    loginBtn.addEventListener('click', () => showModal(loginModal));
-    signupBtn.addEventListener('click', () => showModal(signupModal));
-    
-    // Close modals
-    document.querySelectorAll('.close-modal').forEach(closeBtn => {
-        closeBtn.addEventListener('click', () => {
-            loginModal.style.display = 'none';
-            signupModal.style.display = 'none';
-        });
-    });
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', (e) => {
-        if (e.target === loginModal) loginModal.style.display = 'none';
-        if (e.target === signupModal) signupModal.style.display = 'none';
-    });
-}
-
-// Show modal
-function showModal(modal) {
-    modal.style.display = 'block';
-}
-
-// API Functionality
-function initAPIFunctionality() {
-    // Test API connection
-    testApiBtn.addEventListener('click', async () => {
-        const apiKey = apiKeyInput.value.trim();
-        if (!apiKey) {
-            alert('لطفاً کلید API را وارد کنید');
-            return;
-        }
-        
-        // Update API instance with new key
-        api.apiKey = apiKey;
-        
-        testApiBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال تست...';
-        testApiBtn.disabled = true;
-        
-        const result = await api.testConnection();
-        
-        if (result.success) {
-            alert(`✅ اتصال موفق!\nموجودی: ${result.balance} ${result.currency}`);
-            servicesManager.init();
-        } else {
-            alert(`❌ خطا در اتصال: ${result.error}`);
-        }
-        
-        testApiBtn.innerHTML = '<i class="fas fa-plug"></i> تست اتصال';
-        testApiBtn.disabled = false;
-    });
-    
-    // Retry button
-    retryBtn.addEventListener('click', () => {
-        servicesManager.init();
-    });
-    
-    // Search functionality
-    let searchTimeout;
-    serviceSearch.addEventListener('input', (e) => {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => {
-            servicesManager.searchTerm = e.target.value;
-            servicesManager.filterServices();
-        }, 500);
-    });
-    
-    // Sort functionality
-    serviceSort.addEventListener('change', (e) => {
-        servicesManager.sortBy = e.target.value;
-        servicesManager.filterServices();
     });
 }
 
@@ -147,33 +56,136 @@ function initSmoothScrolling() {
     });
 }
 
-// WhatsApp Button
-function initWhatsAppButton() {
+// CTA Buttons
+function initCTAButtons() {
+    // WhatsApp CTA button
     const whatsappBtn = document.querySelector('.btn-whatsapp');
-    whatsappBtn.addEventListener('click', () => {
-        const message = 'سلام Khan24، من از طریق وبسایت خدمات شما را دیدم و میخواهم سفارش بدهم.';
-        const encodedMessage = encodeURIComponent(message);
-        whatsappBtn.href = `https://wa.me/93700000000?text=${encodedMessage}`;
-    });
+    if (whatsappBtn) {
+        whatsappBtn.addEventListener('click', () => {
+            const message = 'سلام Khan24، من از وبسایت شما دیدن کردم و می‌خواهم در مورد خدمات مشاوره بگیرم.';
+            const encodedMessage = encodeURIComponent(message);
+            whatsappBtn.href = `https://wa.me/93700000000?text=${encodedMessage}`;
+        });
+    }
+    
+    // CTA calculator button
+    const ctaBtn = document.querySelector('.btn-cta');
+    if (ctaBtn) {
+        ctaBtn.addEventListener('click', () => {
+            const calculatorSection = document.getElementById('calculator');
+            if (calculatorSection) {
+                window.scrollTo({
+                    top: calculatorSection.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    }
 }
 
-// Update API key from input
-apiKeyInput.addEventListener('change', (e) => {
-    api.apiKey = e.target.value.trim() || API_CONFIG.API_KEY;
-});
-
-// Auto-test API on page load
-window.addEventListener('load', async () => {
-    setTimeout(async () => {
-        const result = await api.testConnection();
-        if (result.success) {
-            console.log('API connection successful');
-        } else {
-            console.warn('API connection failed:', result.error);
+// Load Popular Services
+function loadPopularServices() {
+    const container = document.querySelector('.popular-services');
+    if (!container) return;
+    
+    // Get 6 popular services from different platforms
+    const popularServices = [
+        { 
+            platform: 'instagram', 
+            service: SERVICES_DATABASE.instagram[0],
+            icon: 'fab fa-instagram',
+            color: '#E1306C'
+        },
+        { 
+            platform: 'tiktok', 
+            service: SERVICES_DATABASE.tiktok[0],
+            icon: 'fab fa-tiktok',
+            color: '#000000'
+        },
+        { 
+            platform: 'youtube', 
+            service: SERVICES_DATABASE.youtube[0],
+            icon: 'fab fa-youtube',
+            color: '#FF0000'
+        },
+        { 
+            platform: 'facebook', 
+            service: SERVICES_DATABASE.facebook[0],
+            icon: 'fab fa-facebook-f',
+            color: '#1877F2'
+        },
+        { 
+            platform: 'twitter', 
+            service: SERVICES_DATABASE.twitter[0],
+            icon: 'fab fa-twitter',
+            color: '#1DA1F2'
+        },
+        { 
+            platform: 'telegram', 
+            service: SERVICES_DATABASE.telegram[0],
+            icon: 'fab fa-telegram',
+            color: '#26A5E4'
         }
-    }, 1000);
-});
+    ];
+    
+    container.innerHTML = popularServices.map(item => `
+        <div class="popular-service-card">
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                <div style="width: 50px; height: 50px; border-radius: 12px; background: ${item.color}; 
+                           display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">
+                    <i class="${item.icon}"></i>
+                </div>
+                <h3 style="margin: 0; color: #1f2937;">${item.service.name}</h3>
+            </div>
+            
+            <p style="color: #6b7280; margin-bottom: 20px; line-height: 1.6;">
+                ${item.service.description}
+            </p>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="color: #059669; font-weight: 700; font-size: 18px;">
+                    $${item.service.basePrice}/1000
+                </span>
+                <button class="btn btn-primary btn-sm" 
+                        onclick="selectPopularService('${item.platform}', ${item.service.id})">
+                    <i class="fas fa-calculator"></i> محاسبه قیمت
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
 
-// Export for debugging
-window.api = api;
-window.servicesManager = servicesManager;
+// Function to select popular service from services section
+function selectPopularService(platformId, serviceId) {
+    // Scroll to calculator
+    const calculatorSection = document.getElementById('calculator');
+    if (calculatorSection) {
+        window.scrollTo({
+            top: calculatorSection.offsetTop - 100,
+            behavior: 'smooth'
+        });
+    }
+    
+    // Select the service after a short delay
+    setTimeout(() => {
+        if (window.priceCalculator) {
+            window.priceCalculator.selectPlatform(platformId);
+            setTimeout(() => {
+                window.priceCalculator.selectService(serviceId);
+            }, 100);
+        }
+    }, 500);
+}
+
+// Format price for display
+function formatPrice(price) {
+    return `$${parseFloat(price).toFixed(2)}`;
+}
+
+// Format number with Persian separators
+function formatNumber(num) {
+    return num.toLocaleString('fa-IR');
+}
+
+// Export for global access
+window.selectPopularService = selectPopularService;
