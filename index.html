@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/calculator.css">
 </head>
 <body>
     <!-- Header -->
@@ -27,17 +27,14 @@
             
             <nav id="mainNav">
                 <a href="#home">خانه</a>
+                <a href="#calculator">محاسبه قیمت</a>
                 <a href="#services">خدمات</a>
-                <a href="#dashboard">داشبورد</a>
                 <a href="#how-it-works">نحوه کار</a>
                 <a href="#contact">تماس</a>
                 
                 <div class="auth-buttons">
-                    <button class="btn btn-outline" id="loginBtn">
-                        <i class="fas fa-sign-in-alt"></i> ورود
-                    </button>
-                    <button class="btn btn-primary" id="signupBtn">
-                        <i class="fas fa-user-plus"></i> ثبت‌نام
+                    <button class="btn btn-outline" id="whatsappBtn">
+                        <i class="fab fa-whatsapp"></i> واتساپ
                     </button>
                 </div>
             </nav>
@@ -48,17 +45,17 @@
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-content">
-                <h1>تمام خدمات <span class="hero-highlight">مارکیتنگ</span></h1>
+                <h1>رشد شبکه‌های اجتماعی <span class="hero-highlight">آسان‌تر</span> از همیشه</h1>
                 <p>حضور خود را در شبکه‌های اجتماعی با خدمات حرفه‌ای رشد دهیم. سریع، مطمئن و مؤثر برای بازار افغانستان.</p>
                 
                 <div class="hero-badges">
                     <div class="badge">
-                        <i class="fas fa-bolt"></i>
-                        <span>شروع سریع</span>
+                        <i class="fas fa-calculator"></i>
+                        <span>محاسبه آنی قیمت</span>
                     </div>
                     <div class="badge">
                         <i class="fas fa-headset"></i>
-                        <span>پشتیبانی واتساپ</span>
+                        <span>پشتیبانی ۲۴/۷</span>
                     </div>
                     <div class="badge">
                         <i class="fas fa-shield-alt"></i>
@@ -69,113 +66,216 @@
         </div>
     </section>
 
-    <!-- Dashboard Section -->
-    <section class="dashboard-section" id="dashboard">
+    <!-- Calculator Section -->
+    <section class="calculator-section" id="calculator">
         <div class="container">
             <div class="section-title">
-                <h2>خدمات مارکیتنگ</h2>
-                <p>لیست کامل خدمات قابل سفارش از طریق API</p>
+                <h2>محاسبه‌گر قیمت خدمات</h2>
+                <p>سرویس مورد نظر خود را انتخاب کنید و قیمت را به صورت خودکار محاسبه کنید</p>
             </div>
 
-            <!-- API Key Input -->
-            <div class="api-key-container">
-                <div class="api-key-input">
-                    <div class="input-group">
-                        <label for="apiKey"><i class="fas fa-key"></i> کلید API</label>
-                        <div class="input-with-button">
-                            <input 
-                                type="text" 
-                                id="apiKey" 
-                                placeholder="کلید API خود را وارد کنید" 
-                                value="07b8850f34c3ad7e91eaed3e505312cb"
-                            >
-                            <button class="btn btn-primary" id="testApiBtn">
-                                <i class="fas fa-plug"></i> تست اتصال
+            <div class="calculator-container">
+                <div class="calculator-card">
+                    <!-- Platform Selection -->
+                    <div class="calculator-step">
+                        <div class="step-header">
+                            <span class="step-number">۱</span>
+                            <h3><i class="fas fa-layer-group"></i> انتخاب پلتفرم</h3>
+                        </div>
+                        <div class="platform-selection" id="platformSelection">
+                            <!-- Platforms will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Service Selection -->
+                    <div class="calculator-step">
+                        <div class="step-header">
+                            <span class="step-number">۲</span>
+                            <h3><i class="fas fa-list"></i> انتخاب سرویس</h3>
+                        </div>
+                        <div class="service-selection">
+                            <select id="serviceSelect" class="service-select">
+                                <option value="">ابتدا پلتفرم را انتخاب کنید</option>
+                            </select>
+                            <div class="service-info" id="serviceInfo">
+                                <!-- Service info will be shown here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quantity Input -->
+                    <div class="calculator-step">
+                        <div class="step-header">
+                            <span class="step-number">۳</span>
+                            <h3><i class="fas fa-hashtag"></i> تعداد مورد نظر</h3>
+                        </div>
+                        <div class="quantity-input">
+                            <div class="input-group">
+                                <label for="quantity"><i class="fas fa-sort-numeric-up"></i> تعداد</label>
+                                <div class="quantity-controls">
+                                    <input 
+                                        type="number" 
+                                        id="quantity" 
+                                        placeholder="مثال: 1000" 
+                                        min="100"
+                                        max="1000000"
+                                    >
+                                    <div class="quantity-presets">
+                                        <button class="preset-btn" data-quantity="100">۱۰۰</button>
+                                        <button class="preset-btn" data-quantity="500">۵۰۰</button>
+                                        <button class="preset-btn" data-quantity="1000">۱,۰۰۰</button>
+                                        <button class="preset-btn" data-quantity="5000">۵,۰۰۰</button>
+                                        <button class="preset-btn" data-quantity="10000">۱۰,۰۰۰</button>
+                                    </div>
+                                </div>
+                                <div class="quantity-range">
+                                    <span id="minQuantity">۱۰۰</span>
+                                    <input 
+                                        type="range" 
+                                        id="quantitySlider" 
+                                        min="100" 
+                                        max="100000" 
+                                        step="100" 
+                                        value="1000"
+                                    >
+                                    <span id="maxQuantity">۱۰۰,۰۰۰</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price Calculation -->
+                    <div class="price-calculation">
+                        <div class="price-header">
+                            <h3><i class="fas fa-calculator"></i> محاسبه قیمت</h3>
+                            <button class="btn btn-reset" id="resetCalculator">
+                                <i class="fas fa-redo"></i> بازنشانی
                             </button>
                         </div>
-                        <small class="input-hint">کلید API از naizop.com: <code>07b8850f34c3ad7e91eaed3e505312cb</code></small>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Platform Selector -->
-            <div class="platform-selector">
-                <h3><i class="fas fa-layer-group"></i> انتخاب پلتفرم</h3>
-                <div class="platform-tabs" id="platformTabs">
-                    <!-- Tabs will be loaded dynamically -->
-                </div>
-            </div>
-
-            <!-- Services Container -->
-            <div class="services-container">
-                <div class="services-header">
-                    <h3><i class="fas fa-list"></i> لیست خدمات</h3>
-                    <div class="search-filter">
-                        <div class="search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="serviceSearch" placeholder="جستجوی خدمات...">
+                        
+                        <div class="price-breakdown">
+                            <div class="price-row">
+                                <span>قیمت واحد:</span>
+                                <span id="unitPrice">$۰.۰۰</span>
+                            </div>
+                            <div class="price-row">
+                                <span>تعداد:</span>
+                                <span id="displayQuantity">۰</span>
+                            </div>
+                            <div class="price-row total">
+                                <span>قیمت کل:</span>
+                                <span id="totalPrice">$۰.۰۰</span>
+                            </div>
                         </div>
-                        <select id="serviceSort">
-                            <option value="default">مرتب‌سازی: پیش‌فرض</option>
-                            <option value="price-low">قیمت: کم به زیاد</option>
-                            <option value="price-high">قیمت: زیاد به کم</option>
-                            <option value="name">نام: الفبا</option>
-                        </select>
+
+                        <div class="quantity-levels">
+                            <div class="level-item">
+                                <span class="level-label">اقتصادی (۵۰۰+)</span>
+                                <span class="level-price" id="price500">$۰.۰۰</span>
+                            </div>
+                            <div class="level-item">
+                                <span class="level-label">مناسب (۵,۰۰۰+)</span>
+                                <span class="level-price" id="price5000">$۰.۰۰</span>
+                            </div>
+                            <div class="level-item">
+                                <span class="level-label">به صرفه (۱۰,۰۰۰+)</span>
+                                <span class="level-price" id="price10000">$۰.۰۰</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Action -->
+                    <div class="order-action">
+                        <div class="order-summary">
+                            <h4>خلاصه سفارش:</h4>
+                            <p id="orderSummary">هیچ سرویسی انتخاب نشده است</p>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-order" id="orderBtn" disabled>
+                            <i class="fab fa-whatsapp"></i> سفارش در واتساپ
+                        </button>
+                        
+                        <div class="payment-methods">
+                            <span><i class="fas fa-money-bill-wave"></i> نقدی</span>
+                            <span><i class="fas fa-university"></i> بانک</span>
+                            <span><i class="fas fa-coins"></i> USDT</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Loading State -->
-                <div class="loading-state" id="loadingState">
-                    <div class="spinner">
-                        <div class="bounce1"></div>
-                        <div class="bounce2"></div>
-                        <div class="bounce3"></div>
+                <!-- Quick Order Sidebar -->
+                <div class="quick-order-sidebar">
+                    <h3><i class="fas fa-bolt"></i> سفارش سریع</h3>
+                    
+                    <div class="quick-services">
+                        <!-- Popular services will be loaded here -->
                     </div>
-                    <p>در حال بارگذاری خدمات...</p>
-                </div>
-
-                <!-- Error State -->
-                <div class="error-state" id="errorState" style="display: none;">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <h4>خطا در بارگذاری</h4>
-                    <p id="errorMessage"></p>
-                    <button class="btn btn-primary" id="retryBtn">
-                        <i class="fas fa-redo"></i> تلاش مجدد
-                    </button>
-                </div>
-
-                <!-- Services Grid -->
-                <div class="services-grid" id="servicesGrid">
-                    <!-- Services will be loaded here dynamically -->
-                </div>
-
-                <!-- No Results -->
-                <div class="no-results" id="noResults" style="display: none;">
-                    <i class="fas fa-search"></i>
-                    <p>هیچ سرویسی یافت نشد</p>
+                    
+                    <div class="sidebar-info">
+                        <div class="info-box">
+                            <i class="fas fa-truck"></i>
+                            <div>
+                                <h4>تحویل سریع</h4>
+                                <p>شروع از ۵ دقیقه</p>
+                            </div>
+                        </div>
+                        <div class="info-box">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <h4>ضمانت کیفیت</h4>
+                                <p>پر کردن مجدد</p>
+                            </div>
+                        </div>
+                        <div class="info-box">
+                            <i class="fas fa-headset"></i>
+                            <div>
+                                <h4>پشتیبانی</h4>
+                                <p>۲۴/۷ واتساپ</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- API Info Panel -->
-            <div class="api-info-panel">
-                <h3><i class="fas fa-info-circle"></i> اطلاعات API</h3>
-                <div class="api-info-content">
-                    <div class="api-stat">
-                        <span class="stat-label">پایگاه داده:</span>
-                        <span class="stat-value">naizop.com</span>
-                    </div>
-                    <div class="api-stat">
-                        <span class="stat-label">ورژن API:</span>
-                        <span class="stat-value">v2</span>
-                    </div>
-                    <div class="api-stat">
-                        <span class="stat-label">وضعیت:</span>
-                        <span class="stat-value status-active" id="apiStatus">متصل نشده</span>
-                    </div>
-                    <div class="api-stat">
-                        <span class="stat-label">تعداد خدمات:</span>
-                        <span class="stat-value" id="servicesCount">0</span>
-                    </div>
+    <!-- Services Section -->
+    <section class="services-section" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>خدمات محبوب ما</h2>
+                <p>برترین سرویس‌های رشد شبکه‌های اجتماعی</p>
+            </div>
+
+            <div class="popular-services">
+                <!-- Popular services grid -->
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>چگونه کار می‌کند؟</h2>
+                <p>در ۳ مرحله ساده خدمات دریافت کنید</p>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">۱</div>
+                    <h3>انتخاب سرویس</h3>
+                    <p>پلتفرم و سرویس مورد نظر خود را انتخاب کنید</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">۲</div>
+                    <h3>محاسبه قیمت</h3>
+                    <p>تعداد را وارد کرده و قیمت را مشاهده کنید</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">۳</div>
+                    <h3>سفارش در واتساپ</h3>
+                    <p>مستقیماً از طریق واتساپ سفارش دهید</p>
                 </div>
             </div>
         </div>
@@ -185,11 +285,11 @@
     <section class="cta-section">
         <div class="container">
             <div class="cta-content">
-                <h2>آماده سفارش خدمات هستید؟</h2>
-                <p>مستقیماً از طریق واتساپ با ما در تماس باشید</p>
+                <h2>آماده رشد شبکه‌های اجتماعی خود هستید؟</h2>
+                <p>همین حالا شروع کنید و نتیجه را ببینید</p>
                 
-                <a href="https://wa.me/93700000000?text=سلام%20Khan24،%20من%20میخواهم%20خدمات%20شبکه‌های%20اجتماعی%20سفارش%20بدهم" class="btn btn-primary btn-whatsapp" target="_blank">
-                    <i class="fab fa-whatsapp"></i> سفارش در واتساپ
+                <a href="#calculator" class="btn btn-primary btn-cta">
+                    <i class="fas fa-calculator"></i> محاسبه قیمت
                 </a>
             </div>
         </div>
@@ -199,7 +299,51 @@
     <footer id="contact">
         <div class="container">
             <div class="footer-content">
-                <!-- Footer content same as before -->
+                <div class="footer-col">
+                    <h3>Khan24</h3>
+                    <p style="color: #d1d5db; margin-top: 20px;">شریک مطمئن شما برای رشد شبکه‌های اجتماعی در افغانستان. خدمات حرفه‌ای برای کسب‌وکارها و افراد.</p>
+                    
+                    <div class="footer-contact" style="margin-top: 30px;">
+                        <div class="contact-item">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>واتساپ: ۹۳۷۰۰۰۰۰۰۰۰+</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@khan24.com</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>خدمات</h3>
+                    <ul class="footer-links">
+                        <li><a href="#calculator"><i class="fas fa-arrow-left"></i> اینستاگرام</a></li>
+                        <li><a href="#calculator"><i class="fas fa-arrow-left"></i> تیک‌تاک</a></li>
+                        <li><a href="#calculator"><i class="fas fa-arrow-left"></i> یوتیوب</a></li>
+                        <li><a href="#calculator"><i class="fas fa-arrow-left"></i> فیسبوک</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>لینک‌های سریع</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home"><i class="fas fa-arrow-left"></i> خانه</a></li>
+                        <li><a href="#calculator"><i class="fas fa-arrow-left"></i> محاسبه قیمت</a></li>
+                        <li><a href="#services"><i class="fas fa-arrow-left"></i> خدمات</a></li>
+                        <li><a href="#how-it-works"><i class="fas fa-arrow-left"></i> نحوه کار</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>پرداخت</h3>
+                    <div class="payment-icons">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <i class="fas fa-university"></i>
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <p style="color: #d1d5db; margin-top: 15px;">پرداخت با USDT، بانک و نقدی</p>
+                </div>
             </div>
             
             <div class="copyright">
@@ -208,26 +352,8 @@
         </div>
     </footer>
 
-    <!-- Modals -->
-    <div class="modal" id="loginModal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h3>ورود به حساب کاربری</h3>
-            <!-- Login form -->
-        </div>
-    </div>
-
-    <div class="modal" id="signupModal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h3>ثبت‌نام جدید</h3>
-            <!-- Signup form -->
-        </div>
-    </div>
-
     <!-- JavaScript -->
-    <script src="assets/js/api.js"></script>
-    <script src="assets/js/services.js"></script>
+    <script src="assets/js/calculator.js"></script>
     <script src="assets/js/app.js"></script>
 </body>
 </html>
