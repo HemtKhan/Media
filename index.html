@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khan24 - Social Media Marketing Services</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-outline {
+            border: 1px solid #2563eb;
+            color: #2563eb;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: #eff6ff;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 0 80px;
+            background: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* Services Grid */
+        .services-section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #1e293b;
+        }
+
+        .section-title p {
+            color: #64748b;
+            font-size: 18px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .platform-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .platform-logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 28px;
+        }
+
+        .instagram-logo {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+        }
+
+        .tiktok-logo {
+            background: #000000;
+            color: white;
+        }
+
+        .youtube-logo {
+            background: #FF0000;
+            color: white;
+        }
+
+        .twitter-logo {
+            background: #1DA1F2;
+            color: white;
+        }
+
+        .facebook-logo {
+            background: #1877F2;
+            color: white;
+        }
+
+        .reddit-logo {
+            background: #FF4500;
+            color: white;
+        }
+
+        .telegram-logo {
+            background: #26A5E4;
+            color: white;
+        }
+
+        .spotify-logo {
+            background: #1DB954;
+            color: white;
+        }
+
+        .platform-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1e293b;
+        }
+
+        .platform-card p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .services-list {
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .services-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .services-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            color: #2563eb;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: #1e293b;
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #e2e8f0;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px 0;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 20px;
+                width: 100%;
+            }
+
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 180px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            .platform-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">K24</div>
+                <span>Khan24.com</span>
+            </a>
+            
+            <nav>
+                <a href="#services">Services</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#contact">Contact</a>
+                
+                <div class="auth-buttons">
+                    <a href="#" class="btn btn-outline">Log in</a>
+                    <a href="#" class="btn btn-primary">Sign Up</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>All Marketing Services</h1>
+            <p>Boost your social media presence with our premium growth services. Fast, reliable, and effective.</p>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="services-section" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Social Media Services</h2>
+                <p>Choose from our wide range of social media marketing services</p>
+            </div>
+            
+            <div class="services-grid">
+                <!-- Instagram Card -->
+                <div class="platform-card">
+                    <div class="platform-logo instagram-logo">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <h3>Instagram</h3>
+                    <p>Boost your Instagram presence with our services</p>
+                    <ul class="services-list">
+                        <li>Buy Instagram Followers</li>
+                        <li>Buy Instagram Likes</li>
+                        <li>Buy Instagram Views</li>
+                        <li>Buy Instagram Comments</li>
+                    </ul>
+                </div>
+
+                <!-- TikTok Card -->
+                <div class="platform-card">
+                    <div class="platform-logo tiktok-logo">
+                        <i class="fab fa-tiktok"></i>
+                    </div>
+                    <h3>TikTok</h3>
+                    <p>Increase your TikTok visibility and engagement</p>
+                    <ul class="services-list">
+                        <li>Buy TikTok Views</li>
+                        <li>Buy TikTok Likes</li>
+                        <li>Buy TikTok Followers</li>
+                        <li>Buy TikTok Shares</li>
+                    </ul>
+                </div>
+
+                <!-- YouTube Card -->
+                <div class="platform-card">
+                    <div class="platform-logo youtube-logo">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <h3>YouTube</h3>
+                    <p>Grow your YouTube channel with our services</p>
+                    <ul class="services-list">
+                        <li>Buy YouTube Views</li>
+                        <li>Buy YouTube Subscribers</li>
+                        <li>Buy YouTube Likes</li>
+                        <li>Buy YouTube Comments</li>
+                    </ul>
+                </div>
+
+                <!-- Twitter Card -->
+                <div class="platform-card">
+                    <div class="platform-logo twitter-logo">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <h3>Twitter (X)</h3>
+                    <p>Expand your Twitter reach and engagement</p>
+                    <ul class="services-list">
+                        <li>Buy Twitter Followers</li>
+                        <li>Buy Twitter Likes</li>
+                        <li>Buy Twitter Retweets</li>
+                        <li>Buy Twitter Comments</li>
+                    </ul>
+                </div>
+
+                <!-- Facebook Card -->
+                <div class="platform-card">
+                    <div class="platform-logo facebook-logo">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <h3>Facebook</h3>
+                    <p>Enhance your Facebook page performance</p>
+                    <ul class="services-list">
+                        <li>Buy Facebook Likes</li>
+                        <li>Buy Facebook Followers</li>
+                        <li>Buy Facebook Views</li>
+                        <li>Buy Facebook Shares</li>
+                    </ul>
+                </div>
+
+                <!-- Reddit Card -->
+                <div class="platform-card">
+                    <div class="platform-logo reddit-logo">
+                        <i class="fab fa-reddit"></i>
+                    </div>
+                    <h3>Reddit</h3>
+                    <p>Boost your Reddit posts and engagement</p>
+                    <ul class="services-list">
+                        <li>Buy Reddit Upvotes</li>
+                        <li>Buy Reddit Comments</li>
+                        <li>Buy Reddit Shares</li>
+                        <li>Buy Reddit Awards</li>
+                    </ul>
+                </div>
+
+                <!-- Telegram Card -->
+                <div class="platform-card">
+                    <div class="platform-logo telegram-logo">
+                        <i class="fab fa-telegram"></i>
+                    </div>
+                    <h3>Telegram</h3>
+                    <p>Grow your Telegram channel or group</p>
+                    <ul class="services-list">
+                        <li>Buy Telegram Members</li>
+                        <li>Buy Telegram Views</li>
+                        <li>Buy Telegram Reactions</li>
+                        <li>Buy Telegram Comments</li>
+                    </ul>
+                </div>
+
+                <!-- Spotify Card -->
+                <div class="platform-card">
+                    <div class="platform-logo spotify-logo">
+                        <i class="fab fa-spotify"></i>
+                    </div>
+                    <h3>Spotify</h3>
+                    <p>Increase your Spotify plays and followers</p>
+                    <ul class="services-list">
+                        <li>Buy Spotify Plays</li>
+                        <li>Buy Spotify Followers</li>
+                        <li>Buy Spotify Saves</li>
+                        <li>Buy Spotify Playlist Adds</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Boost Your Social Media?</h2>
+            <p>Join thousands of satisfied customers who have grown their social media presence with Khan24</p>
+            <a href="#" class="cta-btn">
+                <i class="fab fa-whatsapp"></i>
+                Order on WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Khan24</h3>
+                    <p>Your trusted partner for social media growth. Professional services for businesses and individuals.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Instagram Services</a></li>
+                        <li><a href="#">TikTok Services</a></li>
+                        <li><a href="#">YouTube Services</a></li>
+                        <li><a href="#">Facebook Services</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:info@khan24.com">info@khan24.com</a></li>
+                        <li><a href="tel:+93700000000">+93 700 000 000</a></li>
+                        <li><a href="#">WhatsApp Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Khan24.com. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for Icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</body>
+</html>
