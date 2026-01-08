@@ -1,5 +1,5 @@
 export default async () => {
-  const API_KEY = process.env.07b8850f34c3ad7e91eaed3e505312cb;
+  const API_KEY = process.env.NAIZOP_API_KEY;
 
   const res = await fetch("https://naizop.com/api/v2", {
     method: "POST",
