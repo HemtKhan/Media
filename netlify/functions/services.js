@@ -1,9 +1,11 @@
 export default async () => {
-  const API_KEY = process.env.NAIZOP_API_KEY;
+  const API_KEY = "07b8850f34c3ad7e91eaed3e505312cb"; // API key added directly
 
   const res = await fetch("https://naizop.com/api/v2", {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
     body: new URLSearchParams({
       key: API_KEY,
       action: "services"
