@@ -11,12 +11,23 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
 
+    html{
+      scroll-behavior: smooth;
+    }
+
     body {
       background-color: #020202;
       color: #ffffff;
       font-family: 'Plus Jakarta Sans', sans-serif;
       text-align: right;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* smoother mobile scrolling */
+    *{
+      -webkit-tap-highlight-color: transparent;
     }
 
     .glass-card {
@@ -35,12 +46,13 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: 0.25s;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
       border: 1px solid rgba(255,255,255,0.12);
       background: var(--bg);
       font-size: 1.15rem;
       position: relative;
       overflow: hidden;
+      will-change: transform;
     }
 
     /* ✅ REAL GLOW (box-shadow) — not drop-shadow */
@@ -62,6 +74,10 @@
       box-shadow: 0 0 14px color-mix(in srgb, var(--c) 45%, transparent);
     }
 
+    .glow-btn:active{
+      transform: scale(.97);
+    }
+
     .glow-btn.active {
       border-color: var(--c);
       background: var(--bg);
@@ -71,13 +87,13 @@
     }
 
     /* ✅ Icon stays WHITE like screenshot */
-.glow-btn i,
-.glow-btn span {
-  color: #fff;
-  position: relative;
-  z-index: 2;
-  transition: 0.25s;
-}
+    .glow-btn i,
+    .glow-btn span {
+      color: #fff;
+      position: relative;
+      z-index: 2;
+      transition: 0.25s;
+    }
 
     /* small highlight on active */
     .glow-btn.active i,
@@ -99,6 +115,35 @@
       background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
       box-shadow: 0 10px 25px -5px rgba(37,99,235,0.4);
       border-radius: 20px;
+      transition: transform .15s ease;
+    }
+    .order-btn:active{
+      transform: scale(.98);
+    }
+
+    /* ===== MODAL SMOOTH ANIMATION ===== */
+    .modal-backdrop{
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+    .modal-sheet{
+      transform: translateY(20px);
+      opacity: 0;
+      transition: transform .28s ease, opacity .28s ease;
+      will-change: transform, opacity;
+    }
+    .modal-open .modal-backdrop{
+      opacity: 1;
+    }
+    .modal-open .modal-sheet{
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* smooth list scrolling on iOS */
+    #serviceList{
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
     }
   </style>
 </head>
@@ -148,7 +193,15 @@
       <div class="space-y-6">
         <div>
           <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">انتخاب سرویس </label>
-          <button onclick="openServiceModal()"   class="w-full text-right bg-[#080808] border border-white/10 rounded-2xl p-4 text-sm flex items-center justify-between">   <span id="selectedServiceText" class="text-white/90">سرویس را انتخاب کنید...</span>   <i class="fas fa-chevron-down text-white/40"></i> </button>  <!-- hidden select (still used for calculations, no UI) --> <select id="serviceSelect" class="hidden" onchange="updateDetails()"></select>
+
+          <button onclick="openServiceModal()"
+            class="w-full text-right bg-[#080808] border border-white/10 rounded-2xl p-4 text-sm flex items-center justify-between active:scale-[0.99] transition">
+            <span id="selectedServiceText" class="text-white/90">سرویس را انتخاب کنید...</span>
+            <i class="fas fa-chevron-down text-white/40"></i>
+          </button>
+
+          <!-- hidden select (still used for calculations, no UI) -->
+          <select id="serviceSelect" class="hidden" onchange="updateDetails()"></select>
         </div>
 
         <div>
@@ -182,34 +235,35 @@
           حداقل سفارش: <span id="minQty" class="text-white">--</span> | حداکثر: <span id="maxQty" class="text-white">--</span>
         </div>
 
-        <button onclick="sendWA()" class="order-btn w-full py-5 font-extrabold text-white flex items-center justify-center gap-3 active:scale-95 transition-all">
+        <button onclick="sendWA()"
+          class="order-btn w-full py-5 font-extrabold text-white flex items-center justify-center gap-3 active:scale-95 transition-all">
           <i class="fab fa-whatsapp text-xl"></i>
           ارسال سفارش به واتساپ
         </button>
       </div>
     </div>
   </main>
-<!-- ✅ Service Picker Modal -->
-<div id="serviceModal" class="fixed inset-0 hidden items-end justify-center z-[999]">
-  <div class="absolute inset-0 bg-black/70" onclick="closeServiceModal()"></div>
 
-  <div class="w-full max-w-md mx-auto glass-card rounded-t-[26px] p-5 relative">
-    <div class="flex items-center justify-between mb-3">
-      <h4 class="font-extrabold text-lg">انتخاب سرویس</h4>
-      <button class="text-white/70 text-xl" onclick="closeServiceModal()">✕</button>
+  <!-- ✅ Service Picker Modal -->
+  <div id="serviceModal" class="fixed inset-0 hidden items-end justify-center z-[999]">
+    <div class="absolute inset-0 bg-black/70 modal-backdrop" onclick="closeServiceModal()"></div>
+
+    <div class="w-full max-w-md mx-auto glass-card rounded-t-[26px] p-5 relative modal-sheet">
+      <div class="flex items-center justify-between mb-3">
+        <h4 class="font-extrabold text-lg">انتخاب سرویس</h4>
+        <button class="text-white/70 text-xl" onclick="closeServiceModal()">✕</button>
+      </div>
+
+      <div class="mb-3">
+        <input id="serviceSearch" oninput="renderServiceList()" placeholder="جستجو..." class="text-sm">
+      </div>
+
+      <div id="serviceList" class="max-h-[60vh] overflow-y-auto space-y-2 pr-1"></div>
     </div>
-
-    <div class="mb-3">
-      <input id="serviceSearch" oninput="renderServiceList()" placeholder="جستجو..." class="text-sm">
-    </div>
-
-    <div id="serviceList" class="max-h-[60vh] overflow-y-auto space-y-2 pr-1"></div>
   </div>
-</div>
-  <script>
-    const PROFIT_MARGIN = 1.15; // 15% Profit Margin
 
-    // ✅ USD->AFN: live if possible, fallback to 65
+  <script>
+    const PROFIT_MARGIN = 1.15;
     let USD_TO_AFN = 65;
 
     const db = {
@@ -219,39 +273,23 @@
     };
 
     function fixEncoding(text) {
-  if (!text) return "";
+      if (!text) return "";
+      let s = String(text);
 
-  let s = String(text);
+      try { s = decodeURIComponent(escape(s)); } catch (e) {}
 
-  // try to fix utf8 mojibake
-  try { s = decodeURIComponent(escape(s)); } catch (e) {}
-
-  // remove emojis
-  s = s.replace(/[\u{1F300}-\u{1FAFF}]/gu, "");
-
-  // ✅ remove URLs
-  s = s.replace(/https?:\/\/\S+/gi, "");
-
-  // ✅ remove netlify/functions paths even if broken/spaced
-  s = s.replace(/\.netlify\/functions\/\S*/gi, "");
-  s = s.replace(/netlify\.app\/\S*/gi, "");
-  s = s.replace(/media\d+\.netlify\.app/gi, "");
-
-  // ✅ remove “Page X of Y”
-  s = s.replace(/page\s*\d+\s*of\s*\d+/gi, "");
-
-  // ✅ remove common date/time strings like 09/01/2026, 12:36 am
-  s = s.replace(/\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/gi, "");
-  s = s.replace(/\b\d{1,2}\s*:\s*\d{2}\s*(am|pm)\b/gi, "");
-
-  // ✅ remove extra symbols (keep letters, numbers, spaces, [],(),-.,:/)
-  s = s.replace(/[^a-zA-Z0-9\s\[\]\(\)\-.,:/]/g, "");
-
-  // clean spaces
-  s = s.replace(/\s+/g, " ").trim();
-
-  return s;
-}
+      s = s.replace(/[\u{1F300}-\u{1FAFF}]/gu, "");
+      s = s.replace(/https?:\/\/\S+/gi, "");
+      s = s.replace(/\.netlify\/functions\/\S*/gi, "");
+      s = s.replace(/netlify\.app\/\S*/gi, "");
+      s = s.replace(/media\d+\.netlify\.app/gi, "");
+      s = s.replace(/page\s*\d+\s*of\s*\d+/gi, "");
+      s = s.replace(/\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/gi, "");
+      s = s.replace(/\b\d{1,2}\s*:\s*\d{2}\s*(am|pm)\b/gi, "");
+      s = s.replace(/[^a-zA-Z0-9\s\[\]\(\)\-.,:/]/g, "");
+      s = s.replace(/\s+/g, " ").trim();
+      return s;
+    }
 
     function detectPlatform(item) {
       const txt = (fixEncoding(item.category || "") + " " + fixEncoding(item.name || "")).toLowerCase();
@@ -290,6 +328,12 @@
         </option>`;
       }).join('');
 
+      // set UI text for first service
+      const firstOpt = select.options[0];
+      if(firstOpt){
+        document.getElementById("selectedServiceText").innerText = fixEncoding(firstOpt.text);
+      }
+
       updateDetails();
     }
 
@@ -313,20 +357,20 @@
     }
 
     function sendWA() {
-  const opt = document.getElementById('serviceSelect').selectedOptions[0];
-  const service = opt ? fixEncoding(opt.text) : "-";
-  const sid = opt?.dataset?.sid ?? "-";
+      const opt = document.getElementById('serviceSelect').selectedOptions[0];
+      const service = opt ? fixEncoding(opt.text) : "-";
+      const sid = opt?.dataset?.sid ?? "-";
 
-  const link = document.getElementById('orderLink').value.trim();
-  const qty = document.getElementById('qty').value;
-  const usd = document.getElementById('totalUsd').innerText;
-  const afn = document.getElementById('totalAfn').innerText;
+      const link = document.getElementById('orderLink').value.trim();
+      const qty = document.getElementById('qty').value;
+      const usd = document.getElementById('totalUsd').innerText;
+      const afn = document.getElementById('totalAfn').innerText;
 
-  if (!link) return alert("لطفاً لینک را وارد کنید!");
+      if (!link) return alert("لطفاً لینک را وارد کنید!");
 
-  const platform = document.getElementById('platformTitle').innerText;
+      const platform = document.getElementById('platformTitle').innerText;
 
-  const waMsg = `
+      const waMsg = `
 📌 KHAN SMM PANEL — NEW ORDER
 
 ━━━━━━━━━━━━━━━━
@@ -351,97 +395,106 @@ ${Number(qty).toLocaleString("en-US")}
 کارت/بانک • کریپتو (USDT) • پرداخت حضوری
 `.trim();
 
-  window.open(
-    "https://wa.me/93728158308?text=" + encodeURIComponent(waMsg),
-    "_blank"
-  );
-}
-function platformIconHTML(platformId){
-  const map = {
-    instagram: `<i class="fab fa-instagram text-[#e1306c] text-lg"></i>`,
-    tiktok: `<i class="fab fa-tiktok text-[#00f2ea] text-lg"></i>`,
-    youtube: `<i class="fab fa-youtube text-[#ff0000] text-lg"></i>`,
-    x: `<span class="font-bold text-white text-lg">𝕏</span>`,
-    spotify: `<i class="fab fa-spotify text-[#1DB954] text-lg"></i>`,
-    telegram: `<i class="fab fa-telegram text-[#0088cc] text-lg"></i>`,
-    facebook: `<i class="fab fa-facebook text-[#1877F2] text-lg"></i>`,
-    discord: `<i class="fab fa-discord text-[#5865F2] text-lg"></i>`,
-    reddit: `<i class="fab fa-reddit text-[#FF4500] text-lg"></i>`,
-    snapchat: `<i class="fab fa-snapchat text-[#FFFC00] text-lg"></i>`,
-    linkedin: `<i class="fab fa-linkedin text-[#0077b5] text-lg"></i>`,
-    whatsapp: `<i class="fab fa-whatsapp text-[#25D366] text-lg"></i>`,
-    threads: `<i class="fab fa-threads text-white text-lg"></i>`,
-    kick: `<span class="font-bold text-[#53fc18] text-lg">K</span>`,
-    soundcloud: `<i class="fab fa-soundcloud text-[#ff3300] text-lg"></i>`,
-    twitch: `<i class="fab fa-twitch text-[#9146FF] text-lg"></i>`,
-    bluesky: `<i class="fas fa-cloud text-[#0085ff] text-lg"></i>`
-  };
-  return map[platformId] || `<i class="fas fa-bolt text-white/70 text-lg"></i>`;
-}
+      window.open("https://wa.me/93728158308?text=" + encodeURIComponent(waMsg), "_blank");
+    }
 
-function openServiceModal(){
-  document.getElementById("serviceModal").classList.remove("hidden");
-  document.getElementById("serviceModal").classList.add("flex");
-  document.getElementById("serviceSearch").value = "";
-  renderServiceList();
-}
+    function platformIconHTML(platformId){
+      const map = {
+        instagram: `<i class="fab fa-instagram text-[#e1306c] text-lg"></i>`,
+        tiktok: `<i class="fab fa-tiktok text-[#00f2ea] text-lg"></i>`,
+        youtube: `<i class="fab fa-youtube text-[#ff0000] text-lg"></i>`,
+        x: `<span class="font-bold text-white text-lg">𝕏</span>`,
+        spotify: `<i class="fab fa-spotify text-[#1DB954] text-lg"></i>`,
+        telegram: `<i class="fab fa-telegram text-[#0088cc] text-lg"></i>`,
+        facebook: `<i class="fab fa-facebook text-[#1877F2] text-lg"></i>`,
+        discord: `<i class="fab fa-discord text-[#5865F2] text-lg"></i>`,
+        reddit: `<i class="fab fa-reddit text-[#FF4500] text-lg"></i>`,
+        snapchat: `<i class="fab fa-snapchat text-[#FFFC00] text-lg"></i>`,
+        linkedin: `<i class="fab fa-linkedin text-[#0077b5] text-lg"></i>`,
+        whatsapp: `<i class="fab fa-whatsapp text-[#25D366] text-lg"></i>`,
+        threads: `<i class="fab fa-threads text-white text-lg"></i>`,
+        kick: `<span class="font-bold text-[#53fc18] text-lg">K</span>`,
+        soundcloud: `<i class="fab fa-soundcloud text-[#ff3300] text-lg"></i>`,
+        twitch: `<i class="fab fa-twitch text-[#9146FF] text-lg"></i>`,
+        bluesky: `<i class="fas fa-cloud text-[#0085ff] text-lg"></i>`
+      };
+      return map[platformId] || `<i class="fas fa-bolt text-white/70 text-lg"></i>`;
+    }
 
-function closeServiceModal(){
-  document.getElementById("serviceModal").classList.add("hidden");
-  document.getElementById("serviceModal").classList.remove("flex");
-}
+    // ===== MODAL with smooth open/close =====
+    function openServiceModal(){
+      const modal = document.getElementById("serviceModal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
 
-function renderServiceList(){
-  const platform = document.querySelector(".glow-btn.active")?.dataset?.id || "instagram";
-  const q = (document.getElementById("serviceSearch").value || "").toLowerCase();
+      // trigger animation
+      requestAnimationFrame(() => modal.classList.add("modal-open"));
 
-  const list = (db[platform] && db[platform].length) ? db[platform] : [];
-  const box = document.getElementById("serviceList");
+      document.getElementById("serviceSearch").value = "";
+      renderServiceList();
 
-  const filtered = list.filter(s => (fixEncoding(s.n).toLowerCase().includes(q)));
+      // lock background scroll
+      document.body.style.overflow = "hidden";
+    }
 
-  box.innerHTML = filtered.map((s, idx) => {
-    const showName = fixEncoding(s.n);
-    return `
-      <button onclick="pickService('${platform}', ${idx})"
-        class="w-full flex items-center gap-3 p-4 rounded-2xl bg-white/5 hover:bg-white/10 transition text-right">
-        <div class="w-9 h-9 rounded-full bg-black/30 flex items-center justify-center">
-          ${platformIconHTML(platform)}
-        </div>
-        <div class="flex-1">
-          <div class="text-white font-semibold text-[13px] leading-5">${showName}</div>
-          <div class="text-[11px] text-white/50 mt-1">Min: ${s.min} • Max: ${s.max}</div>
-        </div>
-      </button>
-    `;
-  }).join("") || `<div class="text-white/60 p-4">چیزی پیدا نشد</div>`;
-}
+    function closeServiceModal(){
+      const modal = document.getElementById("serviceModal");
+      modal.classList.remove("modal-open");
 
-function pickService(platform, index){
-  // find the same item in db[platform]
-  const list = db[platform] || [];
-  const item = list.filter(s => true)[index];
-  if(!item) return;
+      // unlock scroll after animation
+      setTimeout(() => {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+        document.body.style.overflow = "";
+      }, 260);
+    }
 
-  // update hidden select to match
-  const select = document.getElementById("serviceSelect");
-  const opts = Array.from(select.options);
-  const wanted = fixEncoding(item.n);
+    function renderServiceList(){
+      const platform = document.querySelector(".glow-btn.active")?.dataset?.id || "instagram";
+      const q = (document.getElementById("serviceSearch").value || "").toLowerCase();
 
-  const found = opts.find(o => fixEncoding(o.text).includes(wanted));
-  if(found){
-    select.value = found.value;
-    select.dispatchEvent(new Event("change"));
-  }else{
-    // fallback: just set UI text
-    updateDetails();
-  }
+      const list = (db[platform] && db[platform].length) ? db[platform] : [];
+      const box = document.getElementById("serviceList");
 
-  // update visible text
-  document.getElementById("selectedServiceText").innerText = wanted;
+      // IMPORTANT: keep real objects for correct picking
+      const filtered = list
+        .map((s, i) => ({...s, __i: i}))
+        .filter(s => fixEncoding(s.n).toLowerCase().includes(q));
 
-  closeServiceModal();
-}
+      box.innerHTML = filtered.map((s) => {
+        const showName = fixEncoding(s.n);
+        return `
+          <button onclick="pickService('${platform}', ${s.__i})"
+            class="w-full flex items-center gap-3 p-4 rounded-2xl bg-white/5 hover:bg-white/10 transition text-right active:scale-[0.99]">
+            <div class="w-9 h-9 rounded-full bg-black/30 flex items-center justify-center">
+              ${platformIconHTML(platform)}
+            </div>
+            <div class="flex-1">
+              <div class="text-white font-semibold text-[13px] leading-5">${showName}</div>
+              <div class="text-[11px] text-white/50 mt-1">Min: ${s.min} • Max: ${s.max}</div>
+            </div>
+          </button>
+        `;
+      }).join("") || `<div class="text-white/60 p-4">چیزی پیدا نشد</div>`;
+    }
+
+    function pickService(platform, realIndex){
+      const list = db[platform] || [];
+      const item = list[realIndex];
+      if(!item) return;
+
+      const select = document.getElementById("serviceSelect");
+      const cleanName = fixEncoding(item.n);
+
+      // choose option by index (same order)
+      if(select.options[realIndex]){
+        select.selectedIndex = realIndex;
+        select.dispatchEvent(new Event("change"));
+      }
+
+      document.getElementById("selectedServiceText").innerText = cleanName;
+      closeServiceModal();
+    }
 
     document.getElementById('platformGrid').onclick = (e) => {
       const btn = e.target.closest('.glow-btn');
@@ -453,16 +506,11 @@ function pickService(platform, index){
 
     async function loadRateAfn() {
       try {
-        // ✅ No-key endpoint
         const res = await fetch("https://open.er-api.com/v6/latest/USD", { cache: "no-store" });
         const data = await res.json();
         const afn = Number(data?.rates?.AFN);
-        if (Number.isFinite(afn) && afn > 0) {
-          USD_TO_AFN = afn;
-        }
-      } catch (e) {
-        // fallback stays 65
-      }
+        if (Number.isFinite(afn) && afn > 0) USD_TO_AFN = afn;
+      } catch (e) {}
       calculate();
     }
 
@@ -496,9 +544,8 @@ function pickService(platform, index){
       populate('instagram');
     }
 
-    // start
-    loadRateAfn();      // ✅ AFN auto
-    loadServicesFile(); // ✅ services.json
+    loadRateAfn();
+    loadServicesFile();
   </script>
 </body>
 </html>
