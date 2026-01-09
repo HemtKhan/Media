@@ -1,448 +1,272 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="dr" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khan24 - سفارش جدید</title>
+    <title>KHAN | Luxury Glow Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/order.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        
+        body { background-color: #020202; color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; text-align: right; overflow-x: hidden; }
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 30px; }
+        
+        /* Glow Buttons matching Brand Colors */
+        .glow-btn { 
+            width: 55px; height: 42px; border-radius: 14px; display: flex; align-items: center; 
+            justify-content: center; cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); 
+            background: rgba(255,255,255,0.02); font-size: 1.1rem;
+        }
+        .glow-btn:hover { transform: translateY(-3px); }
+        .glow-btn.active { border-color: var(--c); box-shadow: 0 0 20px var(--c); background: var(--bg); }
+        .glow-btn i, .glow-btn span { color: #fff; transition: 0.3s; }
+        .glow-btn.active i, .glow-btn.active span { color: var(--c); filter: drop-shadow(0 0 5px var(--c)); }
+
+        select, input { background: #080808 !important; border: 1px solid rgba(255,255,255,0.1) !important; color: #fff !important; border-radius: 16px !important; padding: 14px !important; outline: none; width: 100%; }
+        .order-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4); border-radius: 20px; }
+    </style>
 </head>
-<body>
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar">
-        <div class="sidebar-header">
-            <div class="logo">
-                <div class="logo-icon">۲۴</div>
-                <div class="logo-text">
-                    <div class="logo-main">Khan24</div>
-                    <div class="logo-sub">خدمات مارکیتنگ</div>
-                </div>
+<body class="pb-24">
+
+    <header class="p-6 flex justify-center items-center sticky top-0 z-50 glass-card border-none rounded-none mb-8">
+        <div class="flex items-center gap-3">
+            <div class="bg-blue-600 p-2 rounded-xl shadow-lg shadow-blue-900/40">
+                <i class="fas fa-crown text-white text-xs"></i>
             </div>
+            <span class="text-3xl font-black tracking-tighter italic uppercase text-white">KHAN</span>
+        </div>
+    </header>
+
+    <main class="px-6 max-w-md mx-auto">
+        <div class="grid grid-cols-5 gap-3 mb-10" id="platformGrid">
+            <div class="glow-btn active" data-id="instagram" style="--c:#e1306c; --bg:rgba(225,48,108,0.1)"><i class="fab fa-instagram"></i></div>
+            <div class="glow-btn" data-id="tiktok" style="--c:#00f2ea; --bg:rgba(0,242,234,0.1)"><i class="fab fa-tiktok"></i></div>
+            <div class="glow-btn" data-id="youtube" style="--c:#ff0000; --bg:rgba(255,0,0,0.1)"><i class="fab fa-youtube"></i></div>
+            <div class="glow-btn" data-id="x" style="--c:#ffffff; --bg:rgba(255,255,255,0.1)"><span class="font-bold">𝕏</span></div>
+            <div class="glow-btn" data-id="spotify" style="--c:#1DB954; --bg:rgba(29,185,84,0.1)"><i class="fab fa-spotify"></i></div>
+            <div class="glow-btn" data-id="telegram" style="--c:#0088cc; --bg:rgba(0,136,204,0.1)"><i class="fab fa-telegram"></i></div>
+            <div class="glow-btn" data-id="facebook" style="--c:#1877F2; --bg:rgba(24,119,242,0.1)"><i class="fab fa-facebook"></i></div>
+            <div class="glow-btn" data-id="discord" style="--c:#5865F2; --bg:rgba(88,101,242,0.1)"><i class="fab fa-discord"></i></div>
+            <div class="glow-btn" data-id="reddit" style="--c:#FF4500; --bg:rgba(255,69,0,0.1)"><i class="fab fa-reddit"></i></div>
+            <div class="glow-btn" data-id="snapchat" style="--c:#FFFC00; --bg:rgba(255,252,0,0.1)"><i class="fab fa-snapchat"></i></div>
+            <div class="glow-btn" data-id="linkedin" style="--c:#0077b5; --bg:rgba(0,119,181,0.1)"><i class="fab fa-linkedin"></i></div>
+            <div class="glow-btn" data-id="whatsapp" style="--c:#25D366; --bg:rgba(37,211,102,0.1)"><i class="fab fa-whatsapp"></i></div>
+            <div class="glow-btn" data-id="threads" style="--c:#ffffff; --bg:rgba(255,255,255,0.1)"><i class="fab fa-threads"></i></div>
+            <div class="glow-btn" data-id="kick" style="--c:#53fc18; --bg:rgba(83,252,24,0.1)"><span class="font-bold text-sm">K</span></div>
+            <div class="glow-btn" data-id="soundcloud" style="--c:#ff3300; --bg:rgba(255,51,0,0.1)"><i class="fab fa-soundcloud"></i></div>
+            <div class="glow-btn" data-id="twitch" style="--c:#9146FF; --bg:rgba(145,70,255,0.1)"><i class="fab fa-twitch"></i></div>
+            <div class="glow-btn" data-id="bluesky" style="--c:#0085ff; --bg:rgba(0,133,255,0.1)"><i class="fas fa-cloud"></i></div>
         </div>
 
-        <div class="sidebar-menu">
-            <a href="#" class="menu-item active">
-                <i class="fas fa-plus-circle"></i>
-                <span>سفارش جدید</span>
-            </a>
-            <a href="#" class="menu-item">
-                <i class="fas fa-shopping-cart"></i>
-                <span>سفارشات</span>
-            </a>
-            <a href="#" class="menu-item">
-                <i class="fas fa-history"></i>
-                <span>تاریخچه</span>
-            </a>
-            <a href="#" class="menu-item">
-                <i class="fas fa-wallet"></i>
-                <span>شارژ حساب</span>
-            </a>
-            <a href="#" class="menu-item">
-                <i class="fas fa-headset"></i>
-                <span>پشتیبانی</span>
-            </a>
-            <a href="#" class="menu-item">
-                <i class="fas fa-user"></i>
-                <span>پروفایل</span>
-            </a>
-        </div>
-
-        <div class="sidebar-footer">
-            <div class="balance-card">
-                <div class="balance-info">
-                    <span class="balance-label">موجودی</span>
-                    <span class="balance-amount">$۰.۰۰</span>
-                </div>
-                <button class="btn btn-sm btn-charge">
-                    <i class="fas fa-plus"></i> شارژ
-                </button>
+        <div id="orderBox" class="glass-card p-8 shadow-2xl">
+            <div class="flex items-center gap-3 mb-8 flex-row-reverse">
+                <div class="w-1.5 h-6 bg-blue-600 rounded-full"></div>
+                <h3 id="platformTitle" class="font-extrabold text-xl uppercase tracking-tighter text-white">INSTAGRAM</h3>
             </div>
-        </div>
-    </nav>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Header -->
-        <header class="main-header">
-            <div class="header-content">
-                <h1 class="page-title">
-                    <i class="fas fa-plus-circle"></i>
-                    سفارش جدید
-                </h1>
-                
-                <div class="header-actions">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="جستجوی سرویس..." id="searchInput">
+            <div class="space-y-6">
+                <div>
+                    <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">انتخاب سرویس (با ۱۵٪ سود)</label>
+                    <select id="serviceSelect" class="text-sm" onchange="updateDetails()"></select>
+                </div>
+                <div>
+                    <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">لینک (Link)</label>
+                    <input type="text" id="orderLink" placeholder="لینک را وارد کنید..." class="text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">تعداد (Quantity)</label>
+                        <input type="number" id="qty" value="1000" class="text-sm" oninput="calculate()">
                     </div>
-                    
-                    <button class="btn btn-whatsapp" id="whatsappHelp">
-                        <i class="fab fa-whatsapp"></i>
-                        کمک می‌خواهید؟
-                    </button>
-                </div>
-            </div>
-
-            <!-- Status Tabs -->
-            <div class="status-tabs">
-                <button class="status-tab active" data-filter="all">
-                    همه
-                    <span class="tab-count">۸</span>
-                </button>
-                <button class="status-tab" data-filter="instagram">
-                    اینستاگرام
-                    <span class="tab-count">۳</span>
-                </button>
-                <button class="status-tab" data-filter="tiktok">
-                    تیک‌تاک
-                    <span class="tab-count">۲</span>
-                </button>
-                <button class="status-tab" data-filter="youtube">
-                    یوتیوب
-                    <span class="tab-count">۱</span>
-                </button>
-                <button class="status-tab" data-filter="facebook">
-                    فیسبوک
-                    <span class="tab-count">۱</span>
-                </button>
-                <button class="status-tab" data-filter="telegram">
-                    تلگرام
-                    <span class="tab-count">۱</span>
-                </button>
-                <button class="status-tab more-tab">
-                    <i class="fas fa-ellipsis-h"></i>
-                    بیشتر
-                </button>
-            </div>
-        </header>
-
-        <!-- Platform Selection -->
-        <section class="platform-section">
-            <h2 class="section-title">
-                <i class="fas fa-layer-group"></i>
-                پلتفرم خود را انتخاب کنید
-            </h2>
-
-            <div class="platform-grid">
-                <!-- Platforms will be loaded dynamically -->
-            </div>
-        </section>
-
-        <!-- Recommended Services -->
-        <section class="recommended-section">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <i class="fas fa-crown"></i>
-                    سرویس‌های پیشنهادی Khan24
-                </h2>
-                <span class="recommended-badge">
-                    <i class="fas fa-star"></i>
-                    پرفروش‌ترین‌ها
-                </span>
-            </div>
-
-            <div class="services-grid">
-                <!-- Recommended services will be loaded dynamically -->
-            </div>
-        </section>
-
-        <!-- All Services -->
-        <section class="services-section">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <i class="fas fa-list"></i>
-                    انتخاب سرویس شما
-                </h2>
-                
-                <div class="view-toggle">
-                    <button class="view-btn active" data-view="grid">
-                        <i class="fas fa-th-large"></i>
-                    </button>
-                    <button class="view-btn" data-view="list">
-                        <i class="fas fa-list"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Service Categories -->
-            <div class="service-categories">
-                <button class="category-btn active" data-category="all">
-                    همه سرویس‌ها
-                </button>
-                <button class="category-btn" data-category="followers">
-                    فالوور و دنبال‌کننده
-                </button>
-                <button class="category-btn" data-category="likes">
-                    لایک و پسندیدن
-                </button>
-                <button class="category-btn" data-category="views">
-                    بازدید و ویو
-                </button>
-                <button class="category-btn" data-category="comments">
-                    کامنت و نظر
-                </button>
-                <button class="category-btn" data-category="shares">
-                    اشتراک‌گذاری
-                </button>
-            </div>
-
-            <!-- Services Container -->
-            <div class="services-container">
-                <div class="services-list" id="servicesList">
-                    <!-- Services will be loaded dynamically -->
-                </div>
-
-                <!-- Loading State -->
-                <div class="loading-state" id="loadingState">
-                    <div class="spinner">
-                        <div class="bounce1"></div>
-                        <div class="bounce2"></div>
-                        <div class="bounce3"></div>
-                    </div>
-                    <p>در حال بارگذاری سرویس‌ها...</p>
-                </div>
-
-                <!-- No Results -->
-                <div class="no-results" id="noResults" style="display: none;">
-                    <i class="fas fa-search"></i>
-                    <p>سرویسی یافت نشد</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Simple Order Form (مشابه تصویر) -->
-        <section class="simple-order-form" id="simpleOrderForm" style="display: none;">
-            <button class="btn btn-outline back-button" id="backToServices">
-                <i class="fas fa-arrow-right"></i> بازگشت به لیست سرویس‌ها
-            </button>
-            
-            <div class="platform-badge tiktok">
-                <i class="fab fa-tiktok"></i>
-                <span id="serviceTitle">TikTok Followers [MIXED] [1 Month Refill] [Standard] [10,000/Day]</span>
-            </div>
-            
-            <div class="simple-order-content">
-                <h3><i class="fas fa-shopping-cart"></i> Select Your Service</h3>
-                
-                <div class="service-price-tag">
-                    <span class="price-label">Price per 1000:</span>
-                    <span class="price-value" id="simplePricePer1000">$7.50</span>
-                </div>
-                
-                <div class="form-section">
-                    <h4><i class="fas fa-link"></i> Your Link</h4>
-                    
-                    <div class="form-group">
-                        <label for="postLink">Amount Wanted</label>
-                        <input type="text" id="postLink" placeholder="Poste">
-                        <small class="form-hint">Min: 20 - Max: 100,000</small>
-                    </div>
-                    
-                    <div class="form-checkbox">
-                        <input type="checkbox" id="selectSpeed">
-                        <label for="selectSpeed">Select Your Speed Optional</label>
-                    </div>
-                </div>
-                
-                <div class="delivery-info">
-                    <h5><i class="fas fa-clock"></i> Average Time</h5>
-                    <p class="time-estimate">2 hours 41 minutes</p>
-                </div>
-                
-                <div class="total-price-section">
-                    <div class="total-price">
-                        <span class="total-label">Service Cost</span>
-                        <span class="total-value" id="simpleTotalPrice">$0.00</span>
-                    </div>
-                </div>
-                
-                <div class="form-actions">
-                    <button class="btn-order-now" id="simpleOrderNow">
-                        <i class="fas fa-bolt"></i> Order Now
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Order Modal (حالت پیشرفته) -->
-        <div class="order-modal" id="orderModal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>
-                        <i class="fas fa-shopping-cart"></i>
-                        تکمیل سفارش
-                    </h3>
-                    <button class="close-modal" id="closeModal">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                    <div class="order-summary">
-                        <div class="service-info">
-                            <div class="service-icon" id="modalServiceIcon">
-                                <i class="fab fa-instagram"></i>
-                            </div>
-                            <div>
-                                <h4 id="modalServiceName">نام سرویس</h4>
-                                <p id="modalServiceDescription">توضیحات سرویس</p>
-                            </div>
-                        </div>
-
-                        <div class="order-details">
-                            <div class="detail-row">
-                                <span>قیمت هر ۱۰۰۰:</span>
-                                <span id="modalUnitPrice">$۰.۰۰</span>
-                            </div>
-                            <div class="detail-row">
-                                <span>حداقل:</span>
-                                <span id="modalMinQuantity">۰</span>
-                            </div>
-                            <div class="detail-row">
-                                <span>حداکثر:</span>
-                                <span id="modalMaxQuantity">۰</span>
-                            </div>
+                    <div>
+                        <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">هزینه کل ($)</label>
+                        <div class="p-3.5 rounded-2xl bg-blue-600/10 border border-blue-500/20 text-blue-400 font-bold text-center text-xl">
+                            $<span id="total">0.00</span>
                         </div>
                     </div>
-
-                    <!-- Quantity Input -->
-                    <div class="quantity-section">
-                        <label for="orderQuantity">
-                            <i class="fas fa-hashtag"></i>
-                            تعداد مورد نظر
-                        </label>
-                        
-                        <div class="quantity-input-group">
-                            <div class="quantity-controls">
-                                <button class="quantity-btn" id="decreaseQty">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <input 
-                                    type="number" 
-                                    id="orderQuantity" 
-                                    value="1000" 
-                                    min="100" 
-                                    max="100000"
-                                >
-                                <button class="quantity-btn" id="increaseQty">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                            
-                            <div class="quantity-presets">
-                                <button class="preset-btn" data-quantity="500">۵۰۰</button>
-                                <button class="preset-btn" data-quantity="1000">۱,۰۰۰</button>
-                                <button class="preset-btn" data-quantity="5000">۵,۰۰۰</button>
-                                <button class="preset-btn" data-quantity="10000">۱۰,۰۰۰</button>
-                            </div>
-                        </div>
-
-                        <div class="quantity-slider">
-                            <input 
-                                type="range" 
-                                id="quantitySlider" 
-                                min="100" 
-                                max="50000" 
-                                step="100" 
-                                value="1000"
-                            >
-                            <div class="slider-labels">
-                                <span>۱۰۰</span>
-                                <span>۱۰,۰۰۰</span>
-                                <span>۵۰,۰۰۰</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Price Calculation -->
-                    <div class="price-section">
-                        <div class="price-breakdown">
-                            <div class="price-row">
-                                <span>قیمت واحد:</span>
-                                <span id="priceUnit">$۰.۰۰</span>
-                            </div>
-                            <div class="price-row">
-                                <span>تعداد:</span>
-                                <span id="priceQuantity">۰</span>
-                            </div>
-                            <div class="price-row">
-                                <span>تخفیف:</span>
-                                <span id="priceDiscount">$۰.۰۰</span>
-                            </div>
-                            <div class="price-row total">
-                                <span>مبلغ قابل پرداخت:</span>
-                                <span id="priceTotal">$۰.۰۰</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Link Input -->
-                    <div class="link-section">
-                        <label for="serviceLink">
-                            <i class="fas fa-link"></i>
-                            لینک پست/صفحه
-                        </label>
-                        <input 
-                            type="text" 
-                            id="serviceLink" 
-                            placeholder="https://instagram.com/p/..."
-                        >
-                        <small class="input-hint">
-                            فقط لینک عمومی کافی است. نیازی به رمز عبور نیست.
-                        </small>
-                    </div>
-
-                    <!-- Additional Info -->
-                    <div class="info-section">
-                        <label for="additionalInfo">
-                            <i class="fas fa-sticky-note"></i>
-                            توضیحات اضافی (اختیاری)
-                        </label>
-                        <textarea 
-                            id="additionalInfo" 
-                            rows="3" 
-                            placeholder="هر توضیح اضافی برای سفارش..."
-                        ></textarea>
-                    </div>
                 </div>
-
-                <div class="modal-footer">
-                    <div class="payment-options">
-                        <span>روش پرداخت:</span>
-                        <div class="payment-methods">
-                            <label class="payment-method">
-                                <input type="radio" name="payment" value="wallet" checked>
-                                <span>کیف پول</span>
-                            </label>
-                            <label class="payment-method">
-                                <input type="radio" name="payment" value="usdt">
-                                <span>USDT</span>
-                            </label>
-                            <label class="payment-method">
-                                <input type="radio" name="payment" value="bank">
-                                <span>بانک</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="modal-actions">
-                        <button class="btn btn-outline" id="cancelOrder">
-                            انصراف
-                        </button>
-                        <button class="btn btn-primary" id="confirmOrder">
-                            <i class="fas fa-check-circle"></i>
-                            تایید و پرداخت
-                        </button>
-                    </div>
+                <div class="bg-white/5 p-4 rounded-xl text-[11px] text-gray-400">
+                    حداقل سفارش: <span id="minQty" class="text-white">--</span> | حداکثر: <span id="maxQty" class="text-white">--</span>
                 </div>
+                <button onclick="sendWA()" class="order-btn w-full py-5 font-extrabold text-white flex items-center justify-center gap-3 active:scale-95 transition-all">
+                    <i class="fab fa-whatsapp text-xl"></i>
+                    ارسال سفارش به واتساپ
+                </button>
             </div>
         </div>
     </main>
 
-    <!-- JavaScript -->
-    <script src="assets/js/services-data.js"></script>
-    <script src="assets/js/order-system.js"></script>
+    <script>
+        const PROFIT_MARGIN = 1.15; // 15% Profit Margin
+
+        // ✅ DB stays same shape, BUT it will be filled from services.json automatically
+        const db = {
+            instagram: [],
+            tiktok: [],
+            youtube: [],
+            x: [],
+            spotify: [],
+            telegram: [],
+            facebook: [],
+            discord: [],
+            reddit: [],
+            snapchat: [],
+            linkedin: [],
+            whatsapp: [],
+            threads: [],
+            kick: [],
+            soundcloud: [],
+            twitch: [],
+            bluesky: []
+        };
+
+        // ---- Helpers (no design change) ----
+        function cleanText(str) {
+            if (!str) return "";
+            // decode HTML entities like &#039;
+            const t = document.createElement("textarea");
+            t.innerHTML = String(str);
+            let s = t.value;
+
+            // try fix mojibake like "ðŸ"
+            try { if (s.includes("ðŸ")) s = decodeURIComponent(escape(s)); } catch (e) {}
+            return s;
+        }
+
+        function detectPlatform(item) {
+            const txt = (cleanText(item.category || "") + " " + cleanText(item.name || "")).toLowerCase();
+
+            if (txt.includes("instagram")) return "instagram";
+            if (txt.includes("tiktok") || txt.includes("tik tok")) return "tiktok";
+            if (txt.includes("youtube") || txt.includes("yt ")) return "youtube";
+            if (txt.includes("telegram")) return "telegram";
+            if (txt.includes("facebook") || txt.includes("fb")) return "facebook";
+            if (txt.includes("spotify")) return "spotify";
+            if (txt.includes("snapchat")) return "snapchat";
+            if (txt.includes("discord")) return "discord";
+            if (txt.includes("reddit")) return "reddit";
+            if (txt.includes("linkedin")) return "linkedin";
+            if (txt.includes("whatsapp")) return "whatsapp";
+            if (txt.includes("threads")) return "threads";
+            if (txt.includes("kick")) return "kick";
+            if (txt.includes("soundcloud")) return "soundcloud";
+            if (txt.includes("twitch")) return "twitch";
+            if (txt.includes("bluesky") || txt.includes("blue sky")) return "bluesky";
+
+            // X/Twitter detection
+            if (txt.includes("twitter") || txt.includes(" x ") || txt.startsWith("x ")) return "x";
+
+            // default: ignore (not shown) unless you add button later
+            return null;
+        }
+
+        // ---- Your existing functions (same UI logic) ----
+        function populate(id) {
+            const list = (db[id] && db[id].length)
+                ? db[id]
+                : [{ n: "به زودی...", r: 0, min: 0, max: 0, sid: "-" }];
+
+            const select = document.getElementById('serviceSelect');
+            document.getElementById('platformTitle').innerText = id.toUpperCase();
+
+            // (optional) sort by cheapest first
+            list.sort((a,b) => Number(a.r) - Number(b.r));
+
+            select.innerHTML = list.map(s => {
+                const finalRate = (parseFloat(s.r) * PROFIT_MARGIN).toFixed(2);
+                return `<option value="${finalRate}" data-min="${s.min}" data-max="${s.max}" data-sid="${s.sid}">
+                    ${s.n} — $${finalRate}
+                </option>`;
+            }).join('');
+
+            updateDetails();
+        }
+
+        function updateDetails() {
+            const opt = document.getElementById('serviceSelect').selectedOptions[0];
+            document.getElementById('minQty').innerText = opt?.dataset?.min ?? "--";
+            document.getElementById('maxQty').innerText = opt?.dataset?.max ?? "--";
+            calculate();
+        }
+
+        function calculate() {
+            const rate = parseFloat(document.getElementById('serviceSelect').value) || 0;
+            const qty = parseInt(document.getElementById('qty').value) || 0;
+            const total = (qty / 1000) * rate;
+            document.getElementById('total').innerText = total.toFixed(3);
+        }
+
+        function sendWA() {
+            const opt = document.getElementById('serviceSelect').selectedOptions[0];
+            const service = opt ? opt.text : "-";
+            const sid = opt?.dataset?.sid ?? "-";
+
+            const link = document.getElementById('orderLink').value.trim();
+            const qty = document.getElementById('qty').value;
+            const total = document.getElementById('total').innerText;
+
+            if(!link) return alert("لطفاً لینک را وارد کنید!");
+
+            const waMsg = encodeURIComponent(
+`⚡ KHAN PANEL ORDER ⚡
+
+⭐ سرویس: ${service}
+🆔 Service ID: ${sid}
+🔗 لینک: ${link}
+🔢 تعداد: ${qty}
+💰 قیمت کل: $${total}`
+            );
+
+            window.open(`https://wa.me/93728158308?text=${waMsg}`, '_blank');
+        }
+
+        document.getElementById('platformGrid').onclick = (e) => {
+            const btn = e.target.closest('.glow-btn');
+            if (btn) {
+                document.querySelectorAll('.glow-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                populate(btn.dataset.id);
+            }
+        };
+
+        // ✅ NEW: Load ALL services from services.json (no API, no manual copy/paste)
+        async function loadServicesFile() {
+            try {
+                const res = await fetch("./services.json", { cache: "no-store" });
+                const list = await res.json();
+
+                if (!Array.isArray(list)) throw new Error("services.json must be an array");
+
+                // Clear db
+                Object.keys(db).forEach(k => db[k] = []);
+
+                // Fill db by detecting platform
+                for (const item of list) {
+                    const p = detectPlatform(item);
+                    if (!p || !db[p]) continue;
+
+                    const rate = Number(item.rate);
+                    if (!Number.isFinite(rate)) continue;
+
+                    db[p].push({
+                        n: cleanText(item.name || "Service"),
+                        r: rate,
+                        min: item.min ?? 0,
+                        max: item.max ?? 0,
+                        sid: item.service ?? "-"
+                    });
+                }
+
+            } catch (err) {
+                console.log("Failed to load services.json:", err);
+                // If file missing, UI still works, but shows "به زودی..."
+            }
+
+            populate('instagram'); // start default
+        }
+
+        loadServicesFile();
+    </script>
 </body>
 </html>
