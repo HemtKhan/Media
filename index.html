@@ -2,17 +2,24 @@
 <html lang="dr" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>KHAN | Luxury Glow Panel</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
-    html{
+    * {
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+    }
+
+    html {
       scroll-behavior: smooth;
+      height: 100%;
+      overflow-x: hidden;
     }
 
     body {
@@ -22,17 +29,39 @@
       text-align: right;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
+      height: 100%;
+      position: relative;
     }
 
-    /* smoother mobile scrolling */
-    *{
-      -webkit-tap-highlight-color: transparent;
+    /* Prevent iOS zoom on input focus */
+    input, select, textarea {
+      font-size: 16px !important;
+      transform: translateZ(0);
+    }
+
+    @supports (-webkit-touch-callout: none) {
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+    }
+
+    /* Hide increment buttons on number inputs */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type="number"] {
+      -moz-appearance: textfield;
     }
 
     .glass-card {
       background: rgba(255, 255, 255, 0.03);
       backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 30px;
     }
@@ -46,13 +75,14 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       border: 1px solid rgba(255,255,255,0.12);
       background: var(--bg);
       font-size: 1.15rem;
       position: relative;
       overflow: hidden;
-      will-change: transform;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
     }
 
     /* ✅ REAL GLOW (box-shadow) — not drop-shadow */
@@ -69,13 +99,14 @@
     }
 
     .glow-btn:hover {
-      transform: translateY(-3px);
+      transform: translateY(-3px) translateZ(0);
       border-color: rgba(255,255,255,0.18);
       box-shadow: 0 0 14px color-mix(in srgb, var(--c) 45%, transparent);
     }
 
-    .glow-btn:active{
-      transform: scale(.97);
+    .glow-btn:active {
+      transform: scale(0.97) translateZ(0);
+      transition-duration: 0.1s;
     }
 
     .glow-btn.active {
@@ -92,10 +123,9 @@
       color: #fff;
       position: relative;
       z-index: 2;
-      transition: 0.25s;
+      transition: color 0.2s ease;
     }
 
-    /* small highlight on active */
     .glow-btn.active i,
     .glow-btn.active span {
       color: #000;
@@ -109,48 +139,147 @@
       padding: 14px !important;
       outline: none;
       width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      transform: translateZ(0);
+    }
+
+    input:focus, select:focus {
+      border-color: rgba(37, 99, 235, 0.5) !important;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1) !important;
     }
 
     .order-btn {
       background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
       box-shadow: 0 10px 25px -5px rgba(37,99,235,0.4);
       border-radius: 20px;
-      transition: transform .15s ease;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
     }
-    .order-btn:active{
-      transform: scale(.98);
+    
+    .order-btn:active {
+      transform: scale(0.98) translateZ(0);
+      transition-duration: 0.1s;
     }
 
     /* ===== MODAL SMOOTH ANIMATION ===== */
-    .modal-backdrop{
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
       opacity: 0;
-      transition: opacity .25s ease;
+      transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 998;
     }
-    .modal-sheet{
-      transform: translateY(20px);
-      opacity: 0;
-      transition: transform .28s ease, opacity .28s ease;
-      will-change: transform, opacity;
+
+    .modal-sheet {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 26px 26px 0 0;
+      padding: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 999;
+      max-height: 85vh;
+      overflow: hidden;
     }
-    .modal-open .modal-backdrop{
-      opacity: 1;
-    }
-    .modal-open .modal-sheet{
-      transform: translateY(0);
+
+    .modal-open .modal-backdrop {
       opacity: 1;
     }
 
-    /* smooth list scrolling on iOS */
-    #serviceList{
+    .modal-open .modal-sheet {
+      transform: translateY(0);
+    }
+
+    /* Smooth scrolling for service list */
+    #serviceList {
+      max-height: 60vh;
+      overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(59, 130, 246, 0.5) rgba(255, 255, 255, 0.05);
+    }
+
+    #serviceList::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #serviceList::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+    }
+
+    #serviceList::-webkit-scrollbar-thumb {
+      background: rgba(59, 130, 246, 0.5);
+      border-radius: 3px;
+    }
+
+    /* Prevent body scroll when modal is open */
+    body.modal-open {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+    }
+
+    /* Service picker button */
+    .service-picker-btn {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateZ(0);
+    }
+
+    .service-picker-btn:active {
+      transform: scale(0.99) translateZ(0);
+    }
+
+    /* Loading animation */
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #2563eb;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Fix for iOS Safari 100vh issue */
+    @supports (-webkit-touch-callout: none) {
+      .modal-sheet {
+        max-height: -webkit-fill-available;
+      }
+    }
+
+    /* Smooth focus transitions */
+    .focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Prevent text selection on buttons */
+    button {
+      user-select: none;
+      -webkit-user-select: none;
     }
   </style>
 </head>
 
 <body class="pb-24">
 
-  <header class="p-6 flex justify-center items-center sticky top-0 z-50 glass-card border-none rounded-none mb-8">
+  <header class="p-6 flex justify-center items-center sticky top-0 z-50 glass-card border-none rounded-none mb-8" style="z-index: 100;">
     <div class="flex items-center gap-3">
       <div class="bg-blue-600 p-2 rounded-xl shadow-lg shadow-blue-900/40">
         <i class="fas fa-crown text-black text-xs"></i>
@@ -192,12 +321,12 @@
 
       <div class="space-y-6">
         <div>
-          <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">انتخاب سرویس </label>
+          <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">انتخاب سرویس</label>
 
-          <button onclick="openServiceModal()"
-            class="w-full text-right bg-[#080808] border border-white/10 rounded-2xl p-4 text-sm flex items-center justify-between active:scale-[0.99] transition">
+          <button id="servicePickerBtn" onclick="openServiceModal()"
+            class="service-picker-btn w-full text-right bg-[#080808] border border-white/10 rounded-2xl p-4 text-sm flex items-center justify-between">
             <span id="selectedServiceText" class="text-white/90">سرویس را انتخاب کنید...</span>
-            <i class="fas fa-chevron-down text-white/40"></i>
+            <i class="fas fa-chevron-down text-white/40 transition-transform duration-200" id="pickerIcon"></i>
           </button>
 
           <!-- hidden select (still used for calculations, no UI) -->
@@ -206,13 +335,15 @@
 
         <div>
           <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">لینک (Link)</label>
-          <input type="text" id="orderLink" placeholder="لینک را وارد کنید..." class="text-sm">
+          <input type="text" id="orderLink" placeholder="لینک را وارد کنید..." class="text-sm" 
+                 onfocus="this.setAttribute('data-scroll', window.scrollY)">
         </div>
 
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">تعداد (Quantity)</label>
-            <input type="number" id="qty" value="1000" class="text-sm" oninput="calculate()">
+            <input type="number" id="qty" value="1000" class="text-sm" oninput="calculate()"
+                   onfocus="this.setAttribute('data-scroll', window.scrollY)">
           </div>
 
           <div>
@@ -236,7 +367,7 @@
         </div>
 
         <button onclick="sendWA()"
-          class="order-btn w-full py-5 font-extrabold text-white flex items-center justify-center gap-3 active:scale-95 transition-all">
+          class="order-btn w-full py-5 font-extrabold text-white flex items-center justify-center gap-3">
           <i class="fab fa-whatsapp text-xl"></i>
           ارسال سفارش به واتساپ
         </button>
@@ -245,32 +376,87 @@
   </main>
 
   <!-- ✅ Service Picker Modal -->
-  <div id="serviceModal" class="fixed inset-0 hidden items-end justify-center z-[999]">
-    <div class="absolute inset-0 bg-black/70 modal-backdrop" onclick="closeServiceModal()"></div>
-
-    <div class="w-full max-w-md mx-auto glass-card rounded-t-[26px] p-5 relative modal-sheet">
-      <div class="flex items-center justify-between mb-3">
+  <div id="serviceModal" class="hidden">
+    <div class="modal-backdrop" onclick="closeServiceModal()"></div>
+    <div class="modal-sheet">
+      <div class="flex items-center justify-between mb-6">
         <h4 class="font-extrabold text-lg">انتخاب سرویس</h4>
-        <button class="text-white/70 text-xl" onclick="closeServiceModal()">✕</button>
+        <button class="text-white/70 text-xl p-2 -m-2" onclick="closeServiceModal()" aria-label="بستن">
+          ✕
+        </button>
       </div>
 
-      <div class="mb-3">
-        <input id="serviceSearch" oninput="renderServiceList()" placeholder="جستجو..." class="text-sm">
+      <div class="mb-4">
+        <div class="relative">
+          <input id="serviceSearch" oninput="renderServiceList()" placeholder="جستجو..." 
+                 class="text-sm pr-10">
+          <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-white/30"></i>
+        </div>
       </div>
 
-      <div id="serviceList" class="max-h-[60vh] overflow-y-auto space-y-2 pr-1"></div>
+      <div id="serviceList" class="space-y-2"></div>
     </div>
   </div>
 
   <script>
     const PROFIT_MARGIN = 1.15;
     let USD_TO_AFN = 65;
+    let isModalOpen = false;
 
     const db = {
       instagram: [], tiktok: [], youtube: [], x: [], spotify: [], telegram: [], facebook: [],
       discord: [], reddit: [], snapchat: [], linkedin: [], whatsapp: [], threads: [],
       kick: [], soundcloud: [], twitch: [], bluesky: []
     };
+
+    // Initialize on DOM load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Fix iOS zoom on input focus
+      const inputs = document.querySelectorAll('input, select, textarea');
+      inputs.forEach(input => {
+        // Store scroll position before focus
+        input.addEventListener('focus', function(e) {
+          const scrollY = window.scrollY;
+          this.setAttribute('data-scroll', scrollY);
+          
+          // iOS Safari zoom fix
+          if (window.innerWidth <= 768) {
+            const fontSize = parseFloat(window.getComputedStyle(this).fontSize);
+            if (fontSize < 16) {
+              this.style.fontSize = '16px';
+            }
+          }
+        });
+
+        // Restore scroll position if needed
+        input.addEventListener('blur', function() {
+          const savedScroll = this.getAttribute('data-scroll');
+          if (savedScroll) {
+            requestAnimationFrame(() => {
+              window.scrollTo(0, parseFloat(savedScroll));
+            });
+          }
+          
+          // Reset font size
+          if (window.innerWidth <= 768) {
+            this.style.fontSize = '';
+          }
+        });
+      });
+
+      // Prevent zoom on double-tap
+      let lastTouchEnd = 0;
+      document.addEventListener('touchend', function(event) {
+        const now = Date.now();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, false);
+
+      loadRateAfn();
+      loadServicesFile();
+    });
 
     function fixEncoding(text) {
       if (!text) return "";
@@ -331,7 +517,8 @@
       // set UI text for first service
       const firstOpt = select.options[0];
       if(firstOpt){
-        document.getElementById("selectedServiceText").innerText = fixEncoding(firstOpt.text);
+        const serviceName = fixEncoding(firstOpt.text);
+        document.getElementById("selectedServiceText").innerText = serviceName;
       }
 
       updateDetails();
@@ -366,7 +553,11 @@
       const usd = document.getElementById('totalUsd').innerText;
       const afn = document.getElementById('totalAfn').innerText;
 
-      if (!link) return alert("لطفاً لینک را وارد کنید!");
+      if (!link) {
+        alert("لطفاً لینک را وارد کنید!");
+        document.getElementById('orderLink').focus();
+        return;
+      }
 
       const platform = document.getElementById('platformTitle').innerText;
 
@@ -422,34 +613,55 @@ ${Number(qty).toLocaleString("en-US")}
     }
 
     // ===== MODAL with smooth open/close =====
-    function openServiceModal(){
+    function openServiceModal() {
+      if (isModalOpen) return;
+      isModalOpen = true;
+      
       const modal = document.getElementById("serviceModal");
+      const pickerIcon = document.getElementById("pickerIcon");
+      
+      // Rotate icon
+      pickerIcon.style.transform = 'rotate(180deg)';
+      
+      // Show modal
       modal.classList.remove("hidden");
-      modal.classList.add("flex");
-
-      // trigger animation
-      requestAnimationFrame(() => modal.classList.add("modal-open"));
-
+      document.body.classList.add("modal-open");
+      
+      // Trigger animation
+      setTimeout(() => {
+        modal.classList.add("modal-open");
+      }, 10);
+      
       document.getElementById("serviceSearch").value = "";
       renderServiceList();
-
-      // lock background scroll
-      document.body.style.overflow = "hidden";
+      
+      // Focus search input
+      setTimeout(() => {
+        document.getElementById("serviceSearch").focus();
+      }, 350);
     }
 
-    function closeServiceModal(){
+    function closeServiceModal() {
+      if (!isModalOpen) return;
+      isModalOpen = false;
+      
       const modal = document.getElementById("serviceModal");
+      const pickerIcon = document.getElementById("pickerIcon");
+      
+      // Rotate icon back
+      pickerIcon.style.transform = 'rotate(0deg)';
+      
+      // Start closing animation
       modal.classList.remove("modal-open");
-
-      // unlock scroll after animation
+      
+      // Hide after animation
       setTimeout(() => {
         modal.classList.add("hidden");
-        modal.classList.remove("flex");
-        document.body.style.overflow = "";
-      }, 260);
+        document.body.classList.remove("modal-open");
+      }, 300);
     }
 
-    function renderServiceList(){
+    function renderServiceList() {
       const platform = document.querySelector(".glow-btn.active")?.dataset?.id || "instagram";
       const q = (document.getElementById("serviceSearch").value || "").toLowerCase();
 
@@ -463,31 +675,40 @@ ${Number(qty).toLocaleString("en-US")}
 
       box.innerHTML = filtered.map((s) => {
         const showName = fixEncoding(s.n);
+        const finalRate = (parseFloat(s.r) * PROFIT_MARGIN).toFixed(2);
+        
         return `
           <button onclick="pickService('${platform}', ${s.__i})"
-            class="w-full flex items-center gap-3 p-4 rounded-2xl bg-white/5 hover:bg-white/10 transition text-right active:scale-[0.99]">
-            <div class="w-9 h-9 rounded-full bg-black/30 flex items-center justify-center">
+            class="w-full flex items-center gap-3 p-4 rounded-2xl bg-white/5 hover:bg-white/10 transition-all duration-200 text-right active:scale-[0.99] transform active:translate-y-0.5">
+            <div class="w-10 h-10 rounded-full bg-black/30 flex items-center justify-center flex-shrink-0">
               ${platformIconHTML(platform)}
             </div>
-            <div class="flex-1">
-              <div class="text-white font-semibold text-[13px] leading-5">${showName}</div>
-              <div class="text-[11px] text-white/50 mt-1">Min: ${s.min} • Max: ${s.max}</div>
+            <div class="flex-1 min-w-0">
+              <div class="text-white font-semibold text-[13px] leading-5 truncate">${showName}</div>
+              <div class="text-[11px] text-white/50 mt-1 flex items-center gap-2">
+                <span>Min: ${s.min.toLocaleString()}</span>
+                <span>•</span>
+                <span>Max: ${s.max.toLocaleString()}</span>
+              </div>
+            </div>
+            <div class="text-blue-400 font-bold text-sm whitespace-nowrap">
+              $${finalRate}/1K
             </div>
           </button>
         `;
-      }).join("") || `<div class="text-white/60 p-4">چیزی پیدا نشد</div>`;
+      }).join("") || `<div class="text-white/60 p-4 text-center">چیزی پیدا نشد</div>`;
     }
 
-    function pickService(platform, realIndex){
+    function pickService(platform, realIndex) {
       const list = db[platform] || [];
       const item = list[realIndex];
-      if(!item) return;
+      if (!item) return;
 
       const select = document.getElementById("serviceSelect");
       const cleanName = fixEncoding(item.n);
 
       // choose option by index (same order)
-      if(select.options[realIndex]){
+      if (select.options[realIndex]) {
         select.selectedIndex = realIndex;
         select.dispatchEvent(new Event("change"));
       }
@@ -496,11 +717,18 @@ ${Number(qty).toLocaleString("en-US")}
       closeServiceModal();
     }
 
+    // Platform grid click handler
     document.getElementById('platformGrid').onclick = (e) => {
       const btn = e.target.closest('.glow-btn');
       if (!btn) return;
+      
+      // Remove active class from all buttons
       document.querySelectorAll('.glow-btn').forEach(b => b.classList.remove('active'));
+      
+      // Add active class to clicked button
       btn.classList.add('active');
+      
+      // Populate services
       populate(btn.dataset.id);
     };
 
@@ -510,7 +738,9 @@ ${Number(qty).toLocaleString("en-US")}
         const data = await res.json();
         const afn = Number(data?.rates?.AFN);
         if (Number.isFinite(afn) && afn > 0) USD_TO_AFN = afn;
-      } catch (e) {}
+      } catch (e) {
+        console.log("Using fallback AFN rate");
+      }
       calculate();
     }
 
@@ -539,13 +769,31 @@ ${Number(qty).toLocaleString("en-US")}
         }
       } catch (err) {
         console.log("Failed to load services.json:", err);
+        
+        // Add fallback data
+        db.instagram.push({
+          n: "Instagram Followers - HQ",
+          r: 2.99,
+          min: 100,
+          max: 10000,
+          sid: "IG-001"
+        });
       }
 
       populate('instagram');
     }
 
-    loadRateAfn();
-    loadServicesFile();
+    // Close modal on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && isModalOpen) {
+        closeServiceModal();
+      }
+    });
+
+    // Prevent form submission
+    document.querySelector('form')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+    });
   </script>
 </body>
 </html>
