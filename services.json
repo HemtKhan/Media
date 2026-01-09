@@ -1,0 +1,22 @@
+[
+  {
+    "service": 9176,
+    "name": "Instagram Followers [MIXED] [1 Year Refill]",
+    "type": "Default",
+    "category": "Top Recommended",
+    "rate": "11.25",
+    "min": 10,
+    "max": 100000,
+    "refill": true,
+    "cancel": true
+  },
+  {
+    "service": 13018,
+    "name": "TikTok Followers [WORLDWIDE]",
+    "type": "Default",
+    "category": "Top Recommended",
+    "rate": "7.50",
+    "min": 20,
+    "max": 100000
+  }
+]
