@@ -203,14 +203,39 @@
     };
 
     function fixEncoding(text) {
-      if (!text) return "";
-      let s = String(text);
-      try { s = decodeURIComponent(escape(s)); } catch (e) {}
-      s = s.replace(/[\u{1F300}-\u{1FAFF}]/gu, "");
-      s = s.replace(/[^a-zA-Z0-9\s\[\]\(\)\-.,:/]/g, "");
-      s = s.replace(/\s+/g, " ").trim();
-      return s;
-    }
+  if (!text) return "";
+
+  let s = String(text);
+
+  // try to fix utf8 mojibake
+  try { s = decodeURIComponent(escape(s)); } catch (e) {}
+
+  // remove emojis
+  s = s.replace(/[\u{1F300}-\u{1FAFF}]/gu, "");
+
+  // ✅ remove URLs
+  s = s.replace(/https?:\/\/\S+/gi, "");
+
+  // ✅ remove netlify/functions paths even if broken/spaced
+  s = s.replace(/\.netlify\/functions\/\S*/gi, "");
+  s = s.replace(/netlify\.app\/\S*/gi, "");
+  s = s.replace(/media\d+\.netlify\.app/gi, "");
+
+  // ✅ remove “Page X of Y”
+  s = s.replace(/page\s*\d+\s*of\s*\d+/gi, "");
+
+  // ✅ remove common date/time strings like 09/01/2026, 12:36 am
+  s = s.replace(/\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/gi, "");
+  s = s.replace(/\b\d{1,2}\s*:\s*\d{2}\s*(am|pm)\b/gi, "");
+
+  // ✅ remove extra symbols (keep letters, numbers, spaces, [],(),-.,:/)
+  s = s.replace(/[^a-zA-Z0-9\s\[\]\(\)\-.,:/]/g, "");
+
+  // clean spaces
+  s = s.replace(/\s+/g, " ").trim();
+
+  return s;
+}
 
     function detectPlatform(item) {
       const txt = (fixEncoding(item.category || "") + " " + fixEncoding(item.name || "")).toLowerCase();
