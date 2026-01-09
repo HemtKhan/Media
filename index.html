@@ -37,7 +37,7 @@
       cursor: pointer;
       transition: 0.25s;
       border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.03);
+      background: var(--bg);
       font-size: 1.15rem;
       position: relative;
       overflow: hidden;
@@ -70,14 +70,14 @@
         0 0 44px color-mix(in srgb, var(--c) 35%, transparent);
     }
 
-    /* Icon itself stays BLACK (luxury) */
-    .glow-btn i,
-    .glow-btn span {
-      color: #000;
-      position: relative;
-      z-index: 2;
-      transition: 0.25s;
-    }
+    /* ✅ Icon stays WHITE like screenshot */
+.glow-btn i,
+.glow-btn span {
+  color: #fff;
+  position: relative;
+  z-index: 2;
+  transition: 0.25s;
+}
 
     /* small highlight on active */
     .glow-btn.active i,
@@ -272,22 +272,24 @@
     }
 
     function sendWA() {
-    const opt = document.getElementById('serviceSelect').selectedOptions[0];
-    const service = opt ? fixEncoding(opt.text) : "-";
-    const sid = opt?.dataset?.sid ?? "-";
+  const opt = document.getElementById('serviceSelect').selectedOptions[0];
+  const service = opt ? fixEncoding(opt.text) : "-";
+  const sid = opt?.dataset?.sid ?? "-";
 
-    const link = document.getElementById('orderLink').value.trim();
-    const qty = document.getElementById('qty').value;
-    const usd = document.getElementById('totalUsd').innerText;
-    const afn = document.getElementById('totalAfn').innerText;
+  const link = document.getElementById('orderLink').value.trim();
+  const qty = document.getElementById('qty').value;
+  const usd = document.getElementById('totalUsd').innerText;
+  const afn = document.getElementById('totalAfn').innerText;
 
-    if (!link) return alert("لطفاً لینک را وارد کنید!");
+  if (!link) return alert("لطفاً لینک را وارد کنید!");
 
-    const waMsg = `
+  const platform = document.getElementById('platformTitle').innerText;
+
+  const waMsg = `
 📌 KHAN SMM PANEL — NEW ORDER
 
 ━━━━━━━━━━━━━━━━
-🔹 Platform: ${document.getElementById('platformTitle').innerText}
+🔹 Platform: ${platform}
 🔹 Service: ${service}
 🔹 Service ID: ${sid}
 
@@ -295,20 +297,23 @@
 ${link}
 
 📦 Quantity:
-${qty}
+${Number(qty).toLocaleString("en-US")}
 
 💰 Pricing:
 • USD: $${usd}
 • AFN: ؋ ${afn}
 
 ━━━━━━━━━━━━━━━━
-⏱ Please confirm availability & delivery time.
-    `.trim();
+🕒 Please confirm availability & delivery time.
 
-    window.open(
-        "https://wa.me/93728158308?text=" + encodeURIComponent(waMsg),
-        "_blank"
-    );
+💳 لطفاً روش پرداخت را ارسال کنید:
+کارت/بانک • کریپتو (USDT) • پرداخت حضوری
+`.trim();
+
+  window.open(
+    "https://wa.me/93728158308?text=" + encodeURIComponent(waMsg),
+    "_blank"
+  );
 }
 
     document.getElementById('platformGrid').onclick = (e) => {
