@@ -272,31 +272,44 @@
     }
 
     function sendWA() {
-      const opt = document.getElementById('serviceSelect').selectedOptions[0];
-      const service = opt ? fixEncoding(opt.text) : "-";
-      const sid = opt?.dataset?.sid ?? "-";
+    const opt = document.getElementById('serviceSelect').selectedOptions[0];
+    const service = opt ? fixEncoding(opt.text) : "-";
+    const sid = opt?.dataset?.sid ?? "-";
 
-      const link = document.getElementById('orderLink').value.trim();
-      const qty = document.getElementById('qty').value;
-      const usd = document.getElementById('totalUsd').innerText;
-      const afn = document.getElementById('totalAfn').innerText;
+    const link = document.getElementById('orderLink').value.trim();
+    const qty = document.getElementById('qty').value;
+    const usd = document.getElementById('totalUsd').innerText;
+    const afn = document.getElementById('totalAfn').innerText;
 
-      if (!link) return alert("لطفاً لینک را وارد کنید!");
+    if (!link) return alert("لطفاً لینک را وارد کنید!");
 
-      const waMsg = encodeURIComponent(
-`⚡ KHAN PANEL ORDER ⚡
+    const waMsg = `
+📌 KHAN SMM PANEL — NEW ORDER
 
-⭐ سرویس: ${service}
-🆔 Service ID: ${sid}
-🔗 لینک: ${link}
-🔢 تعداد: ${qty}
+━━━━━━━━━━━━━━━━
+🔹 Platform: ${document.getElementById('platformTitle').innerText}
+🔹 Service: ${service}
+🔹 Service ID: ${sid}
 
-💵 قیمت: $${usd}
-🇦🇫 معادل: ؋ ${afn}  (نرخ: ${USD_TO_AFN.toFixed(1)} ؋ / $)`
-      );
+🔗 Order Link:
+${link}
 
-      window.open(`https://wa.me/93728158308?text=${waMsg}`, '_blank');
-    }
+📦 Quantity:
+${qty}
+
+💰 Pricing:
+• USD: $${usd}
+• AFN: ؋ ${afn}
+
+━━━━━━━━━━━━━━━━
+⏱ Please confirm availability & delivery time.
+    `.trim();
+
+    window.open(
+        "https://wa.me/93728158308?text=" + encodeURIComponent(waMsg),
+        "_blank"
+    );
+}
 
     document.getElementById('platformGrid').onclick = (e) => {
       const btn = e.target.closest('.glow-btn');
