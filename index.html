@@ -121,21 +121,26 @@
             bluesky: []
         };
 
-        // ---- Helpers (no design change) ----
-        function cleanText(str) {
-            if (!str) return "";
-            // decode HTML entities like &#039;
+        // ✅ FIX: better cleaner (removes those weird symbols)
+        function fixEncoding(text) {
+            if (!text) return "";
+            // decode HTML entities
             const t = document.createElement("textarea");
-            t.innerHTML = String(str);
+            t.innerHTML = String(text);
             let s = t.value;
 
-            // try fix mojibake like "ðŸ"
-            try { if (s.includes("ðŸ")) s = decodeURIComponent(escape(s)); } catch (e) {}
+            // try to fix mojibake ALWAYS (not only "ðŸ")
+            try { s = decodeURIComponent(escape(s)); } catch (e) {}
+
+            // remove some common broken leftovers
+            s = s.replace(/Â/g, "");       // common artifact
+            s = s.replace(/�/g, "");       // replacement char
+            s = s.replace(/\s+/g, " ").trim();
             return s;
         }
 
         function detectPlatform(item) {
-            const txt = (cleanText(item.category || "") + " " + cleanText(item.name || "")).toLowerCase();
+            const txt = (fixEncoding(item.category || "") + " " + fixEncoding(item.name || "")).toLowerCase();
 
             if (txt.includes("instagram")) return "instagram";
             if (txt.includes("tiktok") || txt.includes("tik tok")) return "tiktok";
@@ -157,7 +162,6 @@
             // X/Twitter detection
             if (txt.includes("twitter") || txt.includes(" x ") || txt.startsWith("x ")) return "x";
 
-            // default: ignore (not shown) unless you add button later
             return null;
         }
 
@@ -174,11 +178,12 @@
             list.sort((a,b) => Number(a.r) - Number(b.r));
 
             select.innerHTML = list.map(s => {
-                const finalRate = (parseFloat(s.r) * PROFIT_MARGIN).toFixed(2);
-                return `<option value="${finalRate}" data-min="${s.min}" data-max="${s.max}" data-sid="${s.sid}">
-                    ${s.n} — $${finalRate}
-                </option>`;
-            }).join('');
+    const finalRate = (parseFloat(s.r) * PROFIT_MARGIN).toFixed(2);
+    const cleanName = fixEncoding(s.n);
+    return `<option value="${finalRate}" data-min="${s.min}" data-max="${s.max}" data-sid="${s.sid}">
+        ${cleanName}
+    </option>`;
+}).join('');
 
             updateDetails();
         }
@@ -199,7 +204,7 @@
 
         function sendWA() {
             const opt = document.getElementById('serviceSelect').selectedOptions[0];
-            const service = opt ? opt.text : "-";
+            const service = opt ? fixEncoding(opt.text) : "-"; // ✅ FIX
             const sid = opt?.dataset?.sid ?? "-";
 
             const link = document.getElementById('orderLink').value.trim();
@@ -230,7 +235,7 @@
             }
         };
 
-        // ✅ NEW: Load ALL services from services.json (no API, no manual copy/paste)
+        // ✅ Load ALL services from services.json
         async function loadServicesFile() {
             try {
                 const res = await fetch("./services.json", { cache: "no-store" });
@@ -250,7 +255,7 @@
                     if (!Number.isFinite(rate)) continue;
 
                     db[p].push({
-                        n: cleanText(item.name || "Service"),
+                        n: fixEncoding(item.name || "Service"), // ✅ FIX: clean while saving
                         r: rate,
                         min: item.min ?? 0,
                         max: item.max ?? 0,
@@ -260,10 +265,9 @@
 
             } catch (err) {
                 console.log("Failed to load services.json:", err);
-                // If file missing, UI still works, but shows "به زودی..."
             }
 
-            populate('instagram'); // start default
+            populate('instagram');
         }
 
         loadServicesFile();
