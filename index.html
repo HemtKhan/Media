@@ -148,7 +148,7 @@
       <div class="space-y-6">
         <div>
           <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">انتخاب سرویس </label>
-          <select id="serviceSelect" class="text-sm" onchange="updateDetails()"></select>
+          <button onclick="openServiceModal()"   class="w-full text-right bg-[#080808] border border-white/10 rounded-2xl p-4 text-sm flex items-center justify-between">   <span id="selectedServiceText" class="text-white/90">سرویس را انتخاب کنید...</span>   <i class="fas fa-chevron-down text-white/40"></i> </button>  <!-- hidden select (still used for calculations, no UI) --> <select id="serviceSelect" class="hidden" onchange="updateDetails()"></select>
         </div>
 
         <div>
@@ -189,7 +189,23 @@
       </div>
     </div>
   </main>
+<!-- ✅ Service Picker Modal -->
+<div id="serviceModal" class="fixed inset-0 hidden items-end justify-center z-[999]">
+  <div class="absolute inset-0 bg-black/70" onclick="closeServiceModal()"></div>
 
+  <div class="w-full max-w-md mx-auto glass-card rounded-t-[26px] p-5 relative">
+    <div class="flex items-center justify-between mb-3">
+      <h4 class="font-extrabold text-lg">انتخاب سرویس</h4>
+      <button class="text-white/70 text-xl" onclick="closeServiceModal()">✕</button>
+    </div>
+
+    <div class="mb-3">
+      <input id="serviceSearch" oninput="renderServiceList()" placeholder="جستجو..." class="text-sm">
+    </div>
+
+    <div id="serviceList" class="max-h-[60vh] overflow-y-auto space-y-2 pr-1"></div>
+  </div>
+</div>
   <script>
     const PROFIT_MARGIN = 1.15; // 15% Profit Margin
 
@@ -339,6 +355,92 @@ ${Number(qty).toLocaleString("en-US")}
     "https://wa.me/93728158308?text=" + encodeURIComponent(waMsg),
     "_blank"
   );
+}
+function platformIconHTML(platformId){
+  const map = {
+    instagram: `<i class="fab fa-instagram text-[#e1306c] text-lg"></i>`,
+    tiktok: `<i class="fab fa-tiktok text-[#00f2ea] text-lg"></i>`,
+    youtube: `<i class="fab fa-youtube text-[#ff0000] text-lg"></i>`,
+    x: `<span class="font-bold text-white text-lg">𝕏</span>`,
+    spotify: `<i class="fab fa-spotify text-[#1DB954] text-lg"></i>`,
+    telegram: `<i class="fab fa-telegram text-[#0088cc] text-lg"></i>`,
+    facebook: `<i class="fab fa-facebook text-[#1877F2] text-lg"></i>`,
+    discord: `<i class="fab fa-discord text-[#5865F2] text-lg"></i>`,
+    reddit: `<i class="fab fa-reddit text-[#FF4500] text-lg"></i>`,
+    snapchat: `<i class="fab fa-snapchat text-[#FFFC00] text-lg"></i>`,
+    linkedin: `<i class="fab fa-linkedin text-[#0077b5] text-lg"></i>`,
+    whatsapp: `<i class="fab fa-whatsapp text-[#25D366] text-lg"></i>`,
+    threads: `<i class="fab fa-threads text-white text-lg"></i>`,
+    kick: `<span class="font-bold text-[#53fc18] text-lg">K</span>`,
+    soundcloud: `<i class="fab fa-soundcloud text-[#ff3300] text-lg"></i>`,
+    twitch: `<i class="fab fa-twitch text-[#9146FF] text-lg"></i>`,
+    bluesky: `<i class="fas fa-cloud text-[#0085ff] text-lg"></i>`
+  };
+  return map[platformId] || `<i class="fas fa-bolt text-white/70 text-lg"></i>`;
+}
+
+function openServiceModal(){
+  document.getElementById("serviceModal").classList.remove("hidden");
+  document.getElementById("serviceModal").classList.add("flex");
+  document.getElementById("serviceSearch").value = "";
+  renderServiceList();
+}
+
+function closeServiceModal(){
+  document.getElementById("serviceModal").classList.add("hidden");
+  document.getElementById("serviceModal").classList.remove("flex");
+}
+
+function renderServiceList(){
+  const platform = document.querySelector(".glow-btn.active")?.dataset?.id || "instagram";
+  const q = (document.getElementById("serviceSearch").value || "").toLowerCase();
+
+  const list = (db[platform] && db[platform].length) ? db[platform] : [];
+  const box = document.getElementById("serviceList");
+
+  const filtered = list.filter(s => (fixEncoding(s.n).toLowerCase().includes(q)));
+
+  box.innerHTML = filtered.map((s, idx) => {
+    const showName = fixEncoding(s.n);
+    return `
+      <button onclick="pickService('${platform}', ${idx})"
+        class="w-full flex items-center gap-3 p-4 rounded-2xl bg-white/5 hover:bg-white/10 transition text-right">
+        <div class="w-9 h-9 rounded-full bg-black/30 flex items-center justify-center">
+          ${platformIconHTML(platform)}
+        </div>
+        <div class="flex-1">
+          <div class="text-white font-semibold text-[13px] leading-5">${showName}</div>
+          <div class="text-[11px] text-white/50 mt-1">Min: ${s.min} • Max: ${s.max}</div>
+        </div>
+      </button>
+    `;
+  }).join("") || `<div class="text-white/60 p-4">چیزی پیدا نشد</div>`;
+}
+
+function pickService(platform, index){
+  // find the same item in db[platform]
+  const list = db[platform] || [];
+  const item = list.filter(s => true)[index];
+  if(!item) return;
+
+  // update hidden select to match
+  const select = document.getElementById("serviceSelect");
+  const opts = Array.from(select.options);
+  const wanted = fixEncoding(item.n);
+
+  const found = opts.find(o => fixEncoding(o.text).includes(wanted));
+  if(found){
+    select.value = found.value;
+    select.dispatchEvent(new Event("change"));
+  }else{
+    // fallback: just set UI text
+    updateDetails();
+  }
+
+  // update visible text
+  document.getElementById("selectedServiceText").innerText = wanted;
+
+  closeServiceModal();
 }
 
     document.getElementById('platformGrid').onclick = (e) => {
