@@ -1,279 +1,359 @@
 <!DOCTYPE html>
 <html lang="dr" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KHAN | Luxury Glow Panel</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        
-        body { background-color: #020202; color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; text-align: right; overflow-x: hidden; }
-        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 30px; }
-        
-        /* Glow Buttons matching Brand Colors */
-        .glow-btn { 
-            width: 55px; height: 42px; border-radius: 14px; display: flex; align-items: center; 
-            justify-content: center; cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); 
-            background: rgba(255,255,255,0.02); font-size: 1.1rem;
-        }
-        .glow-btn:hover { transform: translateY(-3px); }
-        .glow-btn.active { border-color: var(--c); box-shadow: 0 0 20px var(--c); background: var(--bg); }
-        .glow-btn i, .glow-btn span { color: #fff; transition: 0.3s; }
-        .glow-btn.active i, .glow-btn.active span { color: var(--c); filter: drop-shadow(0 0 5px var(--c)); }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KHAN | Luxury Glow Panel</title>
 
-        select, input { background: #080808 !important; border: 1px solid rgba(255,255,255,0.1) !important; color: #fff !important; border-radius: 16px !important; padding: 14px !important; outline: none; width: 100%; }
-        .order-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4); border-radius: 20px; }
-    </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+
+    body {
+      background-color: #020202;
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      text-align: right;
+      overflow-x: hidden;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 30px;
+    }
+
+    /* ===== ICON BUTTONS ===== */
+    .glow-btn {
+      width: 55px;
+      height: 42px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.25s;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      font-size: 1.15rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ✅ REAL GLOW (box-shadow) — not drop-shadow */
+    .glow-btn::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 50% 50%,
+        color-mix(in srgb, var(--c) 55%, transparent),
+        transparent 60%);
+      opacity: 0.55;
+      filter: blur(10px);
+      pointer-events: none;
+    }
+
+    .glow-btn:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,0.18);
+      box-shadow: 0 0 14px color-mix(in srgb, var(--c) 45%, transparent);
+    }
+
+    .glow-btn.active {
+      border-color: var(--c);
+      background: var(--bg);
+      box-shadow:
+        0 0 22px color-mix(in srgb, var(--c) 70%, transparent),
+        0 0 44px color-mix(in srgb, var(--c) 35%, transparent);
+    }
+
+    /* Icon itself stays BLACK (luxury) */
+    .glow-btn i,
+    .glow-btn span {
+      color: #000;
+      position: relative;
+      z-index: 2;
+      transition: 0.25s;
+    }
+
+    /* small highlight on active */
+    .glow-btn.active i,
+    .glow-btn.active span {
+      color: #000;
+    }
+
+    select, input {
+      background: #080808 !important;
+      border: 1px solid rgba(255,255,255,0.1) !important;
+      color: #fff !important;
+      border-radius: 16px !important;
+      padding: 14px !important;
+      outline: none;
+      width: 100%;
+    }
+
+    .order-btn {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      box-shadow: 0 10px 25px -5px rgba(37,99,235,0.4);
+      border-radius: 20px;
+    }
+  </style>
 </head>
+
 <body class="pb-24">
 
-    <header class="p-6 flex justify-center items-center sticky top-0 z-50 glass-card border-none rounded-none mb-8">
-        <div class="flex items-center gap-3">
-            <div class="bg-blue-600 p-2 rounded-xl shadow-lg shadow-blue-900/40">
-                <i class="fas fa-crown text-white text-xs"></i>
-            </div>
-            <span class="text-3xl font-black tracking-tighter italic uppercase text-white">KHAN</span>
+  <header class="p-6 flex justify-center items-center sticky top-0 z-50 glass-card border-none rounded-none mb-8">
+    <div class="flex items-center gap-3">
+      <div class="bg-blue-600 p-2 rounded-xl shadow-lg shadow-blue-900/40">
+        <i class="fas fa-crown text-black text-xs"></i>
+      </div>
+      <span class="text-3xl font-black tracking-tighter italic uppercase">KHAN</span>
+    </div>
+  </header>
+
+  <main class="px-6 max-w-md mx-auto">
+
+    <div class="grid grid-cols-5 gap-3 mb-10" id="platformGrid">
+      <div class="glow-btn active" data-id="instagram" style="--c:#e1306c;--bg:rgba(225,48,108,0.12)"><i class="fab fa-instagram"></i></div>
+      <div class="glow-btn" data-id="tiktok" style="--c:#00f2ea;--bg:rgba(0,242,234,0.12)"><i class="fab fa-tiktok"></i></div>
+      <div class="glow-btn" data-id="youtube" style="--c:#ff0000;--bg:rgba(255,0,0,0.12)"><i class="fab fa-youtube"></i></div>
+      <div class="glow-btn" data-id="x" style="--c:#ffffff;--bg:rgba(255,255,255,0.10)"><span class="font-bold">𝕏</span></div>
+      <div class="glow-btn" data-id="spotify" style="--c:#1DB954;--bg:rgba(29,185,84,0.12)"><i class="fab fa-spotify"></i></div>
+
+      <div class="glow-btn" data-id="telegram" style="--c:#0088cc;--bg:rgba(0,136,204,0.12)"><i class="fab fa-telegram"></i></div>
+      <div class="glow-btn" data-id="facebook" style="--c:#1877F2;--bg:rgba(24,119,242,0.12)"><i class="fab fa-facebook"></i></div>
+      <div class="glow-btn" data-id="discord" style="--c:#5865F2;--bg:rgba(88,101,242,0.12)"><i class="fab fa-discord"></i></div>
+      <div class="glow-btn" data-id="reddit" style="--c:#FF4500;--bg:rgba(255,69,0,0.12)"><i class="fab fa-reddit"></i></div>
+      <div class="glow-btn" data-id="snapchat" style="--c:#FFFC00;--bg:rgba(255,252,0,0.12)"><i class="fab fa-snapchat"></i></div>
+
+      <div class="glow-btn" data-id="linkedin" style="--c:#0077b5;--bg:rgba(0,119,181,0.12)"><i class="fab fa-linkedin"></i></div>
+      <div class="glow-btn" data-id="whatsapp" style="--c:#25D366;--bg:rgba(37,211,102,0.12)"><i class="fab fa-whatsapp"></i></div>
+      <div class="glow-btn" data-id="threads" style="--c:#ffffff;--bg:rgba(255,255,255,0.10)"><i class="fab fa-threads"></i></div>
+      <div class="glow-btn" data-id="kick" style="--c:#53fc18;--bg:rgba(83,252,24,0.12)"><span class="font-bold text-sm">K</span></div>
+      <div class="glow-btn" data-id="soundcloud" style="--c:#ff3300;--bg:rgba(255,51,0,0.12)"><i class="fab fa-soundcloud"></i></div>
+
+      <div class="glow-btn" data-id="twitch" style="--c:#9146FF;--bg:rgba(145,70,255,0.12)"><i class="fab fa-twitch"></i></div>
+      <div class="glow-btn" data-id="bluesky" style="--c:#0085ff;--bg:rgba(0,133,255,0.12)"><i class="fas fa-cloud"></i></div>
+    </div>
+
+    <div id="orderBox" class="glass-card p-8 shadow-2xl">
+      <div class="flex items-center gap-3 mb-8 flex-row-reverse">
+        <div class="w-1.5 h-6 bg-blue-600 rounded-full"></div>
+        <h3 id="platformTitle" class="font-extrabold text-xl uppercase tracking-tighter text-white">INSTAGRAM</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div>
+          <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">انتخاب سرویس (با ۱۵٪ سود)</label>
+          <select id="serviceSelect" class="text-sm" onchange="updateDetails()"></select>
         </div>
-    </header>
 
-    <main class="px-6 max-w-md mx-auto">
-        <div class="grid grid-cols-5 gap-3 mb-10" id="platformGrid">
-            <div class="glow-btn active" data-id="instagram" style="--c:#e1306c; --bg:rgba(225,48,108,0.1)"><i class="fab fa-instagram"></i></div>
-            <div class="glow-btn" data-id="tiktok" style="--c:#00f2ea; --bg:rgba(0,242,234,0.1)"><i class="fab fa-tiktok"></i></div>
-            <div class="glow-btn" data-id="youtube" style="--c:#ff0000; --bg:rgba(255,0,0,0.1)"><i class="fab fa-youtube"></i></div>
-            <div class="glow-btn" data-id="x" style="--c:#ffffff; --bg:rgba(255,255,255,0.1)"><span class="font-bold">𝕏</span></div>
-            <div class="glow-btn" data-id="spotify" style="--c:#1DB954; --bg:rgba(29,185,84,0.1)"><i class="fab fa-spotify"></i></div>
-            <div class="glow-btn" data-id="telegram" style="--c:#0088cc; --bg:rgba(0,136,204,0.1)"><i class="fab fa-telegram"></i></div>
-            <div class="glow-btn" data-id="facebook" style="--c:#1877F2; --bg:rgba(24,119,242,0.1)"><i class="fab fa-facebook"></i></div>
-            <div class="glow-btn" data-id="discord" style="--c:#5865F2; --bg:rgba(88,101,242,0.1)"><i class="fab fa-discord"></i></div>
-            <div class="glow-btn" data-id="reddit" style="--c:#FF4500; --bg:rgba(255,69,0,0.1)"><i class="fab fa-reddit"></i></div>
-            <div class="glow-btn" data-id="snapchat" style="--c:#FFFC00; --bg:rgba(255,252,0,0.1)"><i class="fab fa-snapchat"></i></div>
-            <div class="glow-btn" data-id="linkedin" style="--c:#0077b5; --bg:rgba(0,119,181,0.1)"><i class="fab fa-linkedin"></i></div>
-            <div class="glow-btn" data-id="whatsapp" style="--c:#25D366; --bg:rgba(37,211,102,0.1)"><i class="fab fa-whatsapp"></i></div>
-            <div class="glow-btn" data-id="threads" style="--c:#ffffff; --bg:rgba(255,255,255,0.1)"><i class="fab fa-threads"></i></div>
-            <div class="glow-btn" data-id="kick" style="--c:#53fc18; --bg:rgba(83,252,24,0.1)"><span class="font-bold text-sm">K</span></div>
-            <div class="glow-btn" data-id="soundcloud" style="--c:#ff3300; --bg:rgba(255,51,0,0.1)"><i class="fab fa-soundcloud"></i></div>
-            <div class="glow-btn" data-id="twitch" style="--c:#9146FF; --bg:rgba(145,70,255,0.1)"><i class="fab fa-twitch"></i></div>
-            <div class="glow-btn" data-id="bluesky" style="--c:#0085ff; --bg:rgba(0,133,255,0.1)"><i class="fas fa-cloud"></i></div>
+        <div>
+          <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">لینک (Link)</label>
+          <input type="text" id="orderLink" placeholder="لینک را وارد کنید..." class="text-sm">
         </div>
 
-        <div id="orderBox" class="glass-card p-8 shadow-2xl">
-            <div class="flex items-center gap-3 mb-8 flex-row-reverse">
-                <div class="w-1.5 h-6 bg-blue-600 rounded-full"></div>
-                <h3 id="platformTitle" class="font-extrabold text-xl uppercase tracking-tighter text-white">INSTAGRAM</h3>
-            </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">تعداد (Quantity)</label>
+            <input type="number" id="qty" value="1000" class="text-sm" oninput="calculate()">
+          </div>
 
-            <div class="space-y-6">
-                <div>
-                    <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">انتخاب سرویس (با ۱۵٪ سود)</label>
-                    <select id="serviceSelect" class="text-sm" onchange="updateDetails()"></select>
-                </div>
-                <div>
-                    <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">لینک (Link)</label>
-                    <input type="text" id="orderLink" placeholder="لینک را وارد کنید..." class="text-sm">
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">تعداد (Quantity)</label>
-                        <input type="number" id="qty" value="1000" class="text-sm" oninput="calculate()">
-                    </div>
-                    <div>
-                        <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">هزینه کل ($)</label>
-                        <div class="p-3.5 rounded-2xl bg-blue-600/10 border border-blue-500/20 text-blue-400 font-bold text-center text-xl">
-                            $<span id="total">0.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white/5 p-4 rounded-xl text-[11px] text-gray-400">
-                    حداقل سفارش: <span id="minQty" class="text-white">--</span> | حداکثر: <span id="maxQty" class="text-white">--</span>
-                </div>
-                <button onclick="sendWA()" class="order-btn w-full py-5 font-extrabold text-white flex items-center justify-center gap-3 active:scale-95 transition-all">
-                    <i class="fab fa-whatsapp text-xl"></i>
-                    ارسال سفارش به واتساپ
-                </button>
+          <div>
+            <label class="text-[10px] uppercase font-bold text-gray-500 mb-2 block mr-1">هزینه کل</label>
+
+            <!-- ✅ USD + AFN -->
+            <div class="p-3.5 rounded-2xl bg-blue-600/10 border border-blue-500/20 text-center">
+              <div class="text-blue-400 font-extrabold text-xl">
+                $<span id="totalUsd">0.00</span>
+              </div>
+              <div class="text-[12px] text-gray-400 mt-1">
+                ؋ <span id="totalAfn">0</span>
+                <span class="text-gray-500"> (نرخ: <span id="rateAfn">65</span> ؋ / $)</span>
+              </div>
             </div>
+          </div>
         </div>
-    </main>
 
-    <script>
-        const PROFIT_MARGIN = 1.15; // 15% Profit Margin
+        <div class="bg-white/5 p-4 rounded-xl text-[11px] text-gray-400">
+          حداقل سفارش: <span id="minQty" class="text-white">--</span> | حداکثر: <span id="maxQty" class="text-white">--</span>
+        </div>
 
-        // ✅ DB stays same shape, BUT it will be filled from services.json automatically
-        const db = {
-            instagram: [],
-            tiktok: [],
-            youtube: [],
-            x: [],
-            spotify: [],
-            telegram: [],
-            facebook: [],
-            discord: [],
-            reddit: [],
-            snapchat: [],
-            linkedin: [],
-            whatsapp: [],
-            threads: [],
-            kick: [],
-            soundcloud: [],
-            twitch: [],
-            bluesky: []
-        };
+        <button onclick="sendWA()" class="order-btn w-full py-5 font-extrabold text-white flex items-center justify-center gap-3 active:scale-95 transition-all">
+          <i class="fab fa-whatsapp text-xl"></i>
+          ارسال سفارش به واتساپ
+        </button>
+      </div>
+    </div>
+  </main>
 
-        // ✅ FIX: better cleaner (removes those weird symbols)
-        function fixEncoding(text) {
-    if (!text) return "";
+  <script>
+    const PROFIT_MARGIN = 1.15; // 15% Profit Margin
 
-    let s = String(text);
+    // ✅ USD->AFN: live if possible, fallback to 65
+    let USD_TO_AFN = 65;
 
-    // try to fix utf8 mojibake
-    try { s = decodeURIComponent(escape(s)); } catch (e) {}
+    const db = {
+      instagram: [], tiktok: [], youtube: [], x: [], spotify: [], telegram: [], facebook: [],
+      discord: [], reddit: [], snapchat: [], linkedin: [], whatsapp: [], threads: [],
+      kick: [], soundcloud: [], twitch: [], bluesky: []
+    };
 
-    // remove emojis
-    s = s.replace(/[\u{1F300}-\u{1FAFF}]/gu, "");
+    function fixEncoding(text) {
+      if (!text) return "";
+      let s = String(text);
+      try { s = decodeURIComponent(escape(s)); } catch (e) {}
+      s = s.replace(/[\u{1F300}-\u{1FAFF}]/gu, "");
+      s = s.replace(/[^a-zA-Z0-9\s\[\]\(\)\-.,:/]/g, "");
+      s = s.replace(/\s+/g, " ").trim();
+      return s;
+    }
 
-    // remove ALL strange symbols (keep letters, numbers, space, [], (), -, .)
-    s = s.replace(/[^a-zA-Z0-9\s\[\]\(\)\-.,:/]/g, "");
+    function detectPlatform(item) {
+      const txt = (fixEncoding(item.category || "") + " " + fixEncoding(item.name || "")).toLowerCase();
+      if (txt.includes("instagram")) return "instagram";
+      if (txt.includes("tiktok") || txt.includes("tik tok")) return "tiktok";
+      if (txt.includes("youtube") || txt.includes("yt ")) return "youtube";
+      if (txt.includes("telegram")) return "telegram";
+      if (txt.includes("facebook") || txt.includes("fb")) return "facebook";
+      if (txt.includes("spotify")) return "spotify";
+      if (txt.includes("snapchat")) return "snapchat";
+      if (txt.includes("discord")) return "discord";
+      if (txt.includes("reddit")) return "reddit";
+      if (txt.includes("linkedin")) return "linkedin";
+      if (txt.includes("whatsapp")) return "whatsapp";
+      if (txt.includes("threads")) return "threads";
+      if (txt.includes("kick")) return "kick";
+      if (txt.includes("soundcloud")) return "soundcloud";
+      if (txt.includes("twitch")) return "twitch";
+      if (txt.includes("bluesky") || txt.includes("blue sky")) return "bluesky";
+      if (txt.includes("twitter") || txt.includes(" x ") || txt.startsWith("x ")) return "x";
+      return null;
+    }
 
-    // clean spaces
-    s = s.replace(/\s+/g, " ").trim();
+    function populate(id) {
+      const list = (db[id] && db[id].length) ? db[id] : [{ n: "به زودی...", r: 0, min: 0, max: 0, sid: "-" }];
+      document.getElementById('platformTitle').innerText = id.toUpperCase();
 
-    return s;
-}
+      list.sort((a,b) => Number(a.r) - Number(b.r));
 
-        function detectPlatform(item) {
-            const txt = (fixEncoding(item.category || "") + " " + fixEncoding(item.name || "")).toLowerCase();
+      const select = document.getElementById('serviceSelect');
+      select.innerHTML = list.map(s => {
+        const finalRate = (parseFloat(s.r) * PROFIT_MARGIN).toFixed(2);
+        const cleanName = fixEncoding(s.n);
+        return `<option value="${finalRate}" data-min="${s.min}" data-max="${s.max}" data-sid="${s.sid}">
+          ${cleanName}
+        </option>`;
+      }).join('');
 
-            if (txt.includes("instagram")) return "instagram";
-            if (txt.includes("tiktok") || txt.includes("tik tok")) return "tiktok";
-            if (txt.includes("youtube") || txt.includes("yt ")) return "youtube";
-            if (txt.includes("telegram")) return "telegram";
-            if (txt.includes("facebook") || txt.includes("fb")) return "facebook";
-            if (txt.includes("spotify")) return "spotify";
-            if (txt.includes("snapchat")) return "snapchat";
-            if (txt.includes("discord")) return "discord";
-            if (txt.includes("reddit")) return "reddit";
-            if (txt.includes("linkedin")) return "linkedin";
-            if (txt.includes("whatsapp")) return "whatsapp";
-            if (txt.includes("threads")) return "threads";
-            if (txt.includes("kick")) return "kick";
-            if (txt.includes("soundcloud")) return "soundcloud";
-            if (txt.includes("twitch")) return "twitch";
-            if (txt.includes("bluesky") || txt.includes("blue sky")) return "bluesky";
+      updateDetails();
+    }
 
-            // X/Twitter detection
-            if (txt.includes("twitter") || txt.includes(" x ") || txt.startsWith("x ")) return "x";
+    function updateDetails() {
+      const opt = document.getElementById('serviceSelect').selectedOptions[0];
+      document.getElementById('minQty').innerText = opt?.dataset?.min ?? "--";
+      document.getElementById('maxQty').innerText = opt?.dataset?.max ?? "--";
+      calculate();
+    }
 
-            return null;
-        }
+    function calculate() {
+      const rate = parseFloat(document.getElementById('serviceSelect').value) || 0;
+      const qty = parseInt(document.getElementById('qty').value) || 0;
 
-        // ---- Your existing functions (same UI logic) ----
-        function populate(id) {
-            const list = (db[id] && db[id].length)
-                ? db[id]
-                : [{ n: "به زودی...", r: 0, min: 0, max: 0, sid: "-" }];
+      const totalUsd = (qty / 1000) * rate;
+      const totalAfn = Math.round(totalUsd * USD_TO_AFN);
 
-            const select = document.getElementById('serviceSelect');
-            document.getElementById('platformTitle').innerText = id.toUpperCase();
+      document.getElementById('totalUsd').innerText = totalUsd.toFixed(3);
+      document.getElementById('totalAfn').innerText = totalAfn.toLocaleString('en-US');
+      document.getElementById('rateAfn').innerText = USD_TO_AFN.toFixed(1);
+    }
 
-            // (optional) sort by cheapest first
-            list.sort((a,b) => Number(a.r) - Number(b.r));
+    function sendWA() {
+      const opt = document.getElementById('serviceSelect').selectedOptions[0];
+      const service = opt ? fixEncoding(opt.text) : "-";
+      const sid = opt?.dataset?.sid ?? "-";
 
-            select.innerHTML = list.map(s => {
-    const finalRate = (parseFloat(s.r) * PROFIT_MARGIN).toFixed(2);
-    const cleanName = fixEncoding(s.n);
-    return `<option value="${finalRate}" data-min="${s.min}" data-max="${s.max}" data-sid="${s.sid}">
-        ${cleanName}
-    </option>`;
-}).join('');
+      const link = document.getElementById('orderLink').value.trim();
+      const qty = document.getElementById('qty').value;
+      const usd = document.getElementById('totalUsd').innerText;
+      const afn = document.getElementById('totalAfn').innerText;
 
-            updateDetails();
-        }
+      if (!link) return alert("لطفاً لینک را وارد کنید!");
 
-        function updateDetails() {
-            const opt = document.getElementById('serviceSelect').selectedOptions[0];
-            document.getElementById('minQty').innerText = opt?.dataset?.min ?? "--";
-            document.getElementById('maxQty').innerText = opt?.dataset?.max ?? "--";
-            calculate();
-        }
-
-        function calculate() {
-            const rate = parseFloat(document.getElementById('serviceSelect').value) || 0;
-            const qty = parseInt(document.getElementById('qty').value) || 0;
-            const total = (qty / 1000) * rate;
-            document.getElementById('total').innerText = total.toFixed(3);
-        }
-
-        function sendWA() {
-            const opt = document.getElementById('serviceSelect').selectedOptions[0];
-            const service = opt ? fixEncoding(opt.text) : "-"; // ✅ FIX
-            const sid = opt?.dataset?.sid ?? "-";
-
-            const link = document.getElementById('orderLink').value.trim();
-            const qty = document.getElementById('qty').value;
-            const total = document.getElementById('total').innerText;
-
-            if(!link) return alert("لطفاً لینک را وارد کنید!");
-
-            const waMsg = encodeURIComponent(
+      const waMsg = encodeURIComponent(
 `⚡ KHAN PANEL ORDER ⚡
 
 ⭐ سرویس: ${service}
 🆔 Service ID: ${sid}
 🔗 لینک: ${link}
 🔢 تعداد: ${qty}
-💰 قیمت کل: $${total}`
-            );
 
-            window.open(`https://wa.me/93728158308?text=${waMsg}`, '_blank');
+💵 قیمت: $${usd}
+🇦🇫 معادل: ؋ ${afn}  (نرخ: ${USD_TO_AFN.toFixed(1)} ؋ / $)`
+      );
+
+      window.open(`https://wa.me/93728158308?text=${waMsg}`, '_blank');
+    }
+
+    document.getElementById('platformGrid').onclick = (e) => {
+      const btn = e.target.closest('.glow-btn');
+      if (!btn) return;
+      document.querySelectorAll('.glow-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      populate(btn.dataset.id);
+    };
+
+    async function loadRateAfn() {
+      try {
+        // ✅ No-key endpoint
+        const res = await fetch("https://open.er-api.com/v6/latest/USD", { cache: "no-store" });
+        const data = await res.json();
+        const afn = Number(data?.rates?.AFN);
+        if (Number.isFinite(afn) && afn > 0) {
+          USD_TO_AFN = afn;
         }
+      } catch (e) {
+        // fallback stays 65
+      }
+      calculate();
+    }
 
-        document.getElementById('platformGrid').onclick = (e) => {
-            const btn = e.target.closest('.glow-btn');
-            if (btn) {
-                document.querySelectorAll('.glow-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                populate(btn.dataset.id);
-            }
-        };
+    async function loadServicesFile() {
+      try {
+        const res = await fetch("./services.json", { cache: "no-store" });
+        const list = await res.json();
+        if (!Array.isArray(list)) throw new Error("services.json must be an array");
 
-        // ✅ Load ALL services from services.json
-        async function loadServicesFile() {
-            try {
-                const res = await fetch("./services.json", { cache: "no-store" });
-                const list = await res.json();
+        Object.keys(db).forEach(k => db[k] = []);
 
-                if (!Array.isArray(list)) throw new Error("services.json must be an array");
+        for (const item of list) {
+          const p = detectPlatform(item);
+          if (!p || !db[p]) continue;
 
-                // Clear db
-                Object.keys(db).forEach(k => db[k] = []);
+          const rate = Number(item.rate);
+          if (!Number.isFinite(rate)) continue;
 
-                // Fill db by detecting platform
-                for (const item of list) {
-                    const p = detectPlatform(item);
-                    if (!p || !db[p]) continue;
-
-                    const rate = Number(item.rate);
-                    if (!Number.isFinite(rate)) continue;
-
-                    db[p].push({
-                        n: fixEncoding(item.name || "Service"), // ✅ FIX: clean while saving
-                        r: rate,
-                        min: item.min ?? 0,
-                        max: item.max ?? 0,
-                        sid: item.service ?? "-"
-                    });
-                }
-
-            } catch (err) {
-                console.log("Failed to load services.json:", err);
-            }
-
-            populate('instagram');
+          db[p].push({
+            n: fixEncoding(item.name || "Service"),
+            r: rate,
+            min: item.min ?? 0,
+            max: item.max ?? 0,
+            sid: item.service ?? "-"
+          });
         }
+      } catch (err) {
+        console.log("Failed to load services.json:", err);
+      }
 
-        loadServicesFile();
-    </script>
+      populate('instagram');
+    }
+
+    // start
+    loadRateAfn();      // ✅ AFN auto
+    loadServicesFile(); // ✅ services.json
+  </script>
 </body>
 </html>
