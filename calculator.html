@@ -22,6 +22,7 @@
     --green: #30d158;
     --whatsapp: #25d366;
     --blue: #0a84ff;
+    --night: #5e5ce6;
     --shadow: 0 18px 50px -12px rgba(20,30,60,.2);
     --shadow-soft: 0 8px 30px -8px rgba(20,30,60,.12);
   }
@@ -36,6 +37,7 @@
       --glass-strong: rgba(36,44,70,.65);
       --glass-border: rgba(255,255,255,.14);
       --glass-inner: rgba(255,255,255,.06);
+      --night: #7d7aff;
       --shadow: 0 18px 50px -12px rgba(0,0,0,.55);
       --shadow-soft: 0 8px 30px -8px rgba(0,0,0,.4);
     }
@@ -62,7 +64,7 @@
 
   /* Header */
   .head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:22px; }
-  .brand { display:flex; align-items:center; gap:11px; }
+  .brand { display:flex; align-items:center; gap:11px; text-decoration:none; color:inherit; }
   .brand-mark {
     width:42px; height:42px; border-radius:13px; flex-shrink:0;
     background: linear-gradient(140deg,#ffd60a,#ff9f0a 55%,#ff6b0a);
@@ -97,21 +99,46 @@
     box-shadow:var(--shadow-soft), inset 0 1px 1px var(--glass-inner);
   }
 
-  .total { text-align:center; padding:24px 20px; }
-  .total .big {
-    font-size:42px; font-weight:800; line-height:1.25;
+  /* Totals */
+  .totals { display:grid; grid-template-columns:1fr 1fr; gap:0; padding:20px 8px; }
+  .totals .t-cell { text-align:center; padding:4px 6px; }
+  .totals .t-cell + .t-cell { border-inline-start:1px solid var(--glass-border); }
+  .totals .big {
+    font-size:30px; font-weight:800; line-height:1.3;
     background:linear-gradient(120deg,#ff9f0a,#ffd60a);
     -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
   }
-  .total .cap { font-size:13.5px; color:var(--text-2); font-weight:600; margin-top:2px; }
+  .totals .night-cell .big { background:linear-gradient(120deg,#7d7aff,#5e5ce6); -webkit-background-clip:text; background-clip:text; }
+  .totals .cap { font-size:12px; color:var(--text-2); font-weight:600; margin-top:3px; line-height:1.5; }
+
+  /* Appliance list header */
+  .list-head { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:4px; padding-bottom:12px; border-bottom:1px solid var(--glass-border); }
+  .list-head h4 { font-size:15px; font-weight:800; flex-shrink:0; }
+  .list-head small { font-size:11.5px; color:var(--text-2); font-weight:600; line-height:1.6; text-align:end; }
 
   /* Appliances */
-  .appliance { display:flex; align-items:center; gap:12px; padding:13px 0; }
+  .appliance { display:flex; align-items:center; gap:10px; padding:13px 0; }
   .appliance + .appliance { border-top:1px solid var(--glass-border); }
-  .a-icon { font-size:24px; width:36px; text-align:center; flex-shrink:0; }
+  .a-icon { font-size:24px; width:34px; text-align:center; flex-shrink:0; }
   .a-body { flex:1; min-width:0; }
   .a-body h5 { font-size:14.5px; font-weight:700; }
   .a-body small { font-size:12px; color:var(--text-2); font-weight:500; }
+
+  .night-toggle {
+    width:38px; height:38px; border-radius:50%; flex-shrink:0; cursor:pointer;
+    border:1px solid var(--glass-border); background:var(--glass-strong);
+    display:grid; place-items:center; font-size:16px;
+    filter:grayscale(1); opacity:.45;
+    transition:all .25s cubic-bezier(.32,.72,.28,1);
+  }
+  .night-toggle.on {
+    filter:none; opacity:1;
+    background:linear-gradient(140deg,#7d7aff,#5e5ce6);
+    border-color:transparent;
+    box-shadow:0 6px 16px -4px rgba(94,92,230,.6);
+  }
+  .night-toggle:active { transform:scale(.85); }
+
   .stepper { display:flex; align-items:center; gap:2px; flex-shrink:0; direction:ltr;
     background:var(--glass-strong); border:1px solid var(--glass-border); border-radius:100px; padding:3px; }
   .stepper button {
@@ -124,8 +151,9 @@
   .cnt { min-width:28px; text-align:center; font-size:15px; font-weight:800; }
 
   /* Slider */
-  .slider-top { display:flex; justify-content:space-between; font-size:14px; font-weight:700; margin-bottom:12px; }
-  .slider-top b { color:var(--accent); }
+  .slider-top { display:flex; justify-content:space-between; gap:10px; font-size:14px; font-weight:700; margin-bottom:4px; }
+  .slider-top b { color:var(--accent); flex-shrink:0; }
+  .slider-hint { font-size:11.5px; color:var(--text-3); font-weight:500; line-height:1.6; margin-bottom:12px; }
   input[type=range] {
     width:100%; appearance:none; -webkit-appearance:none; height:6px; border-radius:100px; direction:ltr;
     background:linear-gradient(90deg,var(--accent) var(--fill,50%), rgba(120,130,160,.28) var(--fill,50%));
@@ -145,6 +173,8 @@
   .fact .f-val { font-size:15.5px; font-weight:800; line-height:1.4; min-height:2.8em; display:flex; align-items:center; justify-content:center; }
   .fact .f-lbl { font-size:10.5px; color:var(--text-2); font-weight:600; margin-top:4px; line-height:1.5; }
 
+  .why { font-size:12.5px; color:var(--text-2); font-weight:500; line-height:2; margin-top:2px; }
+  .why b { color:var(--text); }
   .note { font-size:12px; color:var(--text-3); font-weight:500; line-height:1.8; margin:12px 4px 0; }
 
   /* CTA */
@@ -170,13 +200,13 @@
 <div class="wrap">
 
   <div class="head">
-    <div class="brand">
+    <a class="brand" href="index.html" title="LEMAR SunTech">
       <div class="brand-mark">☀️</div>
       <div>
         <h1 id="t-brand">لمر سن‌تک</h1>
         <small id="t-tagline">انرژی پاک، انتخاب هوشمند</small>
       </div>
-    </div>
+    </a>
     <div class="lang" id="lang">
       <button data-lang="fa" class="on">دری</button>
       <button data-lang="ps">پښتو</button>
@@ -187,16 +217,29 @@
   <h2 class="title" id="t-title">محاسبهٔ سیستم آفتابی</h2>
   <p class="sub" id="t-sub">وسایل برقی‌تان را انتخاب کنید تا انورتر، بتری لیتیوم و پنل مناسب را برای‌تان پیشنهاد کنیم.</p>
 
-  <div class="card total">
-    <div class="big" id="total-load">۰</div>
-    <div class="cap" id="t-total">مجموع بار برقی شما (وات)</div>
+  <div class="card totals">
+    <div class="t-cell">
+      <div class="big" id="total-load">۰</div>
+      <div class="cap" id="t-total">مجموع بار (وات)</div>
+    </div>
+    <div class="t-cell night-cell">
+      <div class="big" id="night-load">۰</div>
+      <div class="cap" id="t-night-total">بار شبانه (وات)</div>
+    </div>
   </div>
 
-  <div class="card" id="appliances"></div>
+  <div class="card">
+    <div class="list-head">
+      <h4 id="t-appl">وسایل برقی</h4>
+      <small id="t-appl-hint">دکمهٔ 🌙 را روشن کنید اگر وسیله در شب هم کار می‌کند</small>
+    </div>
+    <div id="appliances"></div>
+  </div>
 
   <div class="card">
-    <div class="slider-top"><span id="t-backup">ساعت‌های برق پشتیبان (بتری)</span><b id="backup-val">۶</b></div>
-    <input type="range" id="backup" min="2" max="12" step="1" value="6">
+    <div class="slider-top"><span id="t-backup">ساعت‌های برق شبانه از بتری</span><b id="backup-val">۶</b></div>
+    <div class="slider-hint" id="t-backup-hint">چند ساعت در شب می‌خواهید وسایل شبانه‌تان از بتری کار کنند؟</div>
+    <input type="range" id="backup" min="2" max="14" step="1" value="6">
   </div>
 
   <div class="rhead" id="t-rec">سیستم پیشنهادی شما</div>
@@ -218,7 +261,9 @@
     </div>
   </div>
 
-  <p class="note" id="t-note">این محاسبه تخمینی است. برای دیزاین دقیق سیستم، تیم مسلکی ما به صورت رایگان با شما مشوره می‌کند.</p>
+  <div class="card why" id="explain" style="display:none;"></div>
+
+  <p class="note" id="t-note">این محاسبه با معیارهای انجنیری (ذخیرهٔ ۲۵٪ انورتر، عمق تخلیهٔ ۸۰٪ بتری و ۵ ساعت آفتاب مؤثر) تخمین شده است. برای دیزاین نهایی و دقیق، تیم مسلکی ما رایگان با شما مشوره می‌کند.</p>
 
   <a class="wa" id="calc-wa" href="#" target="_blank" rel="noopener"><span>💬</span><span id="t-wa">ارسال این محاسبه در واتساپ</span></a>
 
@@ -230,6 +275,7 @@
 </div>
 
 <script>
+"use strict";
 /* ================= i18n ================= */
 const I18N = {
   fa: {
@@ -237,17 +283,22 @@ const I18N = {
     brand:"لمر سن‌تک", tagline:"انرژی پاک، انتخاب هوشمند",
     title:"محاسبهٔ سیستم آفتابی",
     sub:"وسایل برقی‌تان را انتخاب کنید تا انورتر، بتری لیتیوم و پنل مناسب را برای‌تان پیشنهاد کنیم.",
-    total:"مجموع بار برقی شما (وات)",
-    backup:"ساعت‌های برق پشتیبان (بتری)",
+    total:"مجموع بار (وات)", nightTotal:"بار شبانه (وات)",
+    appl:"وسایل برقی",
+    applHint:"دکمهٔ 🌙 را روشن کنید اگر وسیله در شب هم کار می‌کند",
+    backup:"ساعت‌های برق شبانه از بتری",
+    backupHint:"چند ساعت در شب می‌خواهید وسایل شبانه‌تان از بتری کار کنند؟",
     rec:"سیستم پیشنهادی شما",
     inv:"انورتر هایبرید", bat:"بتری لیتیوم LiFePO4", pan:"پنل ۵۵۰ واته",
-    note:"این محاسبه تخمینی است. برای دیزاین دقیق سیستم، تیم مسلکی ما به صورت رایگان با شما مشوره می‌کند.",
+    note:"این محاسبه با معیارهای انجنیری (ذخیرهٔ ۲۵٪ انورتر، عمق تخلیهٔ ۸۰٪ بتری و ۵ ساعت آفتاب مؤثر) تخمین شده است. برای دیزاین نهایی و دقیق، تیم مسلکی ما رایگان با شما مشوره می‌کند.",
     wa:"ارسال این محاسبه در واتساپ",
     foot:"LEMAR SunTech — کابل، افغانستان",
     watt:"وات", hour:"ساعت", kw:"کیلووات", kwh:"کیلووات‌ساعت", pcs:"عدد",
     kwPlus:"+۲۰ کیلووات", kwhPlus:"+۳۰ کیلووات‌ساعت",
+    explain:(inv,bat,pan)=>`⚡️ انورتر <b>${inv}</b> — با ۲۵٪ ذخیره و توان شروع موتورها (یخچال، واترپمپ...)<br>🔋 بتری <b>${bat}</b> — برای بار شبانهٔ شما با عمق تخلیهٔ مصون ۸۰٪<br>☀️ <b>${pan}</b> پنل — مصرف روزانه + چارج کامل بتری با ۵ ساعت آفتاب`,
+    noNight:"هیچ وسیله‌ای برای شب انتخاب نشده — دکمهٔ 🌙 وسایل شبانه را روشن کنید تا بتری دقیق محاسبه شود.",
     appliances:["گروپ LED","پکه","تلویزیون","یخچال","کمپیوتر","ماشین لباس‌شویی","واترپمپ","ایرکندیشن"],
-    msg:(w,i,b,p,h)=>`سلام لمر سن‌تک!\nمن سیستم آفتابی ضرورت دارم:\n• مجموع بار: ${w} وات\n• انورتر: ${i}\n• بتری لیتیوم: ${b}\n• پنل ۵۵۰ واته: ${p}\n• برق پشتیبان: ${h} ساعت\nلطفاً قیمت بدهید. تشکر!`,
+    msg:(w,nw,i,b,p,h)=>`سلام لمر سن‌تک!\nمن سیستم آفتابی ضرورت دارم:\n• مجموع بار: ${w} وات\n• بار شبانه: ${nw} وات (${h} ساعت از بتری)\n• انورتر پیشنهادی: ${i}\n• بتری لیتیوم: ${b}\n• پنل ۵۵۰ واته: ${p}\nلطفاً قیمت و مشورهٔ دقیق بدهید. تشکر!`,
     msgEmpty:"سلام، من به مشورهٔ رایگان برای سیستم آفتابی ضرورت دارم."
   },
   ps: {
@@ -255,17 +306,22 @@ const I18N = {
     brand:"لمر سن‌ټیک", tagline:"پاکه انرژي، هوښیاره انتخاب",
     title:"د لمریز سیستم محاسبه",
     sub:"خپل برقي وسایل وټاکئ ترڅو مناسب انورټر، لیتیم بیټرۍ او پنل درته وړاندیز کړو.",
-    total:"ستاسو د برق ټول بار (واټ)",
-    backup:"د بیک‌اپ برق ساعتونه (بیټرۍ)",
+    total:"ټول بار (واټ)", nightTotal:"د شپې بار (واټ)",
+    appl:"برقي وسایل",
+    applHint:"که وسیله د شپې هم کار کوي، د 🌙 تڼۍ روښانه کړئ",
+    backup:"د شپې برق ساعتونه له بیټرۍ",
+    backupHint:"غواړئ د شپې وسایل مو څو ساعته له بیټرۍ کار وکړي؟",
     rec:"ستاسو وړاندیز شوی سیستم",
     inv:"هایبرید انورټر", bat:"لیتیم بیټرۍ LiFePO4", pan:"۵۵۰ واټه پنل",
-    note:"دا محاسبه اټکلي ده. د دقیق سیستم ډیزاین لپاره، زموږ مسلکي ټیم وړیا مشوره درکوي.",
+    note:"دا محاسبه د انجنیرۍ معیارونو سره (د انورټر ۲۵٪ زیرمه، د بیټرۍ ۸۰٪ تخلیه او ۵ ساعته مؤثر لمر) اټکل شوې. د وروستي دقیق ډیزاین لپاره زموږ مسلکي ټیم وړیا مشوره درکوي.",
     wa:"دا محاسبه په واټساپ ولېږئ",
     foot:"LEMAR SunTech — کابل، افغانستان",
     watt:"واټ", hour:"ساعته", kw:"کیلوواټ", kwh:"کیلوواټ‌ساعت", pcs:"دانې",
     kwPlus:"+۲۰ کیلوواټ", kwhPlus:"+۳۰ کیلوواټ‌ساعت",
+    explain:(inv,bat,pan)=>`⚡️ انورټر <b>${inv}</b> — د ۲۵٪ زیرمې او د موټرونو د پیل ځواک سره (یخچال، پمپ...)<br>🔋 بیټرۍ <b>${bat}</b> — ستاسو د شپې بار لپاره د ۸۰٪ خوندي تخلیې سره<br>☀️ <b>${pan}</b> پنل — ورځنی مصرف + د بیټرۍ بشپړ چارج د ۵ ساعتو لمر سره`,
+    noNight:"د شپې لپاره هیڅ وسیله نه ده ټاکل شوې — د شپې وسایلو 🌙 تڼۍ روښانه کړئ چې بیټرۍ دقیقه محاسبه شي.",
     appliances:["LED څراغ","پکه","تلویزیون","یخچال","کمپیوټر","د کالیو مینځلو ماشین","د اوبو پمپ","ایرکنډیشن"],
-    msg:(w,i,b,p,h)=>`سلام لمر سن‌ټیک!\nزه لمریز سیستم ته اړتیا لرم:\n• ټول بار: ${w} واټ\n• انورټر: ${i}\n• لیتیم بیټرۍ: ${b}\n• ۵۵۰ واټه پنل: ${p}\n• بیک‌اپ برق: ${h} ساعته\nمهرباني وکړئ قیمت راکړئ. مننه!`,
+    msg:(w,nw,i,b,p,h)=>`سلام لمر سن‌ټیک!\nزه لمریز سیستم ته اړتیا لرم:\n• ټول بار: ${w} واټ\n• د شپې بار: ${nw} واټ (${h} ساعته له بیټرۍ)\n• وړاندیز شوی انورټر: ${i}\n• لیتیم بیټرۍ: ${b}\n• ۵۵۰ واټه پنل: ${p}\nمهرباني وکړئ قیمت او دقیقه مشوره راکړئ. مننه!`,
     msgEmpty:"سلام، زه د لمریز سیستم لپاره وړیا مشورې ته اړتیا لرم."
   },
   en: {
@@ -273,44 +329,69 @@ const I18N = {
     brand:"LEMAR SunTech", tagline:"Clean Energy, Smart Choice",
     title:"Solar System Calculator",
     sub:"Select your appliances and we'll recommend the right inverter, lithium battery and solar panels for you.",
-    total:"Your total electrical load (Watts)",
-    backup:"Backup hours (battery)",
+    total:"Total load (Watts)", nightTotal:"Night load (Watts)",
+    appl:"Your appliances",
+    applHint:"Turn on 🌙 if the appliance also runs at night",
+    backup:"Night hours on battery",
+    backupHint:"How many hours at night should your night appliances run from the battery?",
     rec:"Your recommended system",
     inv:"Hybrid Inverter", bat:"LiFePO4 Lithium Battery", pan:"550W Solar Panels",
-    note:"This is an estimate. For an exact system design, our professional team offers free consultation.",
+    note:"Estimated using engineering standards: 25% inverter headroom, 80% battery depth-of-discharge, and 5 effective sun hours. For the final exact design, our professional team offers free consultation.",
     wa:"Send this calculation on WhatsApp",
     foot:"LEMAR SunTech — Kabul, Afghanistan",
     watt:"W", hour:"h", kw:"kW", kwh:"kWh", pcs:"pcs",
     kwPlus:"20+ kW", kwhPlus:"30+ kWh",
+    explain:(inv,bat,pan)=>`⚡️ <b>${inv}</b> inverter — includes 25% headroom and motor start-up surge (fridge, pump...)<br>🔋 <b>${bat}</b> battery — covers your night load at a safe 80% depth-of-discharge<br>☀️ <b>${pan}</b> panels — daytime use + full battery recharge with 5 sun hours`,
+    noNight:"No appliance is selected for night use — turn on 🌙 for your night appliances so the battery is sized correctly.",
     appliances:["LED Light","Fan","Television","Refrigerator","Computer","Washing Machine","Water Pump","Air Conditioner"],
-    msg:(w,i,b,p,h)=>`Hello LEMAR SunTech!\nI need a solar system:\n• Total load: ${w} W\n• Inverter: ${i}\n• Lithium battery: ${b}\n• 550W panels: ${p}\n• Backup: ${h} hours\nPlease send me a quote. Thanks!`,
+    msg:(w,nw,i,b,p,h)=>`Hello LEMAR SunTech!\nI need a solar system:\n• Total load: ${w} W\n• Night load: ${nw} W (${h} hours on battery)\n• Recommended inverter: ${i}\n• Lithium battery: ${b}\n• 550W panels: ${p}\nPlease send me a quote and exact advice. Thanks!`,
     msgEmpty:"Hello, I would like a free consultation for a solar system."
   }
 };
 
+/* ================= Data ================= */
 const WA_NUMBER = "93778202600";
+/* surge = start-up multiplier for motor loads */
 const APPLIANCES = [
-  { icon:"💡", watts:10,   start:5 },
-  { icon:"🌀", watts:70,   start:2 },
-  { icon:"📺", watts:100,  start:1 },
-  { icon:"🧊", watts:150,  start:1 },
-  { icon:"💻", watts:200,  start:0 },
-  { icon:"🧺", watts:500,  start:0 },
-  { icon:"🚰", watts:750,  start:0 },
-  { icon:"❄️", watts:1500, start:0 },
+  { icon:"💡", watts:10,   surge:1,   start:5, night:true  },
+  { icon:"🌀", watts:70,   surge:1.5, start:2, night:true  },
+  { icon:"📺", watts:100,  surge:1,   start:1, night:true  },
+  { icon:"🧊", watts:150,  surge:3,   start:1, night:true  },
+  { icon:"💻", watts:200,  surge:1,   start:0, night:false },
+  { icon:"🧺", watts:500,  surge:3,   start:0, night:false },
+  { icon:"🚰", watts:750,  surge:3,   start:0, night:false },
+  { icon:"❄️", watts:1500, surge:3,   start:0, night:false },
 ];
 
+/* Engineering constants */
+const INVERTER_SIZES_KW = [3, 5, 8, 12, 20];
+const BATTERY_SIZES_KWH = [5, 10, 15, 20, 30];
+const INVERTER_HEADROOM = 1.25;  /* 25% continuous margin              */
+const SURGE_CAPACITY    = 2;     /* hybrid inverters take 2x for secs  */
+const BATTERY_DOD       = 0.8;   /* safe LiFePO4 depth of discharge    */
+const SYSTEM_EFF        = 0.95;  /* inverter efficiency                */
+const CHARGE_EFF        = 0.9;   /* battery round-trip charge eff.     */
+const SUN_HOURS         = 5;     /* effective sun hours (Afghanistan)  */
+const PANEL_KW          = 0.55;  /* 550W panel                         */
+const PANEL_DERATE      = 0.8;   /* dust, temperature, wiring losses   */
+const DAY_USE_HOURS     = 6;     /* avg daytime running hours          */
+const MAX_COUNT         = 50;
+
+/* ================= State ================= */
 let LANG = "fa";
 const counts = APPLIANCES.map(a => a.start);
+const nights = APPLIANCES.map(a => a.night);
+
 const $ = id => document.getElementById(id);
 const T = () => I18N[LANG];
 const fmt = n => {
-  const s = Number(n).toLocaleString("en-US");
+  const num = Math.round(Number(n) || 0);
+  const s = num.toLocaleString("en-US");
   return T().digits ? s.replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]).replace(/,/g, "٬") : s;
 };
 const waLink = msg => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
 
-/* ---------- Render appliances ---------- */
+/* ================= Render ================= */
 function renderAppliances() {
   $("appliances").innerHTML = APPLIANCES.map((a, i) => `
     <div class="appliance">
@@ -319,6 +400,8 @@ function renderAppliances() {
         <h5>${T().appliances[i]}</h5>
         <small>${fmt(a.watts)} ${T().watt}</small>
       </div>
+      <button class="night-toggle${nights[i] ? " on" : ""}" id="night-${i}"
+              onclick="toggleNight(${i})" aria-pressed="${nights[i]}" title="🌙">🌙</button>
       <div class="stepper">
         <button onclick="bump(${i},-1)" aria-label="−">−</button>
         <span class="cnt" id="cnt-${i}">${fmt(counts[i])}</span>
@@ -327,8 +410,9 @@ function renderAppliances() {
     </div>`).join("");
 }
 
-/* ---------- Language switch ---------- */
+/* ================= Language ================= */
 function setLang(l) {
+  if (!I18N[l]) l = "fa";
   LANG = l;
   const t = T();
   document.documentElement.lang = t.lang;
@@ -339,7 +423,11 @@ function setLang(l) {
   $("t-title").textContent = t.title;
   $("t-sub").textContent = t.sub;
   $("t-total").textContent = t.total;
+  $("t-night-total").textContent = t.nightTotal;
+  $("t-appl").textContent = t.appl;
+  $("t-appl-hint").textContent = t.applHint;
   $("t-backup").textContent = t.backup;
+  $("t-backup-hint").textContent = t.backupHint;
   $("t-rec").textContent = t.rec;
   $("t-inv").textContent = t.inv;
   $("t-bat").textContent = t.bat;
@@ -358,15 +446,26 @@ $("lang").addEventListener("click", e => {
   if (b) setLang(b.dataset.lang);
 });
 
-/* ---------- Stepper ---------- */
+/* ================= Interactions ================= */
 function bump(i, d) {
-  counts[i] = Math.max(0, Math.min(30, counts[i] + d));
+  if (!(i in counts)) return;
+  counts[i] = Math.max(0, Math.min(MAX_COUNT, counts[i] + d));
   $("cnt-" + i).textContent = fmt(counts[i]);
   if (navigator.vibrate) navigator.vibrate(6);
   calc();
 }
 
-/* ---------- Calculation ---------- */
+function toggleNight(i) {
+  if (!(i in nights)) return;
+  nights[i] = !nights[i];
+  const el = $("night-" + i);
+  el.classList.toggle("on", nights[i]);
+  el.setAttribute("aria-pressed", nights[i]);
+  if (navigator.vibrate) navigator.vibrate(6);
+  calc();
+}
+
+/* ================= Engineering ================= */
 const backup = $("backup");
 function fillTrack(el) {
   el.style.setProperty("--fill", ((el.value - el.min) / (el.max - el.min)) * 100 + "%");
@@ -375,34 +474,61 @@ function pickSize(need, sizes, unit, plus) {
   for (const s of sizes) if (s >= need) return fmt(s) + " " + unit;
   return plus;
 }
+
 function calc() {
   fillTrack(backup);
   const t = T();
-  const hours = +backup.value;
+  const hours = Math.max(2, Math.min(14, +backup.value || 6));
   $("backup-val").textContent = fmt(hours) + " " + t.hour;
 
   const totalW = APPLIANCES.reduce((s, a, i) => s + a.watts * counts[i], 0);
+  const nightW = APPLIANCES.reduce((s, a, i) => s + (nights[i] ? a.watts * counts[i] : 0), 0);
   $("total-load").textContent = fmt(totalW);
+  $("night-load").textContent = fmt(nightW);
+
+  const explain = $("explain");
 
   if (totalW === 0) {
     ["rec-inverter","rec-battery","rec-panels"].forEach(id => $(id).textContent = "—");
+    explain.style.display = "none";
     $("calc-wa").href = waLink(t.msgEmpty);
     return;
   }
 
-  const invTxt = pickSize(totalW * 1.3 / 1000, [3,5,8,12,20], t.kw, t.kwPlus);
-  const batTxt = pickSize((totalW * hours / 1000) / 0.8, [5,10,15,20,30], t.kwh, t.kwhPlus);
-  const panels = Math.max(2, Math.ceil((totalW * 8 / 1000) / 2.75));
+  /* Inverter: continuous load + headroom, checked against the largest
+     single motor start-up surge (hybrid inverters tolerate ~2x for seconds). */
+  const continuousKw = (totalW / SYSTEM_EFF) * INVERTER_HEADROOM / 1000;
+  const biggestSurgeExtraW = APPLIANCES.reduce((m, a, i) =>
+    counts[i] > 0 ? Math.max(m, a.watts * (a.surge - 1)) : m, 0);
+  const surgeKw = (totalW + biggestSurgeExtraW) / SURGE_CAPACITY / 1000;
+  const invNeedKw = Math.max(continuousKw, surgeKw);
+  const invTxt = pickSize(invNeedKw, INVERTER_SIZES_KW, t.kw, t.kwPlus);
+
+  /* Battery: sized for the NIGHT load only, at safe DoD and efficiency. */
+  const nightEnergyKwh = (nightW * hours / 1000) / (BATTERY_DOD * SYSTEM_EFF);
+  const batNeedKwh = Math.max(nightEnergyKwh, BATTERY_SIZES_KWH[0]);
+  const batTxt = pickSize(batNeedKwh, BATTERY_SIZES_KWH, t.kwh, t.kwhPlus);
+
+  /* Panels: daytime consumption + fully recharging the battery. */
+  const dayEnergyKwh = totalW * DAY_USE_HOURS / 1000;
+  const rechargeKwh  = (nightW * hours / 1000) / CHARGE_EFF;
+  const panelDailyKwh = PANEL_KW * SUN_HOURS * PANEL_DERATE; /* ≈2.2 kWh/day */
+  const panels = Math.min(80, Math.max(2, Math.ceil((dayEnergyKwh + rechargeKwh) / panelDailyKwh)));
   const panTxt = fmt(panels) + " " + t.pcs;
 
   $("rec-inverter").textContent = invTxt;
   $("rec-battery").textContent  = batTxt;
   $("rec-panels").textContent   = panTxt;
-  $("calc-wa").href = waLink(t.msg(fmt(totalW), invTxt, batTxt, panTxt, fmt(hours)));
+
+  explain.style.display = "block";
+  explain.innerHTML = t.explain(invTxt, batTxt, fmt(panels)) +
+    (nightW === 0 ? `<br>🌙 <span style="color:var(--night);font-weight:700">${t.noNight}</span>` : "");
+
+  $("calc-wa").href = waLink(t.msg(fmt(totalW), fmt(nightW), invTxt, batTxt, panTxt, fmt(hours)));
 }
 backup.addEventListener("input", calc);
 
-/* ---------- Init ---------- */
+/* ================= Init ================= */
 setLang("fa");
 </script>
 </body>
