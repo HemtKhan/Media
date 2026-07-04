@@ -1,1 +1,43 @@
-
+{
+  "company": "LemarSunTech",
+  "tagline": "Clean energy, beautifully engineered",
+  "services": [
+    {
+      "icon": "🏠",
+      "name": "Residential Solar",
+      "description": "Custom rooftop systems designed around your home, roof and budget.",
+      "badge": "Most popular"
+    },
+    {
+      "icon": "🏢",
+      "name": "Commercial Solar",
+      "description": "Large-scale installations that cut operating costs for your business."
+    },
+    {
+      "icon": "🔋",
+      "name": "Battery Storage",
+      "description": "Store daytime sun and power your home through the night and outages."
+    },
+    {
+      "icon": "🚗",
+      "name": "EV Charging",
+      "description": "Home and workplace chargers powered directly by your panels."
+    },
+    {
+      "icon": "🧰",
+      "name": "Maintenance & Repair",
+      "description": "Panel cleaning, inspections and performance tune-ups."
+    },
+    {
+      "icon": "📡",
+      "name": "Smart Monitoring",
+      "description": "Real-time production tracking from an elegant app dashboard."
+    },
+    {
+      "icon": "📐",
+      "name": "Free Site Assessment",
+      "description": "A solar engineer evaluates your roof, shading and energy usage.",
+      "badge": "Free"
+    }
+  ]
+}

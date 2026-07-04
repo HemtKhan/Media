@@ -1,1 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0e1a">
+<title>LemarSunTech — Solar Energy</title>
+<style>
+  :root {
+    --bg: #f2f4f8;
+    --bg-deep: #e8ecf4;
+    --text: #0b1020;
+    --text-2: rgba(11,16,32,.55);
+    --text-3: rgba(11,16,32,.35);
+    --glass: rgba(255,255,255,.58);
+    --glass-strong: rgba(255,255,255,.78);
+    --glass-border: rgba(255,255,255,.9);
+    --glass-inner: rgba(255,255,255,.35);
+    --accent: #ff9f0a;
+    --accent-2: #ffd60a;
+    --green: #30d158;
+    --blue: #0a84ff;
+    --shadow: 0 18px 50px -12px rgba(20,30,60,.22);
+    --shadow-soft: 0 8px 30px -8px rgba(20,30,60,.14);
+    --tabbar-h: 82px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0a0e1a;
+      --bg-deep: #060912;
+      --text: #f5f7fa;
+      --text-2: rgba(245,247,250,.55);
+      --text-3: rgba(245,247,250,.32);
+      --glass: rgba(30,38,60,.42);
+      --glass-strong: rgba(36,44,70,.62);
+      --glass-border: rgba(255,255,255,.14);
+      --glass-inner: rgba(255,255,255,.06);
+      --shadow: 0 18px 50px -12px rgba(0,0,0,.55);
+      --shadow-soft: 0 8px 30px -8px rgba(0,0,0,.4);
+    }
+  }
 
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body { height:100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+  }
+
+  /* ---------- Ambient background orbs ---------- */
+  .ambient { position:fixed; inset:0; z-index:0; overflow:hidden; background:linear-gradient(180deg,var(--bg) 0%,var(--bg-deep) 100%); }
+  .orb { position:absolute; border-radius:50%; filter:blur(70px); opacity:.5; animation: drift 18s ease-in-out infinite alternate; }
+  .orb.sun   { width:340px; height:340px; background:radial-gradient(circle at 35% 35%, #ffd60a, #ff9f0a 60%, transparent 75%); top:-120px; right:-90px; }
+  .orb.sky   { width:300px; height:300px; background:radial-gradient(circle at 40% 40%, #0a84ff, transparent 70%); bottom:6%; left:-120px; animation-delay:-6s; opacity:.35; }
+  .orb.leaf  { width:240px; height:240px; background:radial-gradient(circle at 40% 40%, #30d158, transparent 70%); top:42%; right:-80px; animation-delay:-11s; opacity:.28; }
+  @keyframes drift {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(-36px, 30px) scale(1.12); }
+  }
+
+  /* ---------- App frame ---------- */
+  .app {
+    position:relative; z-index:1;
+    max-width: 430px; height:100dvh;
+    margin:0 auto;
+    display:flex; flex-direction:column;
+  }
+
+  /* ---------- Glass header ---------- */
+  header {
+    position:sticky; top:0; z-index:20;
+    padding: calc(env(safe-area-inset-top, 12px) + 10px) 20px 12px;
+    display:flex; align-items:center; justify-content:space-between;
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    background: linear-gradient(180deg, var(--glass-strong), transparent);
+  }
+  .brand { display:flex; align-items:center; gap:10px; }
+  .brand-mark {
+    width:38px; height:38px; border-radius:12px;
+    background: linear-gradient(140deg, #ffd60a, #ff9f0a 55%, #ff6b0a);
+    display:grid; place-items:center;
+    box-shadow: 0 6px 18px -4px rgba(255,159,10,.6), inset 0 1px 1.5px rgba(255,255,255,.7);
+    font-size:20px;
+  }
+  .brand h1 { font-size:17px; font-weight:700; letter-spacing:-.3px; }
+  .brand p  { font-size:11px; color:var(--text-2); font-weight:500; letter-spacing:.2px; }
+  .avatar {
+    width:36px; height:36px; border-radius:50%;
+    background: linear-gradient(135deg, var(--blue), #64d2ff);
+    display:grid; place-items:center; color:#fff; font-weight:700; font-size:14px;
+    border: 1.5px solid var(--glass-border);
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* ---------- Screens ---------- */
+  main { flex:1; overflow:hidden; position:relative; }
+  .screen {
+    position:absolute; inset:0;
+    overflow-y:auto; overscroll-behavior:contain;
+    padding: 8px 20px calc(var(--tabbar-h) + env(safe-area-inset-bottom, 12px) + 28px);
+    opacity:0; transform: translateY(14px) scale(.985);
+    pointer-events:none;
+    transition: opacity .38s cubic-bezier(.32,.72,.28,1), transform .38s cubic-bezier(.32,.72,.28,1);
+  }
+  .screen.active { opacity:1; transform:none; pointer-events:auto; }
+  .screen::-webkit-scrollbar { display:none; }
+
+  .large-title { font-size:32px; font-weight:800; letter-spacing:-.8px; margin:6px 0 2px; }
+  .subtitle { font-size:14px; color:var(--text-2); font-weight:500; margin-bottom:18px; }
+
+  /* ---------- Liquid glass card ---------- */
+  .card {
+    position:relative;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 26px;
+    padding: 20px;
+    margin-bottom:14px;
+    backdrop-filter: blur(28px) saturate(1.7);
+    -webkit-backdrop-filter: blur(28px) saturate(1.7);
+    box-shadow: var(--shadow-soft), inset 0 1px 1px var(--glass-inner);
+    transition: transform .25s cubic-bezier(.32,.72,.28,1);
+  }
+  .card:active { transform: scale(.977); }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(150deg, rgba(255,214,10,.32), rgba(255,159,10,.16) 45%, var(--glass));
+    overflow:hidden;
+  }
+  .hero .sun-ring {
+    position:absolute; top:-46px; right:-46px; width:150px; height:150px; border-radius:50%;
+    background: conic-gradient(from 0deg, #ffd60a, #ff9f0a, #ffd60a);
+    filter: blur(2px); opacity:.85;
+    animation: spin 24s linear infinite;
+  }
+  .hero .sun-core {
+    position:absolute; top:-30px; right:-30px; width:118px; height:118px; border-radius:50%;
+    background: radial-gradient(circle at 38% 38%, #fff7d6, #ffd60a 45%, #ff9f0a);
+    box-shadow: 0 0 60px 8px rgba(255,190,10,.55);
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .hero .kicker { font-size:12px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
+  .hero h2 { font-size:24px; font-weight:800; letter-spacing:-.5px; line-height:1.15; max-width:75%; }
+  .hero p  { font-size:14px; color:var(--text-2); margin-top:8px; max-width:80%; line-height:1.45; }
+
+  .cta {
+    display:inline-flex; align-items:center; gap:8px;
+    margin-top:16px; padding:12px 22px;
+    border:none; border-radius:100px;
+    font: 600 15px/1 -apple-system, "SF Pro Text", sans-serif;
+    color:#3a2400;
+    background: linear-gradient(140deg, #ffd60a, #ff9f0a);
+    box-shadow: 0 10px 26px -6px rgba(255,159,10,.65), inset 0 1px 1.5px rgba(255,255,255,.75);
+    cursor:pointer;
+    transition: transform .2s cubic-bezier(.32,.72,.28,1);
+  }
+  .cta:active { transform: scale(.94); }
+
+  /* Stats grid */
+  .stats { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+  .stat { padding:18px; margin:0; }
+  .stat .icon { font-size:22px; margin-bottom:10px; }
+  .stat .val { font-size:26px; font-weight:800; letter-spacing:-.6px; font-variant-numeric: tabular-nums; }
+  .stat .unit { font-size:14px; font-weight:600; color:var(--text-2); margin-left:2px; }
+  .stat .lbl { font-size:12px; color:var(--text-2); font-weight:500; margin-top:3px; }
+
+  /* Energy bars */
+  .bars { display:flex; align-items:flex-end; gap:7px; height:96px; margin-top:16px; }
+  .bar { flex:1; border-radius:7px 7px 4px 4px;
+    background: linear-gradient(180deg, #ffd60a, #ff9f0a);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,.5);
+    animation: grow .9s cubic-bezier(.32,.72,.28,1) backwards;
+  }
+  .bar.dim { background: linear-gradient(180deg, rgba(255,214,10,.35), rgba(255,159,10,.3)); }
+  @keyframes grow { from { height:6px !important; opacity:0; } }
+  .bar-labels { display:flex; gap:7px; margin-top:8px; }
+  .bar-labels span { flex:1; text-align:center; font-size:10px; font-weight:600; color:var(--text-3); }
+
+  .section-head { display:flex; align-items:baseline; justify-content:space-between; margin:22px 2px 12px; }
+  .section-head h3 { font-size:20px; font-weight:800; letter-spacing:-.4px; }
+  .section-head a { font-size:14px; font-weight:600; color:var(--blue); text-decoration:none; }
+
+  /* Service rows */
+  .service { display:flex; align-items:center; gap:14px; }
+  .service .s-icon {
+    width:50px; height:50px; border-radius:16px; flex-shrink:0;
+    display:grid; place-items:center; font-size:24px;
+    background: var(--glass-strong);
+    border:1px solid var(--glass-border);
+    box-shadow: inset 0 1px 1px var(--glass-inner);
+  }
+  .service .s-body { flex:1; min-width:0; }
+  .service h4 { font-size:16px; font-weight:700; letter-spacing:-.2px; }
+  .service p { font-size:13px; color:var(--text-2); margin-top:2px; line-height:1.4; }
+  .service .chev { color:var(--text-3); font-size:18px; font-weight:600; }
+  .badge { display:inline-block; font-size:11px; font-weight:700; padding:3px 9px; border-radius:100px; margin-top:6px;
+    background:rgba(48,209,88,.16); color:var(--green); }
+
+  /* Calculator */
+  .calc-value { text-align:center; padding:26px 20px 22px; }
+  .calc-value .big { font-size:46px; font-weight:800; letter-spacing:-1.5px; font-variant-numeric:tabular-nums;
+    background: linear-gradient(120deg, #ff9f0a, #ffd60a); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  .calc-value .cap { font-size:13px; color:var(--text-2); font-weight:600; margin-top:4px; }
+  .slider-row { margin:6px 0 4px; }
+  .slider-row .top { display:flex; justify-content:space-between; font-size:14px; font-weight:600; margin-bottom:10px; }
+  .slider-row .top b { font-variant-numeric:tabular-nums; color:var(--accent); }
+  input[type=range] {
+    width:100%; appearance:none; -webkit-appearance:none; height:6px; border-radius:100px;
+    background: linear-gradient(90deg, var(--accent) var(--fill,50%), rgba(120,130,160,.28) var(--fill,50%));
+    outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    appearance:none; -webkit-appearance:none; width:28px; height:28px; border-radius:50%;
+    background:#fff; border:.5px solid rgba(0,0,0,.06);
+    box-shadow: 0 4px 12px rgba(0,0,0,.22), 0 1px 3px rgba(0,0,0,.12);
+    cursor:pointer;
+  }
+  .calc-facts { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:14px; }
+  .fact { text-align:center; padding:14px 6px; margin:0; border-radius:20px; }
+  .fact .f-val { font-size:17px; font-weight:800; letter-spacing:-.3px; font-variant-numeric:tabular-nums; }
+  .fact .f-lbl { font-size:10.5px; color:var(--text-2); font-weight:600; margin-top:3px; }
+
+  /* Contact form */
+  .field { margin-bottom:12px; }
+  .field label { display:block; font-size:12px; font-weight:700; letter-spacing:.3px; color:var(--text-2); margin:0 4px 6px; text-transform:uppercase; }
+  .field input, .field textarea {
+    width:100%; padding:15px 16px; border-radius:18px;
+    border:1px solid var(--glass-border);
+    background: var(--glass);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    font: 500 16px/1.3 -apple-system, "SF Pro Text", sans-serif;
+    color:var(--text); outline:none;
+    box-shadow: inset 0 1px 1px var(--glass-inner);
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .field input:focus, .field textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(255,159,10,.18); }
+  .field textarea { resize:none; height:104px; }
+  .submit {
+    width:100%; padding:17px; border:none; border-radius:20px;
+    font: 700 17px/1 -apple-system, "SF Pro Text", sans-serif; color:#3a2400;
+    background: linear-gradient(140deg, #ffd60a, #ff9f0a);
+    box-shadow: 0 12px 30px -8px rgba(255,159,10,.7), inset 0 1px 1.5px rgba(255,255,255,.75);
+    cursor:pointer; margin-top:4px;
+    transition: transform .2s cubic-bezier(.32,.72,.28,1);
+  }
+  .submit:active { transform: scale(.96); }
+  .contact-line { display:flex; align-items:center; gap:12px; padding:4px 2px; }
+  .contact-line + .contact-line { margin-top:14px; }
+  .contact-line .c-ic { width:38px; height:38px; border-radius:12px; display:grid; place-items:center; font-size:17px;
+    background:var(--glass-strong); border:1px solid var(--glass-border); }
+  .contact-line span { font-size:15px; font-weight:600; }
+  .contact-line small { display:block; font-size:12px; color:var(--text-2); font-weight:500; }
+
+  /* ---------- Floating glass tab bar ---------- */
+  nav {
+    position:fixed; left:50%; transform:translateX(-50%);
+    bottom: calc(env(safe-area-inset-bottom, 10px) + 12px);
+    z-index:30;
+    width: min(390px, calc(100% - 32px));
+    height: 66px;
+    display:flex; align-items:center; justify-content:space-around;
+    border-radius: 100px;
+    background: var(--glass-strong);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(30px) saturate(1.8);
+    -webkit-backdrop-filter: blur(30px) saturate(1.8);
+    box-shadow: var(--shadow), inset 0 1px 1.5px var(--glass-inner);
+  }
+  .tab {
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    background:none; border:none; cursor:pointer;
+    color:var(--text-3); font: 600 10px/1 -apple-system, "SF Pro Text", sans-serif;
+    padding:8px 14px; border-radius:100px;
+    transition: color .25s, transform .25s cubic-bezier(.32,.72,.28,1);
+  }
+  .tab .t-ic { font-size:22px; transition: transform .3s cubic-bezier(.32,.72,.28,1); filter:grayscale(1) opacity(.55); }
+  .tab.active { color:var(--accent); }
+  .tab.active .t-ic { transform: translateY(-1px) scale(1.12); filter:none; }
+  .tab:active { transform: scale(.88); }
+
+  /* Toast */
+  .toast {
+    position:fixed; left:50%; top:calc(env(safe-area-inset-top,12px) + 14px);
+    transform:translate(-50%,-140%); z-index:50;
+    padding:13px 22px; border-radius:100px;
+    background:var(--glass-strong); border:1px solid var(--glass-border);
+    backdrop-filter:blur(28px) saturate(1.8); -webkit-backdrop-filter:blur(28px) saturate(1.8);
+    box-shadow:var(--shadow);
+    font-size:14px; font-weight:700;
+    transition: transform .5s cubic-bezier(.32,.72,.28,1);
+    white-space:nowrap;
+  }
+  .toast.show { transform:translate(-50%,0); }
+</style>
+</head>
+<body>
+
+<div class="ambient">
+  <div class="orb sun"></div>
+  <div class="orb sky"></div>
+  <div class="orb leaf"></div>
+</div>
+
+<div class="app">
+
+  <header>
+    <div class="brand">
+      <div class="brand-mark">☀️</div>
+      <div>
+        <h1>LemarSunTech</h1>
+        <p>Clean energy, beautifully engineered</p>
+      </div>
+    </div>
+    <div class="avatar">LS</div>
+  </header>
+
+  <main>
+
+    <!-- ============ HOME ============ -->
+    <section class="screen active" id="screen-home">
+      <h2 class="large-title">Good day ☀️</h2>
+      <p class="subtitle">Your solar future starts here.</p>
+
+      <div class="card hero">
+        <div class="sun-ring"></div>
+        <div class="sun-core"></div>
+        <div class="kicker">Go Solar Today</div>
+        <h2>Power your home with sunshine</h2>
+        <p>Premium panels, smart storage and expert installation — all in one place.</p>
+        <button class="cta" onclick="go('contact')">Get Free Quote →</button>
+      </div>
+
+      <div class="stats">
+        <div class="card stat">
+          <div class="icon">⚡️</div>
+          <div><span class="val" data-count="2400">0</span><span class="unit">+</span></div>
+          <div class="lbl">Systems installed</div>
+        </div>
+        <div class="card stat">
+          <div class="icon">🔋</div>
+          <div><span class="val" data-count="18">0</span><span class="unit">MW</span></div>
+          <div class="lbl">Total capacity delivered</div>
+        </div>
+        <div class="card stat">
+          <div class="icon">🌍</div>
+          <div><span class="val" data-count="12500">0</span><span class="unit">t</span></div>
+          <div class="lbl">CO₂ saved per year</div>
+        </div>
+        <div class="card stat">
+          <div class="icon">⭐️</div>
+          <div><span class="val">4.9</span><span class="unit">/5</span></div>
+          <div class="lbl">Customer rating</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-head" style="margin:0 0 4px;">
+          <h3 style="font-size:17px;">This week's production</h3>
+          <a>kWh</a>
+        </div>
+        <div class="bars">
+          <div class="bar" style="height:52%; animation-delay:.05s"></div>
+          <div class="bar" style="height:68%; animation-delay:.1s"></div>
+          <div class="bar" style="height:44%; animation-delay:.15s"></div>
+          <div class="bar" style="height:82%; animation-delay:.2s"></div>
+          <div class="bar" style="height:95%; animation-delay:.25s"></div>
+          <div class="bar" style="height:74%; animation-delay:.3s"></div>
+          <div class="bar dim" style="height:38%; animation-delay:.35s"></div>
+        </div>
+        <div class="bar-labels">
+          <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h3>Popular services</h3>
+        <a href="#" onclick="go('services');return false;">See all</a>
+      </div>
+      <div class="card service" onclick="go('services')">
+        <div class="s-icon">🏠</div>
+        <div class="s-body">
+          <h4>Residential Solar</h4>
+          <p>Rooftop systems tailored to your home</p>
+        </div>
+        <div class="chev">›</div>
+      </div>
+      <div class="card service" onclick="go('services')">
+        <div class="s-icon">🔋</div>
+        <div class="s-body">
+          <h4>Battery Storage</h4>
+          <p>Keep the lights on, day and night</p>
+        </div>
+        <div class="chev">›</div>
+      </div>
+    </section>
+
+    <!-- ============ SERVICES ============ -->
+    <section class="screen" id="screen-services">
+      <h2 class="large-title">Services</h2>
+      <p class="subtitle">Everything you need to go solar.</p>
+      <div id="services-list"></div>
+    </section>
+
+    <!-- ============ CALCULATOR ============ -->
+    <section class="screen" id="screen-calc">
+      <h2 class="large-title">Savings</h2>
+      <p class="subtitle">Estimate your solar savings in seconds.</p>
+
+      <div class="card calc-value">
+        <div class="big" id="calc-savings">$1,860</div>
+        <div class="cap">estimated savings per year</div>
+      </div>
+
+      <div class="card">
+        <div class="slider-row">
+          <div class="top"><span>Monthly electric bill</span><b id="bill-val">$220</b></div>
+          <input type="range" id="bill" min="50" max="800" step="10" value="220">
+        </div>
+      </div>
+      <div class="card">
+        <div class="slider-row">
+          <div class="top"><span>Sunlight hours / day</span><b id="sun-val">5.5 h</b></div>
+          <input type="range" id="sun" min="3" max="9" step="0.5" value="5.5">
+        </div>
+      </div>
+
+      <div class="calc-facts">
+        <div class="card fact">
+          <div class="f-val" id="fact-size">7.2 kW</div>
+          <div class="f-lbl">System size</div>
+        </div>
+        <div class="card fact">
+          <div class="f-val" id="fact-payback">6.8 yr</div>
+          <div class="f-lbl">Payback</div>
+        </div>
+        <div class="card fact">
+          <div class="f-val" id="fact-25">$46k</div>
+          <div class="f-lbl">25-yr savings</div>
+        </div>
+      </div>
+
+      <button class="submit" style="margin-top:16px" onclick="go('contact')">Request Exact Quote</button>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="screen" id="screen-contact">
+      <h2 class="large-title">Contact</h2>
+      <p class="subtitle">Talk to a solar expert — it's free.</p>
+
+      <form class="card" onsubmit="sendForm(event)">
+        <div class="field">
+          <label>Name</label>
+          <input type="text" placeholder="Your full name" required>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label>Message</label>
+          <textarea placeholder="Tell us about your home and energy goals…"></textarea>
+        </div>
+        <button class="submit" type="submit">Send Message</button>
+      </form>
+
+      <div class="card">
+        <div class="contact-line">
+          <div class="c-ic">📞</div>
+          <div><span>+1 (800) 555-SOLAR</span><small>Mon–Sat, 8am–7pm</small></div>
+        </div>
+        <div class="contact-line">
+          <div class="c-ic">✉️</div>
+          <div><span>hello@lemarsuntech.com</span><small>We reply within 24 hours</small></div>
+        </div>
+        <div class="contact-line">
+          <div class="c-ic">📍</div>
+          <div><span>LemarSunTech HQ</span><small>100 Sunshine Blvd, Solar City</small></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FLOATING TAB BAR ============ -->
+  <nav>
+    <button class="tab active" data-tab="home"     onclick="go('home')"><span class="t-ic">🏠</span>Home</button>
+    <button class="tab"        data-tab="services" onclick="go('services')"><span class="t-ic">🛠️</span>Services</button>
+    <button class="tab"        data-tab="calc"     onclick="go('calc')"><span class="t-ic">📊</span>Savings</button>
+    <button class="tab"        data-tab="contact"  onclick="go('contact')"><span class="t-ic">💬</span>Contact</button>
+  </nav>
+
+</div>
+
+<div class="toast" id="toast">✅ Message sent — we'll be in touch!</div>
+
+<script>
+/* ---------- Services data (mirrors services.json) ---------- */
+const SERVICES = [
+  { icon:"🏠", name:"Residential Solar", desc:"Custom rooftop systems designed around your home, roof and budget.", badge:"Most popular" },
+  { icon:"🏢", name:"Commercial Solar", desc:"Large-scale installations that cut operating costs for your business." },
+  { icon:"🔋", name:"Battery Storage", desc:"Store daytime sun and power your home through the night and outages." },
+  { icon:"🚗", name:"EV Charging", desc:"Home and workplace chargers powered directly by your panels." },
+  { icon:"🧰", name:"Maintenance & Repair", desc:"Panel cleaning, inspections and performance tune-ups." },
+  { icon:"📡", name:"Smart Monitoring", desc:"Real-time production tracking from an elegant app dashboard." },
+  { icon:"📐", name:"Free Site Assessment", desc:"A solar engineer evaluates your roof, shading and energy usage.", badge:"Free" },
+];
+
+const list = document.getElementById("services-list");
+list.innerHTML = SERVICES.map(s => `
+  <div class="card service">
+    <div class="s-icon">${s.icon}</div>
+    <div class="s-body">
+      <h4>${s.name}</h4>
+      <p>${s.desc}</p>
+      ${s.badge ? `<span class="badge">${s.badge}</span>` : ""}
+    </div>
+    <div class="chev">›</div>
+  </div>`).join("");
+
+/* ---------- Tab navigation ---------- */
+function go(name) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById("screen-" + name).classList.add("active");
+  document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.tab === name));
+  if (navigator.vibrate) navigator.vibrate(8);
+}
+
+/* ---------- Animated counters ---------- */
+function animateCounters() {
+  document.querySelectorAll("[data-count]").forEach(el => {
+    const target = +el.dataset.count, dur = 1300, t0 = performance.now();
+    (function tick(t) {
+      const p = Math.min((t - t0) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased).toLocaleString();
+      if (p < 1) requestAnimationFrame(tick);
+    })(t0);
+  });
+}
+animateCounters();
+
+/* ---------- Savings calculator ---------- */
+const bill = document.getElementById("bill");
+const sun  = document.getElementById("sun");
+function fillTrack(el) {
+  const p = ((el.value - el.min) / (el.max - el.min)) * 100;
+  el.style.setProperty("--fill", p + "%");
+}
+function calc() {
+  fillTrack(bill); fillTrack(sun);
+  const b = +bill.value, h = +sun.value;
+  document.getElementById("bill-val").textContent = "$" + b;
+  document.getElementById("sun-val").textContent  = h + " h";
+
+  const offset = Math.min(0.95, 0.55 + (h - 3) * 0.07);       // % of bill offset by solar
+  const yearly = Math.round(b * 12 * offset / 10) * 10;
+  const sizeKw = +(b * 0.033 * (5.5 / h)).toFixed(1);          // rough system size
+  const cost   = sizeKw * 2600 * 0.7;                          // after ~30% incentive
+  const payback = Math.max(3, +(cost / yearly).toFixed(1));
+  const lifetime = Math.round((yearly * 25 - cost) / 1000);
+
+  document.getElementById("calc-savings").textContent = "$" + yearly.toLocaleString();
+  document.getElementById("fact-size").textContent    = sizeKw + " kW";
+  document.getElementById("fact-payback").textContent = payback + " yr";
+  document.getElementById("fact-25").textContent      = "$" + lifetime + "k";
+}
+bill.addEventListener("input", calc);
+sun.addEventListener("input", calc);
+calc();
+
+/* ---------- Contact form ---------- */
+function sendForm(e) {
+  e.preventDefault();
+  const toast = document.getElementById("toast");
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2800);
+  e.target.reset();
+  if (navigator.vibrate) navigator.vibrate([10, 40, 10]);
+}
+</script>
+</body>
+</html>
