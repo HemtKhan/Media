@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa-AF" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0a0e1a">
-<title>LemarSunTech — Solar Energy</title>
+<title>لمر سن‌تک | LEMAR SunTech — انرژی آفتابی</title>
 <style>
   :root {
     --bg: #f2f4f8;
@@ -21,6 +21,7 @@
     --accent: #ff9f0a;
     --accent-2: #ffd60a;
     --green: #30d158;
+    --whatsapp: #25d366;
     --blue: #0a84ff;
     --shadow: 0 18px 50px -12px rgba(20,30,60,.22);
     --shadow-soft: 0 8px 30px -8px rgba(20,30,60,.14);
@@ -45,7 +46,7 @@
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html, body { height:100%; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "Noto Naskh Arabic", Tahoma, Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
     overflow: hidden;
@@ -56,12 +57,12 @@
   /* ---------- Ambient background orbs ---------- */
   .ambient { position:fixed; inset:0; z-index:0; overflow:hidden; background:linear-gradient(180deg,var(--bg) 0%,var(--bg-deep) 100%); }
   .orb { position:absolute; border-radius:50%; filter:blur(70px); opacity:.5; animation: drift 18s ease-in-out infinite alternate; }
-  .orb.sun   { width:340px; height:340px; background:radial-gradient(circle at 35% 35%, #ffd60a, #ff9f0a 60%, transparent 75%); top:-120px; right:-90px; }
-  .orb.sky   { width:300px; height:300px; background:radial-gradient(circle at 40% 40%, #0a84ff, transparent 70%); bottom:6%; left:-120px; animation-delay:-6s; opacity:.35; }
-  .orb.leaf  { width:240px; height:240px; background:radial-gradient(circle at 40% 40%, #30d158, transparent 70%); top:42%; right:-80px; animation-delay:-11s; opacity:.28; }
+  .orb.sun   { width:340px; height:340px; background:radial-gradient(circle at 35% 35%, #ffd60a, #ff9f0a 60%, transparent 75%); top:-120px; left:-90px; }
+  .orb.sky   { width:300px; height:300px; background:radial-gradient(circle at 40% 40%, #0a84ff, transparent 70%); bottom:6%; right:-120px; animation-delay:-6s; opacity:.35; }
+  .orb.leaf  { width:240px; height:240px; background:radial-gradient(circle at 40% 40%, #30d158, transparent 70%); top:42%; left:-80px; animation-delay:-11s; opacity:.28; }
   @keyframes drift {
     from { transform: translate(0,0) scale(1); }
-    to   { transform: translate(-36px, 30px) scale(1.12); }
+    to   { transform: translate(36px, 30px) scale(1.12); }
   }
 
   /* ---------- App frame ---------- */
@@ -89,14 +90,15 @@
     box-shadow: 0 6px 18px -4px rgba(255,159,10,.6), inset 0 1px 1.5px rgba(255,255,255,.7);
     font-size:20px;
   }
-  .brand h1 { font-size:17px; font-weight:700; letter-spacing:-.3px; }
-  .brand p  { font-size:11px; color:var(--text-2); font-weight:500; letter-spacing:.2px; }
-  .avatar {
-    width:36px; height:36px; border-radius:50%;
-    background: linear-gradient(135deg, var(--blue), #64d2ff);
-    display:grid; place-items:center; color:#fff; font-weight:700; font-size:14px;
+  .brand h1 { font-size:17px; font-weight:700; }
+  .brand p  { font-size:11.5px; color:var(--text-2); font-weight:500; }
+  .call-btn {
+    width:40px; height:40px; border-radius:50%;
+    background: linear-gradient(135deg, #30d158, #25a244);
+    display:grid; place-items:center; font-size:18px;
     border: 1.5px solid var(--glass-border);
     box-shadow: var(--shadow-soft);
+    text-decoration:none;
   }
 
   /* ---------- Screens ---------- */
@@ -112,8 +114,8 @@
   .screen.active { opacity:1; transform:none; pointer-events:auto; }
   .screen::-webkit-scrollbar { display:none; }
 
-  .large-title { font-size:32px; font-weight:800; letter-spacing:-.8px; margin:6px 0 2px; }
-  .subtitle { font-size:14px; color:var(--text-2); font-weight:500; margin-bottom:18px; }
+  .large-title { font-size:30px; font-weight:800; margin:6px 0 2px; line-height:1.3; }
+  .subtitle { font-size:14.5px; color:var(--text-2); font-weight:500; margin-bottom:18px; line-height:1.6; }
 
   /* ---------- Liquid glass card ---------- */
   .card {
@@ -132,88 +134,129 @@
 
   /* Hero */
   .hero {
-    background: linear-gradient(150deg, rgba(255,214,10,.32), rgba(255,159,10,.16) 45%, var(--glass));
+    background: linear-gradient(210deg, rgba(255,214,10,.32), rgba(255,159,10,.16) 45%, var(--glass));
     overflow:hidden;
   }
   .hero .sun-ring {
-    position:absolute; top:-46px; right:-46px; width:150px; height:150px; border-radius:50%;
+    position:absolute; top:-46px; left:-46px; width:150px; height:150px; border-radius:50%;
     background: conic-gradient(from 0deg, #ffd60a, #ff9f0a, #ffd60a);
     filter: blur(2px); opacity:.85;
     animation: spin 24s linear infinite;
   }
   .hero .sun-core {
-    position:absolute; top:-30px; right:-30px; width:118px; height:118px; border-radius:50%;
+    position:absolute; top:-30px; left:-30px; width:118px; height:118px; border-radius:50%;
     background: radial-gradient(circle at 38% 38%, #fff7d6, #ffd60a 45%, #ff9f0a);
     box-shadow: 0 0 60px 8px rgba(255,190,10,.55);
   }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .hero .kicker { font-size:12px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
-  .hero h2 { font-size:24px; font-weight:800; letter-spacing:-.5px; line-height:1.15; max-width:75%; }
-  .hero p  { font-size:14px; color:var(--text-2); margin-top:8px; max-width:80%; line-height:1.45; }
+  .hero .kicker { font-size:12.5px; font-weight:700; color:var(--accent); margin-bottom:8px; }
+  .hero h2 { font-size:23px; font-weight:800; line-height:1.5; max-width:78%; }
+  .hero p  { font-size:14px; color:var(--text-2); margin-top:8px; max-width:82%; line-height:1.8; }
 
   .cta {
     display:inline-flex; align-items:center; gap:8px;
-    margin-top:16px; padding:12px 22px;
+    margin-top:16px; padding:13px 22px;
     border:none; border-radius:100px;
-    font: 600 15px/1 -apple-system, "SF Pro Text", sans-serif;
-    color:#3a2400;
-    background: linear-gradient(140deg, #ffd60a, #ff9f0a);
-    box-shadow: 0 10px 26px -6px rgba(255,159,10,.65), inset 0 1px 1.5px rgba(255,255,255,.75);
-    cursor:pointer;
+    font: 700 15px/1 inherit;
+    font-family:inherit;
+    color:#fff;
+    background: linear-gradient(140deg, #2fdd6d, #1faa4e);
+    box-shadow: 0 10px 26px -6px rgba(37,211,102,.6), inset 0 1px 1.5px rgba(255,255,255,.4);
+    cursor:pointer; text-decoration:none;
     transition: transform .2s cubic-bezier(.32,.72,.28,1);
   }
   .cta:active { transform: scale(.94); }
+  .cta.orange {
+    color:#3a2400;
+    background: linear-gradient(140deg, #ffd60a, #ff9f0a);
+    box-shadow: 0 10px 26px -6px rgba(255,159,10,.65), inset 0 1px 1.5px rgba(255,255,255,.75);
+  }
 
   /* Stats grid */
   .stats { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
   .stat { padding:18px; margin:0; }
   .stat .icon { font-size:22px; margin-bottom:10px; }
-  .stat .val { font-size:26px; font-weight:800; letter-spacing:-.6px; font-variant-numeric: tabular-nums; }
-  .stat .unit { font-size:14px; font-weight:600; color:var(--text-2); margin-left:2px; }
-  .stat .lbl { font-size:12px; color:var(--text-2); font-weight:500; margin-top:3px; }
-
-  /* Energy bars */
-  .bars { display:flex; align-items:flex-end; gap:7px; height:96px; margin-top:16px; }
-  .bar { flex:1; border-radius:7px 7px 4px 4px;
-    background: linear-gradient(180deg, #ffd60a, #ff9f0a);
-    box-shadow: inset 0 1px 1px rgba(255,255,255,.5);
-    animation: grow .9s cubic-bezier(.32,.72,.28,1) backwards;
-  }
-  .bar.dim { background: linear-gradient(180deg, rgba(255,214,10,.35), rgba(255,159,10,.3)); }
-  @keyframes grow { from { height:6px !important; opacity:0; } }
-  .bar-labels { display:flex; gap:7px; margin-top:8px; }
-  .bar-labels span { flex:1; text-align:center; font-size:10px; font-weight:600; color:var(--text-3); }
+  .stat .val { font-size:24px; font-weight:800; }
+  .stat .lbl { font-size:12.5px; color:var(--text-2); font-weight:500; margin-top:4px; line-height:1.5; }
 
   .section-head { display:flex; align-items:baseline; justify-content:space-between; margin:22px 2px 12px; }
-  .section-head h3 { font-size:20px; font-weight:800; letter-spacing:-.4px; }
+  .section-head h3 { font-size:19px; font-weight:800; }
   .section-head a { font-size:14px; font-weight:600; color:var(--blue); text-decoration:none; }
 
-  /* Service rows */
-  .service { display:flex; align-items:center; gap:14px; }
-  .service .s-icon {
-    width:50px; height:50px; border-radius:16px; flex-shrink:0;
-    display:grid; place-items:center; font-size:24px;
+  /* Brand chips */
+  .brands { display:flex; flex-wrap:wrap; gap:8px; }
+  .brand-chip {
+    padding:8px 15px; border-radius:100px; font-size:13px; font-weight:700;
+    background:var(--glass-strong); border:1px solid var(--glass-border);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Category filter (segmented) */
+  .seg { display:flex; gap:6px; overflow-x:auto; padding:2px; margin-bottom:16px; scrollbar-width:none; }
+  .seg::-webkit-scrollbar { display:none; }
+  .seg button {
+    flex-shrink:0; padding:10px 18px; border-radius:100px; border:1px solid var(--glass-border);
+    background:var(--glass); color:var(--text-2);
+    font:600 13.5px/1 inherit; font-family:inherit; cursor:pointer;
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    transition: all .25s cubic-bezier(.32,.72,.28,1);
+  }
+  .seg button.on {
+    background: linear-gradient(140deg, #ffd60a, #ff9f0a); color:#3a2400; font-weight:700;
+    border-color:transparent;
+    box-shadow: 0 8px 20px -6px rgba(255,159,10,.6);
+  }
+
+  /* Product rows */
+  .product { display:flex; align-items:center; gap:14px; }
+  .product .p-icon {
+    width:52px; height:52px; border-radius:16px; flex-shrink:0;
+    display:grid; place-items:center; font-size:25px;
     background: var(--glass-strong);
     border:1px solid var(--glass-border);
     box-shadow: inset 0 1px 1px var(--glass-inner);
   }
-  .service .s-body { flex:1; min-width:0; }
-  .service h4 { font-size:16px; font-weight:700; letter-spacing:-.2px; }
-  .service p { font-size:13px; color:var(--text-2); margin-top:2px; line-height:1.4; }
-  .service .chev { color:var(--text-3); font-size:18px; font-weight:600; }
-  .badge { display:inline-block; font-size:11px; font-weight:700; padding:3px 9px; border-radius:100px; margin-top:6px;
+  .product .p-body { flex:1; min-width:0; }
+  .product h4 { font-size:15.5px; font-weight:700; line-height:1.45; }
+  .product p { font-size:12.5px; color:var(--text-2); margin-top:3px; line-height:1.7; }
+  .product .wa-mini {
+    width:38px; height:38px; border-radius:50%; flex-shrink:0;
+    display:grid; place-items:center; font-size:17px;
+    background: rgba(37,211,102,.15); border:1px solid rgba(37,211,102,.35);
+    text-decoration:none;
+  }
+  .badge { display:inline-block; font-size:11px; font-weight:700; padding:3px 10px; border-radius:100px; margin-top:6px;
     background:rgba(48,209,88,.16); color:var(--green); }
+  .badge.hot { background:rgba(255,159,10,.16); color:var(--accent); }
 
   /* Calculator */
-  .calc-value { text-align:center; padding:26px 20px 22px; }
-  .calc-value .big { font-size:46px; font-weight:800; letter-spacing:-1.5px; font-variant-numeric:tabular-nums;
+  .calc-value { text-align:center; padding:24px 20px 20px; }
+  .calc-value .big { font-size:40px; font-weight:800;
     background: linear-gradient(120deg, #ff9f0a, #ffd60a); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
-  .calc-value .cap { font-size:13px; color:var(--text-2); font-weight:600; margin-top:4px; }
+  .calc-value .cap { font-size:13.5px; color:var(--text-2); font-weight:600; margin-top:4px; }
+
+  .appliance { display:flex; align-items:center; gap:12px; padding:13px 0; }
+  .appliance + .appliance { border-top:1px solid var(--glass-border); }
+  .appliance .a-icon { font-size:23px; width:34px; text-align:center; }
+  .appliance .a-body { flex:1; }
+  .appliance h5 { font-size:14.5px; font-weight:700; }
+  .appliance small { font-size:12px; color:var(--text-2); font-weight:500; }
+  .stepper { display:flex; align-items:center; gap:2px;
+    background:var(--glass-strong); border:1px solid var(--glass-border); border-radius:100px; padding:3px; }
+  .stepper button {
+    width:32px; height:32px; border:none; border-radius:50%;
+    background:transparent; color:var(--text); font-size:19px; font-weight:600; cursor:pointer;
+    display:grid; place-items:center;
+    transition: background .2s, transform .15s;
+  }
+  .stepper button:active { background:rgba(255,159,10,.25); transform:scale(.85); }
+  .stepper .cnt { min-width:26px; text-align:center; font-size:15px; font-weight:800; }
+
   .slider-row { margin:6px 0 4px; }
   .slider-row .top { display:flex; justify-content:space-between; font-size:14px; font-weight:600; margin-bottom:10px; }
-  .slider-row .top b { font-variant-numeric:tabular-nums; color:var(--accent); }
+  .slider-row .top b { color:var(--accent); }
   input[type=range] {
-    width:100%; appearance:none; -webkit-appearance:none; height:6px; border-radius:100px;
+    width:100%; appearance:none; -webkit-appearance:none; height:6px; border-radius:100px; direction:ltr;
     background: linear-gradient(90deg, var(--accent) var(--fill,50%), rgba(120,130,160,.28) var(--fill,50%));
     outline:none;
   }
@@ -223,45 +266,36 @@
     box-shadow: 0 4px 12px rgba(0,0,0,.22), 0 1px 3px rgba(0,0,0,.12);
     cursor:pointer;
   }
-  .calc-facts { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:14px; }
-  .fact { text-align:center; padding:14px 6px; margin:0; border-radius:20px; }
-  .fact .f-val { font-size:17px; font-weight:800; letter-spacing:-.3px; font-variant-numeric:tabular-nums; }
+
+  .result-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  .fact { text-align:center; padding:16px 6px; margin:0; border-radius:20px; }
+  .fact .f-ic { font-size:20px; margin-bottom:6px; }
+  .fact .f-val { font-size:16px; font-weight:800; line-height:1.4; }
   .fact .f-lbl { font-size:10.5px; color:var(--text-2); font-weight:600; margin-top:3px; }
 
-  /* Contact form */
-  .field { margin-bottom:12px; }
-  .field label { display:block; font-size:12px; font-weight:700; letter-spacing:.3px; color:var(--text-2); margin:0 4px 6px; text-transform:uppercase; }
-  .field input, .field textarea {
-    width:100%; padding:15px 16px; border-radius:18px;
-    border:1px solid var(--glass-border);
-    background: var(--glass);
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    font: 500 16px/1.3 -apple-system, "SF Pro Text", sans-serif;
-    color:var(--text); outline:none;
-    box-shadow: inset 0 1px 1px var(--glass-inner);
-    transition: border-color .2s, box-shadow .2s;
-  }
-  .field input:focus, .field textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(255,159,10,.18); }
-  .field textarea { resize:none; height:104px; }
   .submit {
     width:100%; padding:17px; border:none; border-radius:20px;
-    font: 700 17px/1 -apple-system, "SF Pro Text", sans-serif; color:#3a2400;
-    background: linear-gradient(140deg, #ffd60a, #ff9f0a);
-    box-shadow: 0 12px 30px -8px rgba(255,159,10,.7), inset 0 1px 1.5px rgba(255,255,255,.75);
-    cursor:pointer; margin-top:4px;
+    font: 700 16px/1 inherit; font-family:inherit; color:#fff;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    background: linear-gradient(140deg, #2fdd6d, #1faa4e);
+    box-shadow: 0 12px 30px -8px rgba(37,211,102,.6), inset 0 1px 1.5px rgba(255,255,255,.4);
+    cursor:pointer; margin-top:14px; text-decoration:none;
     transition: transform .2s cubic-bezier(.32,.72,.28,1);
   }
   .submit:active { transform: scale(.96); }
-  .contact-line { display:flex; align-items:center; gap:12px; padding:4px 2px; }
-  .contact-line + .contact-line { margin-top:14px; }
-  .contact-line .c-ic { width:38px; height:38px; border-radius:12px; display:grid; place-items:center; font-size:17px;
+
+  /* Contact */
+  .contact-line { display:flex; align-items:center; gap:12px; padding:4px 2px; text-decoration:none; color:inherit; }
+  .contact-line + .contact-line { margin-top:16px; }
+  .contact-line .c-ic { width:40px; height:40px; border-radius:13px; display:grid; place-items:center; font-size:18px; flex-shrink:0;
     background:var(--glass-strong); border:1px solid var(--glass-border); }
-  .contact-line span { font-size:15px; font-weight:600; }
-  .contact-line small { display:block; font-size:12px; color:var(--text-2); font-weight:500; }
+  .contact-line span { font-size:15px; font-weight:700; }
+  .contact-line small { display:block; font-size:12.5px; color:var(--text-2); font-weight:500; margin-top:2px; }
+  .phone-ltr { direction:ltr; unicode-bidi:embed; }
 
   /* ---------- Floating glass tab bar ---------- */
   nav {
-    position:fixed; left:50%; transform:translateX(-50%);
+    position:fixed; right:50%; transform:translateX(50%);
     bottom: calc(env(safe-area-inset-bottom, 10px) + 12px);
     z-index:30;
     width: min(390px, calc(100% - 32px));
@@ -277,28 +311,14 @@
   .tab {
     display:flex; flex-direction:column; align-items:center; gap:3px;
     background:none; border:none; cursor:pointer;
-    color:var(--text-3); font: 600 10px/1 -apple-system, "SF Pro Text", sans-serif;
-    padding:8px 14px; border-radius:100px;
+    color:var(--text-3); font: 600 10.5px/1 inherit; font-family:inherit;
+    padding:8px 13px; border-radius:100px;
     transition: color .25s, transform .25s cubic-bezier(.32,.72,.28,1);
   }
   .tab .t-ic { font-size:22px; transition: transform .3s cubic-bezier(.32,.72,.28,1); filter:grayscale(1) opacity(.55); }
   .tab.active { color:var(--accent); }
   .tab.active .t-ic { transform: translateY(-1px) scale(1.12); filter:none; }
   .tab:active { transform: scale(.88); }
-
-  /* Toast */
-  .toast {
-    position:fixed; left:50%; top:calc(env(safe-area-inset-top,12px) + 14px);
-    transform:translate(-50%,-140%); z-index:50;
-    padding:13px 22px; border-radius:100px;
-    background:var(--glass-strong); border:1px solid var(--glass-border);
-    backdrop-filter:blur(28px) saturate(1.8); -webkit-backdrop-filter:blur(28px) saturate(1.8);
-    box-shadow:var(--shadow);
-    font-size:14px; font-weight:700;
-    transition: transform .5s cubic-bezier(.32,.72,.28,1);
-    white-space:nowrap;
-  }
-  .toast.show { transform:translate(-50%,0); }
 </style>
 </head>
 <body>
@@ -315,215 +335,238 @@
     <div class="brand">
       <div class="brand-mark">☀️</div>
       <div>
-        <h1>LemarSunTech</h1>
-        <p>Clean energy, beautifully engineered</p>
+        <h1>لمر سن‌تک</h1>
+        <p>انرژی پاک، انتخاب هوشمند</p>
       </div>
     </div>
-    <div class="avatar">LS</div>
+    <a class="call-btn" href="tel:+93778202600" aria-label="تماس">📞</a>
   </header>
 
   <main>
 
     <!-- ============ HOME ============ -->
     <section class="screen active" id="screen-home">
-      <h2 class="large-title">Good day ☀️</h2>
-      <p class="subtitle">Your solar future starts here.</p>
+      <h2 class="large-title">سلام! ☀️</h2>
+      <p class="subtitle">آینده‌تان را با انرژی آفتاب روشن بسازید.</p>
 
       <div class="card hero">
         <div class="sun-ring"></div>
         <div class="sun-core"></div>
-        <div class="kicker">Go Solar Today</div>
-        <h2>Power your home with sunshine</h2>
-        <p>Premium panels, smart storage and expert installation — all in one place.</p>
-        <button class="cta" onclick="go('contact')">Get Free Quote →</button>
+        <div class="kicker">از سال ۲۰۱۸ در خدمت مردم افغانستان</div>
+        <h2>خانه‌تان را با نور آفتاب روشن کنید</h2>
+        <p>پنل‌های آفتابی، بتری‌های لیتیومی و انورترهای هایبرید با کیفیت جهانی — همراه با نصب مسلکی و ۵ سال وارنتی.</p>
+        <a class="cta" id="hero-wa" href="#" target="_blank" rel="noopener">درخواست قیمت در واتساپ 💬</a>
       </div>
 
       <div class="stats">
         <div class="card stat">
-          <div class="icon">⚡️</div>
-          <div><span class="val" data-count="2400">0</span><span class="unit">+</span></div>
-          <div class="lbl">Systems installed</div>
+          <div class="icon">🛠️</div>
+          <div class="val">+۷ سال</div>
+          <div class="lbl">تجربه در انرژی آفتابی</div>
         </div>
         <div class="card stat">
-          <div class="icon">🔋</div>
-          <div><span class="val" data-count="18">0</span><span class="unit">MW</span></div>
-          <div class="lbl">Total capacity delivered</div>
+          <div class="icon">🛡️</div>
+          <div class="val">۵ سال</div>
+          <div class="lbl">وارنتی نصب و خدمات</div>
         </div>
         <div class="card stat">
-          <div class="icon">🌍</div>
-          <div><span class="val" data-count="12500">0</span><span class="unit">t</span></div>
-          <div class="lbl">CO₂ saved per year</div>
+          <div class="icon">🏆</div>
+          <div class="val">Tier-1</div>
+          <div class="lbl">برندهای درجه یک جهانی</div>
         </div>
         <div class="card stat">
-          <div class="icon">⭐️</div>
-          <div><span class="val">4.9</span><span class="unit">/5</span></div>
-          <div class="lbl">Customer rating</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="section-head" style="margin:0 0 4px;">
-          <h3 style="font-size:17px;">This week's production</h3>
-          <a>kWh</a>
-        </div>
-        <div class="bars">
-          <div class="bar" style="height:52%; animation-delay:.05s"></div>
-          <div class="bar" style="height:68%; animation-delay:.1s"></div>
-          <div class="bar" style="height:44%; animation-delay:.15s"></div>
-          <div class="bar" style="height:82%; animation-delay:.2s"></div>
-          <div class="bar" style="height:95%; animation-delay:.25s"></div>
-          <div class="bar" style="height:74%; animation-delay:.3s"></div>
-          <div class="bar dim" style="height:38%; animation-delay:.35s"></div>
-        </div>
-        <div class="bar-labels">
-          <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+          <div class="icon">📞</div>
+          <div class="val">۲۴/۷</div>
+          <div class="lbl">پشتیبانی تخنیکی</div>
         </div>
       </div>
 
       <div class="section-head">
-        <h3>Popular services</h3>
-        <a href="#" onclick="go('services');return false;">See all</a>
+        <h3>برندهای ما</h3>
       </div>
-      <div class="card service" onclick="go('services')">
-        <div class="s-icon">🏠</div>
-        <div class="s-body">
-          <h4>Residential Solar</h4>
-          <p>Rooftop systems tailored to your home</p>
+      <div class="card">
+        <div class="brands">
+          <span class="brand-chip">Deye</span>
+          <span class="brand-chip">Growatt</span>
+          <span class="brand-chip">Solis</span>
+          <span class="brand-chip">LONGi</span>
+          <span class="brand-chip">Jinko Solar</span>
+          <span class="brand-chip">JA Solar</span>
+          <span class="brand-chip">Q.CELLS</span>
         </div>
-        <div class="chev">›</div>
       </div>
-      <div class="card service" onclick="go('services')">
-        <div class="s-icon">🔋</div>
-        <div class="s-body">
-          <h4>Battery Storage</h4>
-          <p>Keep the lights on, day and night</p>
-        </div>
-        <div class="chev">›</div>
+
+      <div class="section-head">
+        <h3>محصولات پرفروش</h3>
+        <a href="#" onclick="go('products');return false;">همه ←</a>
       </div>
+      <div id="home-products"></div>
     </section>
 
-    <!-- ============ SERVICES ============ -->
-    <section class="screen" id="screen-services">
-      <h2 class="large-title">Services</h2>
-      <p class="subtitle">Everything you need to go solar.</p>
-      <div id="services-list"></div>
+    <!-- ============ PRODUCTS ============ -->
+    <section class="screen" id="screen-products">
+      <h2 class="large-title">محصولات</h2>
+      <p class="subtitle">پنل، بتری لیتیوم و انورتر — همه با وارنتی.</p>
+
+      <div class="seg" id="seg"></div>
+      <div id="products-list"></div>
     </section>
 
     <!-- ============ CALCULATOR ============ -->
     <section class="screen" id="screen-calc">
-      <h2 class="large-title">Savings</h2>
-      <p class="subtitle">Estimate your solar savings in seconds.</p>
+      <h2 class="large-title">محاسبهٔ سیستم</h2>
+      <p class="subtitle">وسایل برقی‌تان را انتخاب کنید تا سیستم مناسب را برای‌تان پیشنهاد کنیم.</p>
 
       <div class="card calc-value">
-        <div class="big" id="calc-savings">$1,860</div>
-        <div class="cap">estimated savings per year</div>
+        <div class="big" id="total-load">۰ وات</div>
+        <div class="cap">مجموع بار برقی شما</div>
       </div>
+
+      <div class="card" id="appliances"></div>
 
       <div class="card">
         <div class="slider-row">
-          <div class="top"><span>Monthly electric bill</span><b id="bill-val">$220</b></div>
-          <input type="range" id="bill" min="50" max="800" step="10" value="220">
-        </div>
-      </div>
-      <div class="card">
-        <div class="slider-row">
-          <div class="top"><span>Sunlight hours / day</span><b id="sun-val">5.5 h</b></div>
-          <input type="range" id="sun" min="3" max="9" step="0.5" value="5.5">
+          <div class="top"><span>ساعت‌های برق پشتیبان (بتری)</span><b id="backup-val">۶ ساعت</b></div>
+          <input type="range" id="backup" min="2" max="12" step="1" value="6">
         </div>
       </div>
 
-      <div class="calc-facts">
+      <div class="section-head"><h3>سیستم پیشنهادی شما</h3></div>
+      <div class="result-grid">
         <div class="card fact">
-          <div class="f-val" id="fact-size">7.2 kW</div>
-          <div class="f-lbl">System size</div>
+          <div class="f-ic">⚡️</div>
+          <div class="f-val" id="rec-inverter">—</div>
+          <div class="f-lbl">انورتر هایبرید</div>
         </div>
         <div class="card fact">
-          <div class="f-val" id="fact-payback">6.8 yr</div>
-          <div class="f-lbl">Payback</div>
+          <div class="f-ic">🔋</div>
+          <div class="f-val" id="rec-battery">—</div>
+          <div class="f-lbl">بتری لیتیوم</div>
         </div>
         <div class="card fact">
-          <div class="f-val" id="fact-25">$46k</div>
-          <div class="f-lbl">25-yr savings</div>
+          <div class="f-ic">☀️</div>
+          <div class="f-val" id="rec-panels">—</div>
+          <div class="f-lbl">پنل ۵۵۰ واته</div>
         </div>
       </div>
 
-      <button class="submit" style="margin-top:16px" onclick="go('contact')">Request Exact Quote</button>
+      <a class="submit" id="calc-wa" href="#" target="_blank" rel="noopener">💬 ارسال این محاسبه در واتساپ</a>
     </section>
 
     <!-- ============ CONTACT ============ -->
     <section class="screen" id="screen-contact">
-      <h2 class="large-title">Contact</h2>
-      <p class="subtitle">Talk to a solar expert — it's free.</p>
-
-      <form class="card" onsubmit="sendForm(event)">
-        <div class="field">
-          <label>Name</label>
-          <input type="text" placeholder="Your full name" required>
-        </div>
-        <div class="field">
-          <label>Email</label>
-          <input type="email" placeholder="you@example.com" required>
-        </div>
-        <div class="field">
-          <label>Message</label>
-          <textarea placeholder="Tell us about your home and energy goals…"></textarea>
-        </div>
-        <button class="submit" type="submit">Send Message</button>
-      </form>
+      <h2 class="large-title">تماس با ما</h2>
+      <p class="subtitle">تیم لمر سن‌تک آمادهٔ مشورهٔ رایگان برای شماست.</p>
 
       <div class="card">
-        <div class="contact-line">
+        <a class="contact-line" href="https://wa.me/93778202600" target="_blank" rel="noopener">
+          <div class="c-ic" style="background:rgba(37,211,102,.15); border-color:rgba(37,211,102,.35);">💬</div>
+          <div><span>واتساپ</span><small class="phone-ltr">0778 202 600</small></div>
+        </a>
+        <a class="contact-line" href="tel:+93778202600">
           <div class="c-ic">📞</div>
-          <div><span>+1 (800) 555-SOLAR</span><small>Mon–Sat, 8am–7pm</small></div>
-        </div>
-        <div class="contact-line">
-          <div class="c-ic">✉️</div>
-          <div><span>hello@lemarsuntech.com</span><small>We reply within 24 hours</small></div>
-        </div>
+          <div><span>شماره تماس</span><small class="phone-ltr">0778 202 600</small></div>
+        </a>
+        <a class="contact-line" href="https://lemarsuntech.com" target="_blank" rel="noopener">
+          <div class="c-ic">🌐</div>
+          <div><span>ویب‌سایت</span><small>lemarsuntech.com</small></div>
+        </a>
         <div class="contact-line">
           <div class="c-ic">📍</div>
-          <div><span>LemarSunTech HQ</span><small>100 Sunshine Blvd, Solar City</small></div>
+          <div><span>آدرس</span><small>کابل، افغانستان</small></div>
+        </div>
+        <div class="contact-line">
+          <div class="c-ic">🕐</div>
+          <div><span>ساعات کاری</span><small>شنبه تا پنجشنبه — ۷:۳۰ صبح الی ۶:۳۰ شام</small></div>
         </div>
       </div>
+
+      <a class="submit" href="https://wa.me/93778202600?text=%D8%B3%D9%84%D8%A7%D9%85%D8%8C%20%D9%85%D9%86%20%D8%AF%D8%B1%20%D9%85%D9%88%D8%B1%D8%AF%20%D8%B3%DB%8C%D8%B3%D8%AA%D9%85%20%D8%A2%D9%81%D8%AA%D8%A7%D8%A8%DB%8C%20%D9%85%D8%B9%D9%84%D9%88%D9%85%D8%A7%D8%AA%20%D9%85%DB%8C%E2%80%8C%D8%AE%D9%88%D8%A7%D9%87%D9%85." target="_blank" rel="noopener">💬 چت در واتساپ</a>
     </section>
 
   </main>
 
   <!-- ============ FLOATING TAB BAR ============ -->
   <nav>
-    <button class="tab active" data-tab="home"     onclick="go('home')"><span class="t-ic">🏠</span>Home</button>
-    <button class="tab"        data-tab="services" onclick="go('services')"><span class="t-ic">🛠️</span>Services</button>
-    <button class="tab"        data-tab="calc"     onclick="go('calc')"><span class="t-ic">📊</span>Savings</button>
-    <button class="tab"        data-tab="contact"  onclick="go('contact')"><span class="t-ic">💬</span>Contact</button>
+    <button class="tab active" data-tab="home"     onclick="go('home')"><span class="t-ic">🏠</span>خانه</button>
+    <button class="tab"        data-tab="products" onclick="go('products')"><span class="t-ic">🔋</span>محصولات</button>
+    <button class="tab"        data-tab="calc"     onclick="go('calc')"><span class="t-ic">🧮</span>محاسبه</button>
+    <button class="tab"        data-tab="contact"  onclick="go('contact')"><span class="t-ic">💬</span>تماس</button>
   </nav>
 
 </div>
 
-<div class="toast" id="toast">✅ Message sent — we'll be in touch!</div>
-
 <script>
-/* ---------- Services data (mirrors services.json) ---------- */
-const SERVICES = [
-  { icon:"🏠", name:"Residential Solar", desc:"Custom rooftop systems designed around your home, roof and budget.", badge:"Most popular" },
-  { icon:"🏢", name:"Commercial Solar", desc:"Large-scale installations that cut operating costs for your business." },
-  { icon:"🔋", name:"Battery Storage", desc:"Store daytime sun and power your home through the night and outages." },
-  { icon:"🚗", name:"EV Charging", desc:"Home and workplace chargers powered directly by your panels." },
-  { icon:"🧰", name:"Maintenance & Repair", desc:"Panel cleaning, inspections and performance tune-ups." },
-  { icon:"📡", name:"Smart Monitoring", desc:"Real-time production tracking from an elegant app dashboard." },
-  { icon:"📐", name:"Free Site Assessment", desc:"A solar engineer evaluates your roof, shading and energy usage.", badge:"Free" },
+/* ---------- Helpers ---------- */
+const WA = "93778202600";
+const faDigits = s => String(s).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+const waLink = msg => `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+
+document.getElementById("hero-wa").href =
+  waLink("سلام، من در مورد سیستم آفتابی برای خانه‌ام معلومات و قیمت می‌خواهم.");
+
+/* ---------- Products ---------- */
+const CATS = [
+  { id:"all",      label:"همه" },
+  { id:"panel",    label:"پنل آفتابی" },
+  { id:"battery",  label:"بتری لیتیوم" },
+  { id:"inverter", label:"انورتر" },
+  { id:"package",  label:"پکیج کامل" },
 ];
 
-const list = document.getElementById("services-list");
-list.innerHTML = SERVICES.map(s => `
-  <div class="card service">
-    <div class="s-icon">${s.icon}</div>
-    <div class="s-body">
-      <h4>${s.name}</h4>
-      <p>${s.desc}</p>
-      ${s.badge ? `<span class="badge">${s.badge}</span>` : ""}
+const PRODUCTS = [
+  { cat:"panel",    icon:"☀️", name:"پنل آفتابی مونوکریستال ۵۵۰ وات",
+    desc:"برندهای LONGi، Jinko و JA Solar — بازدهی بلند، مقاوم در برابر گرد و غبار", badge:"پرفروش", hot:true, home:true },
+  { cat:"panel",    icon:"🌞", name:"پنل Q.CELLS ۵۸۰ وات",
+    desc:"تکنالوژی آلمانی، مناسب برای پروژه‌های خانگی و تجارتی" },
+  { cat:"battery",  icon:"🔋", name:"بتری لیتیوم LiFePO4 — ۵ کیلووات‌ساعت",
+    desc:"+۶۰۰۰ سایکل شارژ، عمر بیش از ۱۰ سال، بدون ضرورت به مراقبت", badge:"پرفروش", hot:true, home:true },
+  { cat:"battery",  icon:"🔋", name:"بتری لیتیوم LiFePO4 — ۱۰ کیلووات‌ساعت",
+    desc:"مناسب برای خانه‌های بزرگ — برق پشتیبان تمام شب" },
+  { cat:"battery",  icon:"🏭", name:"بتری لیتیوم ۱۵ تا ۳۰ کیلووات‌ساعت",
+    desc:"برای دفاتر، مارکیت‌ها و پروژه‌های تجارتی" },
+  { cat:"inverter", icon:"⚡️", name:"انورتر هایبرید Deye — ۵ کیلووات",
+    desc:"تعویض برق در ۴ میلی‌ثانیه — بدون خاموشی", badge:"پرفروش", hot:true, home:true },
+  { cat:"inverter", icon:"⚡️", name:"انورتر هایبرید Growatt — ۳ تا ۶ کیلووات",
+    desc:"اقتصادی و قابل اعتماد برای خانه‌ها" },
+  { cat:"inverter", icon:"🏢", name:"انورتر Solis — ۸ تا ۲۰ کیلووات",
+    desc:"برای پروژه‌های بزرگ تجارتی و صنعتی" },
+  { cat:"package",  icon:"📦", name:"پکیج کامل خانگی",
+    desc:"پنل + بتری لیتیوم + انورتر + استرکچر + نصب مسلکی با ۵ سال وارنتی", badge:"پیشنهاد ما" },
+  { cat:"package",  icon:"🏗️", name:"استرکچر و لوازم نصب",
+    desc:"ساختمان فلزی مقاوم، کیبل و تجهیزات معیاری" },
+];
+
+const productCard = p => `
+  <div class="card product">
+    <div class="p-icon">${p.icon}</div>
+    <div class="p-body">
+      <h4>${p.name}</h4>
+      <p>${p.desc}</p>
+      ${p.badge ? `<span class="badge${p.hot ? " hot" : ""}">${p.badge}</span>` : ""}
     </div>
-    <div class="chev">›</div>
-  </div>`).join("");
+    <a class="wa-mini" target="_blank" rel="noopener"
+       href="${waLink("سلام، در مورد «" + p.name + "» معلومات و قیمت می‌خواهم.")}">💬</a>
+  </div>`;
+
+document.getElementById("home-products").innerHTML =
+  PRODUCTS.filter(p => p.home).map(productCard).join("");
+
+const seg = document.getElementById("seg");
+seg.innerHTML = CATS.map(c =>
+  `<button data-cat="${c.id}" class="${c.id === "all" ? "on" : ""}">${c.label}</button>`).join("");
+
+function renderProducts(cat) {
+  document.getElementById("products-list").innerHTML =
+    PRODUCTS.filter(p => cat === "all" || p.cat === cat).map(productCard).join("");
+}
+renderProducts("all");
+seg.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  seg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+  renderProducts(b.dataset.cat);
+  if (navigator.vibrate) navigator.vibrate(8);
+});
 
 /* ---------- Tab navigation ---------- */
 function go(name) {
@@ -533,58 +576,93 @@ function go(name) {
   if (navigator.vibrate) navigator.vibrate(8);
 }
 
-/* ---------- Animated counters ---------- */
-function animateCounters() {
-  document.querySelectorAll("[data-count]").forEach(el => {
-    const target = +el.dataset.count, dur = 1300, t0 = performance.now();
-    (function tick(t) {
-      const p = Math.min((t - t0) / dur, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(target * eased).toLocaleString();
-      if (p < 1) requestAnimationFrame(tick);
-    })(t0);
-  });
-}
-animateCounters();
+/* ---------- System calculator ---------- */
+const APPLIANCES = [
+  { icon:"💡", name:"گروپ LED",        watts:10,   start:5 },
+  { icon:"🌀", name:"پکه",             watts:70,   start:2 },
+  { icon:"📺", name:"تلویزیون",        watts:100,  start:1 },
+  { icon:"🧊", name:"یخچال",           watts:150,  start:1 },
+  { icon:"💻", name:"کمپیوتر",         watts:200,  start:0 },
+  { icon:"🧺", name:"ماشین لباس‌شویی", watts:500,  start:0 },
+  { icon:"🚰", name:"واترپمپ",         watts:750,  start:0 },
+  { icon:"❄️", name:"ایرکندیشن",       watts:1500, start:0 },
+];
+const counts = APPLIANCES.map(a => a.start);
 
-/* ---------- Savings calculator ---------- */
-const bill = document.getElementById("bill");
-const sun  = document.getElementById("sun");
+document.getElementById("appliances").innerHTML = APPLIANCES.map((a, i) => `
+  <div class="appliance">
+    <div class="a-icon">${a.icon}</div>
+    <div class="a-body">
+      <h5>${a.name}</h5>
+      <small>${faDigits(a.watts)} وات</small>
+    </div>
+    <div class="stepper">
+      <button onclick="bump(${i},1)">+</button>
+      <span class="cnt" id="cnt-${i}">${faDigits(a.start)}</span>
+      <button onclick="bump(${i},-1)">−</button>
+    </div>
+  </div>`).join("");
+
+const backup = document.getElementById("backup");
+
+function bump(i, d) {
+  counts[i] = Math.max(0, Math.min(30, counts[i] + d));
+  document.getElementById("cnt-" + i).textContent = faDigits(counts[i]);
+  if (navigator.vibrate) navigator.vibrate(6);
+  calc();
+}
+
 function fillTrack(el) {
   const p = ((el.value - el.min) / (el.max - el.min)) * 100;
   el.style.setProperty("--fill", p + "%");
 }
+
+function pickSize(need, sizes, unit, plusLabel) {
+  for (const s of sizes) if (s >= need) return faDigits(s) + " " + unit;
+  return plusLabel;
+}
+
 function calc() {
-  fillTrack(bill); fillTrack(sun);
-  const b = +bill.value, h = +sun.value;
-  document.getElementById("bill-val").textContent = "$" + b;
-  document.getElementById("sun-val").textContent  = h + " h";
+  fillTrack(backup);
+  const hours = +backup.value;
+  document.getElementById("backup-val").textContent = faDigits(hours) + " ساعت";
 
-  const offset = Math.min(0.95, 0.55 + (h - 3) * 0.07);       // % of bill offset by solar
-  const yearly = Math.round(b * 12 * offset / 10) * 10;
-  const sizeKw = +(b * 0.033 * (5.5 / h)).toFixed(1);          // rough system size
-  const cost   = sizeKw * 2600 * 0.7;                          // after ~30% incentive
-  const payback = Math.max(3, +(cost / yearly).toFixed(1));
-  const lifetime = Math.round((yearly * 25 - cost) / 1000);
+  const totalW = APPLIANCES.reduce((sum, a, i) => sum + a.watts * counts[i], 0);
+  document.getElementById("total-load").textContent = faDigits(totalW.toLocaleString("en-US").replace(/,/g, "٬")) + " وات";
 
-  document.getElementById("calc-savings").textContent = "$" + yearly.toLocaleString();
-  document.getElementById("fact-size").textContent    = sizeKw + " kW";
-  document.getElementById("fact-payback").textContent = payback + " yr";
-  document.getElementById("fact-25").textContent      = "$" + lifetime + "k";
+  if (totalW === 0) {
+    ["rec-inverter", "rec-battery", "rec-panels"].forEach(id =>
+      document.getElementById(id).textContent = "—");
+    document.getElementById("calc-wa").href = waLink("سلام، من به مشوره برای سیستم آفتابی ضرورت دارم.");
+    return;
+  }
+
+  const invNeed  = totalW * 1.3 / 1000;
+  const invTxt   = pickSize(invNeed, [3, 5, 8, 12, 20], "کیلووات", "+۲۰ کیلووات");
+  const batNeed  = (totalW * hours / 1000) / 0.8;
+  const batTxt   = pickSize(batNeed, [5, 10, 15, 20, 30], "کیلووات‌ساعت", "+۳۰ کیلووات‌ساعت");
+  const dailyKwh = totalW * 8 / 1000;
+  const panels   = Math.max(2, Math.ceil(dailyKwh / 2.75));
+  const panTxt   = faDigits(panels) + " عدد";
+
+  document.getElementById("rec-inverter").textContent = invTxt;
+  document.getElementById("rec-battery").textContent  = batTxt;
+  document.getElementById("rec-panels").textContent   = panTxt;
+
+  document.getElementById("calc-wa").href = waLink(
+    "سلام لمر سن‌تک!\n" +
+    "من سیستم آفتابی ضرورت دارم:\n" +
+    "• مجموع بار: " + faDigits(totalW) + " وات\n" +
+    "• انورتر: " + invTxt + "\n" +
+    "• بتری لیتیوم: " + batTxt + "\n" +
+    "• پنل ۵۵۰ واته: " + panTxt + "\n" +
+    "• برق پشتیبان: " + faDigits(hours) + " ساعت\n" +
+    "لطفاً قیمت بدهید. تشکر!"
+  );
 }
-bill.addEventListener("input", calc);
-sun.addEventListener("input", calc);
+
+backup.addEventListener("input", calc);
 calc();
-
-/* ---------- Contact form ---------- */
-function sendForm(e) {
-  e.preventDefault();
-  const toast = document.getElementById("toast");
-  toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 2800);
-  e.target.reset();
-  if (navigator.vibrate) navigator.vibrate([10, 40, 10]);
-}
 </script>
 </body>
 </html>
