@@ -1,1 +1,76 @@
-
+{
+  "company": "LEMAR SunTech | لمر سن‌تک",
+  "tagline": "انرژی پاک، انتخاب هوشمند",
+  "phone": "+93778202600",
+  "whatsapp": "https://wa.me/93778202600",
+  "website": "https://lemarsuntech.com",
+  "location": "کابل، افغانستان",
+  "hours": "شنبه تا پنجشنبه — ۷:۳۰ صبح الی ۶:۳۰ شام",
+  "brands": ["Deye", "Growatt", "Solis", "LONGi", "Jinko Solar", "JA Solar", "Q.CELLS"],
+  "products": [
+    {
+      "category": "panel",
+      "icon": "☀️",
+      "name": "پنل آفتابی مونوکریستال ۵۵۰ وات",
+      "description": "برندهای LONGi، Jinko و JA Solar — بازدهی بلند، مقاوم در برابر گرد و غبار",
+      "badge": "پرفروش"
+    },
+    {
+      "category": "panel",
+      "icon": "🌞",
+      "name": "پنل Q.CELLS ۵۸۰ وات",
+      "description": "تکنالوژی آلمانی، مناسب برای پروژه‌های خانگی و تجارتی"
+    },
+    {
+      "category": "battery",
+      "icon": "🔋",
+      "name": "بتری لیتیوم LiFePO4 — ۵ کیلووات‌ساعت",
+      "description": "+۶۰۰۰ سایکل شارژ، عمر بیش از ۱۰ سال، بدون ضرورت به مراقبت",
+      "badge": "پرفروش"
+    },
+    {
+      "category": "battery",
+      "icon": "🔋",
+      "name": "بتری لیتیوم LiFePO4 — ۱۰ کیلووات‌ساعت",
+      "description": "مناسب برای خانه‌های بزرگ — برق پشتیبان تمام شب"
+    },
+    {
+      "category": "battery",
+      "icon": "🏭",
+      "name": "بتری لیتیوم ۱۵ تا ۳۰ کیلووات‌ساعت",
+      "description": "برای دفاتر، مارکیت‌ها و پروژه‌های تجارتی"
+    },
+    {
+      "category": "inverter",
+      "icon": "⚡️",
+      "name": "انورتر هایبرید Deye — ۵ کیلووات",
+      "description": "تعویض برق در ۴ میلی‌ثانیه — بدون خاموشی",
+      "badge": "پرفروش"
+    },
+    {
+      "category": "inverter",
+      "icon": "⚡️",
+      "name": "انورتر هایبرید Growatt — ۳ تا ۶ کیلووات",
+      "description": "اقتصادی و قابل اعتماد برای خانه‌ها"
+    },
+    {
+      "category": "inverter",
+      "icon": "🏢",
+      "name": "انورتر Solis — ۸ تا ۲۰ کیلووات",
+      "description": "برای پروژه‌های بزرگ تجارتی و صنعتی"
+    },
+    {
+      "category": "package",
+      "icon": "📦",
+      "name": "پکیج کامل خانگی",
+      "description": "پنل + بتری لیتیوم + انورتر + استرکچر + نصب مسلکی با ۵ سال وارنتی",
+      "badge": "پیشنهاد ما"
+    },
+    {
+      "category": "package",
+      "icon": "🏗️",
+      "name": "استرکچر و لوازم نصب",
+      "description": "ساختمان فلزی مقاوم، کیبل و تجهیزات معیاری"
+    }
+  ]
+}
